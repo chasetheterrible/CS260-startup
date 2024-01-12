@@ -5,4 +5,4 @@ startup
 #CS Is hard stuff but interesting
 
 #I am a twin
-#I have five sistesrs
+#I have four sisters

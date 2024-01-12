@@ -6,4 +6,4 @@ There are days and knights
 shinning armor and cool swords
 I will miss you tree
 
-Actually I like strawberry cheesecake
+My name is Chase

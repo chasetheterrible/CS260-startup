@@ -1,2 +1,2 @@
-Elevator Pitch
+Elevator Pitch:
 Have you ever wanted to work on speed and memorization at the same time, or even have quick friendly competition? This matching game makes it so you as an individual can test your skills of speed and memorization agains't yourself or others by turning over two cards at a time and comparing them. The user is timed and the goal is for the cards to have the same number. If the numbers patch it is a pair and the cards are taken off the table, if not the user must flip two new cards over until the whole board is clear. Once the board is clear the game is over. The layout of the cards will be different each time.

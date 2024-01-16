@@ -8,3 +8,19 @@ Have you ever wanted to work on speed and memorization at the same time, or even
 ![instruction screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.24%20PM.png)
 ![Game screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.32%20PM.png)
 ![End screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.48%20PM.png)
+## Key Features
+* Secure login over HTTPS
+* Tiles are reandomly organized in 4 x 5
+* Ability to select desired tiles
+
+## Technologies
+* HTML - Uses correct HTML structure for appllication. Six HTMl pages: one for app design/logo, one for sign up, one for log in, one for instructions, one for the game, and one for the stats
+* CSS - Application styling that looks good on differnet screen sizes, uses good whitespace, color choice and contrast
+* JavaScript - Provides login, tile display, timer, backend endpoint calls
+* Service - Backend service points with endpoints for:
+  * login
+  * submitting time
+  * comparing user scores
+* DB/Login - Store users, time scores and data in database. Register and login users. Credentials securely stored in database. Can't play unless authenticated
+* Websocket - As each user finished the game, their time is brodcasted to their scoreboard
+* React - Application ported to use the React web framework

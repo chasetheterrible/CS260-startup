@@ -14,11 +14,11 @@ This is a sequence diagram that shows how to people would interact with the back
 
 ## Key Features
 * Secure login over HTTPS
-* Tiles are reandomly organized in 4 x 5
+* Tiles are randomly organized in 4 x 5
 * Ability to select desired tiles
 
 ## Technologies
-* HTML - Uses correct HTML structure for appllication. Six HTMl pages: one for app design/logo, one for sign up, one for log in, one for instructions, one for the game, and one for the stats
+* HTML - Uses correct HTML structure for application. Six HTMl pages: one for app design/logo, one for sign up, one for log in, one for instructions, one for the game, and one for the stats
 * CSS - Application styling that looks good on differnet screen sizes, uses good whitespace, color choice and contrast
 * JavaScript - Provides login, tile display, timer, backend endpoint calls
 * Service - Backend service points with endpoints for:

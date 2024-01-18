@@ -5,4 +5,4 @@ What I learned from this assignemnt I've learned that somewhat how to resolve co
 
 IP address for server: 52.55.2.3
 To command SSH to server:  ssh -i /Users/chasecook/Downloads/Chase\'s\ AWS\ keypair.pem ubuntu@52.55.2.3
-[Route53(domain name)](/https://learn.cs260.click/page/webServers/amazonWebServicesRoute53/amazonWebServicesRoute53_md)
+[Route53(domain name)](https://learn.cs260.click/page/webServers/amazonWebServicesRoute53/amazonWebServicesRoute53_md)

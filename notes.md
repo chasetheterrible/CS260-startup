@@ -12,6 +12,9 @@ To command SSH to server:  ssh -i /Users/chasecook/Downloads/Chase\'s\ AWS\ keyp
 
 [The Console info]<https://github.com/webprogramming260/.github/blob/main/profile/essentials/console/console.md>
 
-## **Notes for HTML**
+# **Notes for HTML**
+## HTML structure
 * If wanting to upload image with URL copy image address by right click(cntrl+click)
+
+## **HTML Input**
 * For checkboxes, at the end of the tag(ex <input...checked />) it will auto select the option

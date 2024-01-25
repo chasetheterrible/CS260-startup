@@ -6,6 +6,25 @@ What I learned from this assignemnt I've learned that somewhat how to resolve co
 IP address for server: 52.55.2.3
 To command SSH to server:  ssh -i /Users/chasecook/Downloads/Chase\'s\ AWS\ keypair.pem ubuntu@52.55.2.3
 [Route53]<https://learn.cs260.click/page/webServers/amazonWebServicesRoute53/amazonWebServicesRoute53_md>
+
+# Git
+* **git init ** convets an existing project to a git repository, or intilizaes a new empty repository
+* **git add** tracks everything and **git status** to see the what respository looks like now
+* git commit -m 'type message'
+## Diff
+* Most of time we don't wantto reverse to earlier commit, but just want tto compare differences between commits
+*   To refer to earlier commits you just add ~ and the numerical distance from HEAD that you want to reference. In this case we will compare HEAD and HEAD~1: git diff HEAD HEAD~1
+## Branches
+* branching allows to work on variations of code wihtout affecting main branch
+*   create new one ny doing "git branch A" for ex
+*   work on new branch with git checkout A
+*   to merge and execute branch to main to git merge A
+##Cloning repository
+* git clone 'url of github repository'
+* When cloning its placed in the subdirecotry named with the name of the respository so make sure you are in the directory where you keep all source repositoreis before running command
+* cd repository name to get to the repository directoy
+
+  
 # Caddy Info
 * web service for HTTP requests and serves requested static files or routes to another web service
 *   ability to route requests is called gateway or reverse

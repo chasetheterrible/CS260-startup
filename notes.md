@@ -31,6 +31,8 @@ To command SSH to server:  ssh -i /Users/chasecook/Downloads/Chase\'s\ AWS\ keyp
 * ssh -i [key paur file] ubuntu@domain_name
 *   to configure cd ~ then vi Caddyfile
 * do nano caddyfile to for editing and :wq to save and exit
+* configure file ~/Caddyfile
+* HTML files: ~/public_html
 
 # EC2
 * To ssh to server to ssh -i [key pair] ubuntu@ip_address

@@ -150,7 +150,15 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 ### Video
 * Use video tage and specify src wtih url to source video. Like audio can iinclude control or autoplay
 * may need to include crossorigin="anonymous" if requesting filees from different domain name then one serving your content
-* ex <video controls width="300" crossorigin="anonymous">
+* ex "<video controls width="300" crossorigin="anonymous">
   <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
-</video>
+</video>"
+
 ### Internal Media
+* svg and canvas allow to create images directly within HTML
+SVG(scalable vector graphics)
+* Ex draws black border with red circle: '<'svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="red" style="border: 1px solid #000000">
+  <circle cx="150" cy="100" r="50" />
+</svg>
+Canvas
+* Faciliates 2d Drawing and animation. HTML for canvas is simple but requires javascript for support

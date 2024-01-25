@@ -94,8 +94,10 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 *   ' &apos;
 *   smiley face: &#128521;
 ## HTML structure
-[HTML Example look like]<
-
+[HTML Example look like]<https://github.com/chasetheterrible/CS260-startup/blob/main/Example%20html%20code.png>
+[Output]<https://github.com/chasetheterrible/CS260-startup/blob/main/Output%20html%20code.png>
+* Block vs Inline: Block element is to distinguish flow in the content structure while Inline element is meant to be inline within the flow of a block element
+*   Ex: <div>He said <b>don't</b> cross the beams.</div>
 * If wanting to upload image with URL copy image address by right click(cntrl+click)
 
 

@@ -52,8 +52,53 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 [The Console info]<https://github.com/webprogramming260/.github/blob/main/profile/essentials/console/console.md>
 
 # **Notes for HTML**
+## Elements and Tags
+* p(paragrph tag)
+* Closing teg has </character>
+* "<html>" represents top level page structure
+*   followed by head containing metadata bout the page/page title
+*   <head>, next line tabed <title>title name</title>
+*   go back a tab then close with body(contains elements  presenting conent structure
+* <main>represents main content structure as opposed to tings like headers, footers, avigation content</main>
+## Attributes
+* Describes sepcific deatils of element
+* id= gives unitque id to element to distinguis from others
+* class= designates element being classified into named groups of elements ex <p id= "hello" class="greeting>Hello world</p>
+## Hyper Links
+* started with anchor tag <a href="url">name shown</a>
+## common elements
+* **html**: The page container/ **head**: Header information/ **title**: Title of the page/ **meta**:	Metadata for the page such as character set or viewport settings/ **script**: JavaScript reference. Either a external reference, or inline/ **include**:	External content reference/ **body**:	The entire content body of the page/ **header**:	Header of the main content/ **foote**r:	Footer of the main content/ **nav**:	Navigational inputs/ **main**:	Main content of the page/ **section**:	A section of the main content/ **aside**:	Aside content from the main content/ **div**:	A block division of content/ **span**:	An inline span of content/ **h<1-9**>:	Text heading. From h1, the highest level, down to h9, the lowest level
+* p:	A paragraph of text
+* b:	Bring attention
+* table:	Table
+* tr:	Table row
+* th:	Table header
+* td:	Table data
+* ol,ul:	Ordered or unordered list
+* li:	List item
+* a:	Anchor the text to a hyperlink
+* img:	Graphical image reference
+* dialog:	Interactive component such as a confirmation
+* form:	A collection of user input
+* input	User: input field
+* audio:	Audio content
+* video:	Video content
+* svg: Scalable vector graphic content
+* iframe:	Inline frame of another HTML page
+* can add comments by doing <!-- coment end with -->
+* Special characters
+*   &: &amp;
+*   <  &lt;
+*   >  &gt;
+*   ": &quot;
+*   ' &apos;
+*   smiley face: &#128521;
 ## HTML structure
+[HTML Example look like]<
+
 * If wanting to upload image with URL copy image address by right click(cntrl+click)
+
+
 
 ## **HTML Input**
 * For checkboxes, at the end of the tag(ex <input...checked />) it will auto select the option

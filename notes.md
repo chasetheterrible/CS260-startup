@@ -92,7 +92,8 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 *   >  &gt;
 *   ": &quot;
 *   ' &apos;
-*   smiley face: &#128521;
+*   smiley face: &#128521
+
 ## HTML structure
 ![HTML Code examplpe.](https://github.com/chasetheterrible/CS260-startup/blob/main/Example%20html%20code.png)
 ![Code output.](https://github.com/chasetheterrible/CS260-startup/blob/main/Output%20html%20code.png)
@@ -104,3 +105,52 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 
 ## **HTML Input**
 * For checkboxes, at the end of the tag(ex <input...checked />) it will auto select the option
+* form: to submit values of input
+  
+### Input element
+* Text: single line vale
+* password(obscurred)
+* email
+* tel(telephone)
+* url(address)
+* number
+* checkbox(inclusive selection)
+* radio: exclusive selection
+* Range(of numbers)
+* date(y,m,d)
+* datetime-local: date and time
+* month(year,month)
+* Week(week of year)
+* Color
+* file(local file)
+* submit(button to trigger form submit)
+* !!Important!! To create imnput must specify with type= attribute
+*   ex <label for="checkbox1">Check me</label> <input type="checkbox" name="varCheckbox" value="checkbox1" checked /> <!-- checked at end means option is auto filled -->
+*   name: name of input. Submitted as name of input if used in a form
+*   disabled: disables ability for user to interact with input
+*   value: initial value of input
+*   required: signifies value is required in order to be valid
+### Validating Input
+* several inputs have auto validation, meaning they won't accept value that is not for example, a number, url, outside of range, or an email
+* Can specify required attribute on input element to mark it requiring value before it can be submitted
+* Patter attribute exists on text, serach, url, tel, email, passwrod inputs
+*   provides a reged that must mathc for the input to be considered valid
+
+## HTML media
+### Images
+* to include image use image tag and specify src(picture file/url)
+* also incldue alt to describe image
+* ex <img alt="mountain landscape" src="https://images.pexels.com/photos/164170/pexels-photo-164170.jpeg" />
+### Audio
+* To include audo specify src wtih source to audio file
+* can include controls attribute to allow user to control playback
+*   if not displayed there will be no visual representaion of autio on page
+* Autoplay attribute starts audio as soon as audio dile is loaded and loop attribute keeps playing over and over
+* ex <audio controls src="testAudio.mp3"></audio>
+### Video
+* Use video tage and specify src wtih url to source video. Like audio can iinclude control or autoplay
+* may need to include crossorigin="anonymous" if requesting filees from different domain name then one serving your content
+* ex <video controls width="300" crossorigin="anonymous">
+  <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+</video>
+### Internal Media

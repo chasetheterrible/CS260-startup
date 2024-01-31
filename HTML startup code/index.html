@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <!--head tag is all meta data for the document-->
+    <head>
+        <meta charset="UTF-8" />
+        <!-- tells browser not to scale viewport immediately-->
+        <meta name="'viewport" content="width=device-width, initial-scale=1.0" />
+        <!--Title of the Document, or what shows on the tab of the browser-->
+        <title>Paired-up HTMl</title>
+    </head>
+    <body>
+        <!--following example this header is will show the name of the app and the list of ref links-->
+        <header>
+            <h1>Paired Up</h1>
+            <!--represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents-->
+            <nav>
+                <menu>
+                    <li><a href='index.html'>Home</a></li>
+                    <li><a href='about.html'>About</a></li>
+                    <li><a href='play.html'>Play</a></li>
+                    <li><a href='scores.html'>Scores</a></li>
+                </menu>
+            </nav>
+            <!--paragpraph break...line to separate-->
+            <hr />
+        </header>
+
+        <main>
+            <h1>Welcome</h1>
+            <p>Login to play</p>
+            <!--Form is used to create, well an interactive form-->
+            <!--when user submits form they will be sent to play.html-->
+            <form method="'get" action="play.html">
+                <!--label creates the name: Name next to the user input box-->
+                <!--inut is well what they put it-->
+                <label for="name">Email</label>
+                <!--Id gives this code specific identity-->
+                <input type="text" id="email" placeholder="your@email" />
+                
+                <div>
+                    <label for="name">Password</label>
+                    <input type="text" id="password" placeholder="password" />
+                </div>
+                <button type ='submit'>Login</button>
+            </form>
+        </main>
+
+        <footer>
+            <hr />
+            <span class="text-rest">Chase Cook</span>
+            <!--line break-->
+            <br />
+            <a href="https://github.com/chasetheterrible/CS260-startup/tree/main">Github</a>
+        </footer>
+
+    </body>
+</html>

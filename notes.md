@@ -207,6 +207,7 @@ Canvas
     <p class="summary">Summary</p>
   </section>
 </body>)"
+
 * Say we want to change the h2 color but only for the sections for each department we provide a descednat cobinator where each item in lst is descendant of previous item so selector would be all h2 descendants of section elements
 *   ex section h2 { color: #004400  }
 * Examples of combinators to use:
@@ -217,9 +218,11 @@ Canvas
 * can use general sibling combinator to incease white space padding on left paragprahs siblings of level two headings
 *   h2 ~ p {  padding-left: 0.5cm;  }
 *   siblings are on same tab spacing
+
 ### Class selector
 * select a class put a period in front of it. Ex if class='summary' .summary { font-weight: bold;  }
 * can also combine element ame and class selector to select all paragraphs with class summary ex p.summary{...}
+
 ### ID selector
 * reference ID of element. All ids should be unique
 * to select id put a # in front of it. Ex #summary
@@ -231,3 +234,6 @@ Canvas
 * Select based on positional relationship, mouse interaction, hyperlink visitation states, and attributes
 * suppose we wnat purple highlight bar to appear only when mouse hovers over text. To accomplish this we change ID selector to select whenever section is hovered over
 * ex section:hover { border-left: solid lem purple; }
+
+## CSS Declarations
+* Specify porperty and vlaue assign when rule selector matches one or more elemnts. There are tons of possible properties defined to modify style of HTML

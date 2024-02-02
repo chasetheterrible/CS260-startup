@@ -167,6 +167,23 @@ Canvas
 ## CSS intro
 * Converts structure/content of HTML into vibrant responsive experience
 * CSS is primarily concerned with defining ruleents, or simply rules. Rules are comprised of a selector that selects elements to apply rule to, and one or more declarations that represents property to style with given property value
+* p { font-family: ; font-size: ; color:; text-shadow:; }
+*   selects all paragrpah elements and changes font, font size, color, and creates gray shadow for the text
+### Associating CSS wtih HTML
+* 3 ways to associate CSS with HTML, fist is to use style attribute of HTML elemtn and explicitly assign one or more declarations
+*   (<p style="color:green">CSS</p>)
+* Next way is to use HTMl style element to define CSS rules withitn HTML document. Style element should appear in head element so rules apply to all elements in body
+### Cascading styles
+* because elements inherit rules applied to parents you often end up with same declaration property applied to single element multiple times. Ex setting body elements to be red, and paragraph elements to be green and span to be blue, then finally use style element on specific span to be black
+
+
+* In this case rules cascade down from highest nodes in DOM tree to lowest. Any property defiend at lover level will overriede higher.
+### The Box Model
+* CSS defines everything as boxes, when apply styles, we apply them to region of display that is a rectangualr box. Inermost holds elements content like text or image are displayed. Next is padding that will inherit bacgkround color. After is the border which inherits color, thickness and linestyle, FInal is the margin whihc is considered external to actual  and therefore only represents whitespace. By default width and height of element is defined by content of box
+  
+* Final way is to use HTML link element to create hyperlink reference to external file containing rules. Link element must appear in head element of document
+*   (<link rel=stylesheet href=styles.css />)
+*   Using thise form is preferred way to define CSS
 
 ## Selector
 * To start we select the element(body, main, p, id, class etc) it will effect all those. If we did body if would effect the whole document, sense body is the whole document.

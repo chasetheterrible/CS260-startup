@@ -237,3 +237,21 @@ Canvas
 
 ## CSS Declarations
 * Specify porperty and vlaue assign when rule selector matches one or more elemnts. There are tons of possible properties defined to modify style of HTML
+![Some Declerations](https://github.com/chasetheterrible/CS260-startup/blob/main/Declaration%20properties.png)
+![More declarations](https://github.com/chasetheterrible/CS260-startup/blob/main/more%20delcarations.png)
+
+### Units
+* Helps define size of properties. Example when the width of an element can be dfined by usin gabsolute unites such as number of pixels or inches. Or percentages of parent element, percentage of viewport dimension or multiplier of size letter m (1.5em)
+![Examples of Units](https://github.com/chasetheterrible/CS260-startup/blob/main/units.png)
+
+### Color
+* Ways to describe color, raning from representations familiar to programmers
+![Color examples](https://github.com/chasetheterrible/CS260-startup/blob/main/color%20methods.png)
+
+## Fonts
+* font-family property defines what fonts should be used. Represents ordered list of fonts. First font in list available will be used
+### Font families
+* 4 major families 1) Serif 2)sans-serif 3)fixed 4) symbol
+*   serif is a small stroke attached to ends of a characters major stroke
+*   sans-seirf do not have extra strokes
+*   fixed are all same size 

@@ -173,9 +173,10 @@ Canvas
 * 3 ways to associate CSS with HTML, fist is to use style attribute of HTML elemtn and explicitly assign one or more declarations
 *   (<p style="color:green">CSS</p>)
 * Next way is to use HTMl style element to define CSS rules withitn HTML document. Style element should appear in head element so rules apply to all elements in body
+![Associating css with HTML](https://github.com/chasetheterrible/CS260-startup/blob/main/associating%20CSS%20with%20HTML.png)
 ### Cascading styles
 * because elements inherit rules applied to parents you often end up with same declaration property applied to single element multiple times. Ex setting body elements to be red, and paragraph elements to be green and span to be blue, then finally use style element on specific span to be black
-
+![Cascading styles](https://github.com/chasetheterrible/CS260-startup/blob/main/cascading%20example.png)
 
 * In this case rules cascade down from highest nodes in DOM tree to lowest. Any property defiend at lover level will overriede higher.
 ### The Box Model

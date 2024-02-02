@@ -162,3 +162,54 @@ SVG(scalable vector graphics)
 </svg>
 Canvas
 * Faciliates 2d Drawing and animation. HTML for canvas is simple but requires javascript for support
+
+# CSS
+## CSS intro
+* Converts structure/content of HTML into vibrant responsive experience
+* CSS is primarily concerned with defining ruleents, or simply rules. Rules are comprised of a selector that selects elements to apply rule to, and one or more declarations that represents property to style with given property value
+
+## Selector
+* To start we select the element(body, main, p, id, class etc) it will effect all those. If we did body if would effect the whole document, sense body is the whole document.
+*   Can use the asteriks(*) to select all elements as well
+### Combinators
+*sections should always have a heading
+"(<body>
+  <h1>Departments</h1>
+  <p>welcome message</p>
+  <section id="physics">
+    <h2>Physics</h2>
+    <p class="introduction">Introduction</p>
+    <p>Text</p>
+    <p class="summary">Summary</p>
+  </section>
+  <section id="chemistry">
+    <h2>Chemistry</h2>
+    <p class="introduction">Introduction</p>
+    <p>Text</p>
+    <p class="summary">Summary</p>
+  </section>
+</body>)"
+* Say we want to change the h2 color but only for the sections for each department we provide a descednat cobinator where each item in lst is descendant of previous item so selector would be all h2 descendants of section elements
+*   ex section h2 { color: #004400  }
+* Examples of combinators to use:
+*   descendant(list of descendants): body sectoin
+*   child(list of direct children): section > p
+*   general sibling(list of siblings) p ~ div
+*   adjacent siblin(list of adjacent sibling): p + div
+* can use general sibling combinator to incease white space padding on left paragprahs siblings of level two headings
+*   h2 ~ p {  padding-left: 0.5cm;  }
+*   siblings are on same tab spacing
+### Class selector
+* select a class put a period in front of it. Ex if class='summary' .summary { font-weight: bold;  }
+* can also combine element ame and class selector to select all paragraphs with class summary ex p.summary{...}
+### ID selector
+* reference ID of element. All ids should be unique
+* to select id put a # in front of it. Ex #summary
+## Attribute selector
+* Allows to select element based upon attributes
+* can select any element with given attribute a[href]. Can also specify required value for attribute a[href]=.fish.png] for selector to match
+* also supports wildcards siuch as ability to select attribute contaning values specific text p[href*=https://}
+### Pseufo selector
+* Select based on positional relationship, mouse interaction, hyperlink visitation states, and attributes
+* suppose we wnat purple highlight bar to appear only when mouse hovers over text. To accomplish this we change ID selector to select whenever section is hovered over
+* ex section:hover { border-left: solid lem purple; }

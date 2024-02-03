@@ -220,12 +220,12 @@ Canvas
 *   siblings are on same tab spacing
 
 ### Class selector
-* select a class put a period in front of it. Ex if class='summary' .summary { font-weight: bold;  }
-* can also combine element ame and class selector to select all paragraphs with class summary ex p.summary{...}
+* select a class put a period in front of it. Ex if class='summary' .summary
+* can also combine element name and class selector to select all paragraphs with class summary ex p.summary
 
 ### ID selector
 * reference ID of element. All ids should be unique
-* to select id put a # in front of it. Ex #summary
+* to select id put a # in front of it. Ex #summary(selects anything with id as summary)
 ## Attribute selector
 * Allows to select element based upon attributes
 * can select any element with given attribute a[href]. Can also specify required value for attribute a[href]=.fish.png] for selector to match
@@ -269,3 +269,4 @@ Canvas
 * don't need define every milisecond but key points
 *   do this wtih from and to
 ![keyframe](https://github.com/chasetheterrible/CS260-startup/blob/main/keyframe%20demo.png)
+* transform: translateX(50px) moves an element across the x axis 50 pixels

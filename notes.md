@@ -268,3 +268,4 @@ Canvas
 * Now we need to create keyframe
 * don't need define every milisecond but key points
 *   do this wtih from and to
+![keyframe](https://github.com/chasetheterrible/CS260-startup/blob/main/keyframe%20demo.png)

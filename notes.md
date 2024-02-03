@@ -254,4 +254,17 @@ Canvas
 * 4 major families 1) Serif 2)sans-serif 3)fixed 4) symbol
 *   serif is a small stroke attached to ends of a characters major stroke
 *   sans-seirf do not have extra strokes
-*   fixed are all same size 
+*   fixed are all same size
+### Importing fonts
+* to import to @font-face(squigly brackets)
+*   on inside to font-family: font_name; as well as src: url(link to font);
+* or can do @import url(url); then p squicly brackets font-family: font_name;
+### CSS Animation
+* create CSS animation using animagtion properties and defining keyframes from what elements should look like
+* EX we select p(paragraph element) of center text and want to zoom till 20% view height
+*   p squicgly brackets(text-align: center; font-szie: 20vh;)
+* To make happen specifuy animating selected elements by adding **animation-name**  property with value. This name refers to name of keyfames we wills specify. Also add animation-duration to specify animation to last 3 seconds
+*   same as abovee but including animation-name: demo(will store what it does somewhere else); animation-duration: 3s;
+* Now we need to create keyframe
+* don't need define every milisecond but key points
+*   do this wtih from and to

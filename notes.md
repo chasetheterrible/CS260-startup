@@ -271,13 +271,13 @@ Canvas
 ![keyframe](https://github.com/chasetheterrible/CS260-startup/blob/main/keyframe%20demo.png)
 * transform: translateX(50px) moves an element across the x axis 50 pixels
 
-### Responsive Design
+## Responsive Design
 * Media quieries allow us to run series of tests(eg whethere users screen is greater than cedrtain width/resolution) and apply CSS selectively
 <!--Ex @media scree and (min-width: 80rem) { .container \n(not actaully just entered) margin: 1em 2em; } -->
 * This allows media query to see if current webpage is being displayed as screed media(not printed document) and viewport is 80 rem. CSS for .container selector will only be applied if these things are true
 * Can add multiple media quiereis withing a style sheet, tweking layout/parts of it to best suit various screen sizes(known as breakpoints)
 * common approac is designing simple singe column layout for narrow screens(mobile devices(
-#### Multicol
+### Multicol
 * specifies column-count to indicate max numner of columns you want content to be split into. Browser works out the sizes
 <!-- .container { column-count: 3; } -->
 * if specify column-wdith, will create as many columns of width that will comfortably fit the screen, then share extra space between columns
@@ -292,3 +292,22 @@ Canvas
 *   A p or div element had block display by default
 * display: inline; displays elements with width only as big as content.
 *   B or span elements have this by default
+* display: flex; displays elements children in flexible orientaiton
+* display: grid; displays elements children in grid orientation
+* **If applying the display: rule to a default tag it will overide it**
+
+### Viewport meta tag
+* when mobile devies gained pop they began to be used to view websites however they were optimized for desktop disply and not mobile screen. To chagne web spps scaled to screen size it got in the ay. Solution is to include meta tag in head element of all HTML pages to not scale the page
+* <!--<meta name="viewport" content="width=device-width,initial-scale=1" />-->
+
+### Float
+* float CSS property moves elements to left or right of container element and allows inline elemnets to wrap arround it.
+* Ex if we had an asside element followed by large paragraph of tex we could create following CSS rule to cause text to wrap around the aside
+<!-- aside { float: right; padding: 3cm; margin: 0.5cm; border: black solid thin; } -->
+* float right will put the element on the right side, left on left and inline end the whole space it looks like
+* when browser resizes, text will flow around floating element
+
+### Media queries
+* one of main CSS features for creating responsive applications is (at symbol)media selector. It dynamically detecs sie and oientation of device and applies CSS rules to represent struture of HTML in way that accomodates the change
+* can use medai to tell which side of scree(technically viewpoet) is longest. takes 1 or more predicates spearated by boolean operatos. In out case we simply want to know if screen is oriented in portrain(short size on top) or not. If it is we transform all dive elements by rotating 270 degrees
+<!-- @media (orientation: portrait) { div { transform: rotate(270def); } }

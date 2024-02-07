@@ -345,3 +345,44 @@ Canvas
   </footer>
 </body> -->
 * use flexbox to make it come alive. the display with val of felx tells borwser children of element are to be displayed in a flex row. We want top level flexbox childfren to be column oriented so we add flex-direct property wil value column. Then add some other declarations to 0 out margin and fill entire viewport with application
+<!--body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100vh;
+} -->
+* To get division of space for flebox we add following flex properties to each of children
+*   header - Flex: 0 80px. 0 means it wont grow and 8- px means its has starting basis height of 80 pixels. Creates fixed size plot
+*   Footer flex 0 80 like head it will not grow and has height 30 pixels
+*   main flex 1. One means it will get 1 fractional unit of gorwth, since it is the only child with non 0 growth it will get all remaining space. Main also gets additional properties because we want it to be a contaitner for controls and content area. So set dispaly to be flex and specify flex-direction to be a row so children are oriented by side
+<!--header {
+  flex: 0 80px;
+  background: hsl(223, 57%, 38%);
+}
+
+footer {
+  flex: 0 30px;
+  background: hsl(180, 10%, 10%);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+} -->
+* now just add some CSS to control content areas represented by two child section elements. We want controls to have 25% of space and content to have remaining. So set flex propertu with value to 1 and 3 respectively. means controls get one unit of space content gets 3 units of space. No matter how we resize this ration will remain(look at code from above that holds two section elements)
+<!-- section:nth-child(1) {
+  flex: 1;
+  background-color: hsl(180, 10%, 80%);
+}
+section:nth-child(2) {
+  flex: 3;
+  background-color: white;
+} effects 1st section then 2nd section-->
+
+### Media query
+* above complets design, but we also want to handle small screen sizes. To do so we add media queries
+* To support narrow scree[portrait mode] we include media quiery that detecs when we are in portrait orientation and sets flex-direction of main elements to be column instead of row.
+*   causes cells to be stacked on top eachotehr instead of side by side
+* To handle making header/footer disappear when screen is too short, we use media quiery that tirggers when our viewpoet height has max value of 700 pixels. When it is true display propeerty for both header/footer to none so they will be hidden
+*   main element becomes only child and since it has flex of 1 it takes over everything

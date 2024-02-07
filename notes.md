@@ -380,6 +380,11 @@ section:nth-child(2) {
   background-color: white;
 } effects 1st section then 2nd section-->
 
+* align-items aligns items based on felx direction.
+*   if flex direction is rows each div element in my codepen example will be each a new row. If I sent vaue to center it will but it in the middle on the x axis(y axis if flex direction is column) start will be at left(column is top) and end will be right for row, bottom for column
+
+* Justify content changes how browser distributes space around and between element
+
 ### Media query
 * above complets design, but we also want to handle small screen sizes. To do so we add media queries
 * To support narrow scree[portrait mode] we include media quiery that detecs when we are in portrait orientation and sets flex-direction of main elements to be column instead of row.

@@ -392,3 +392,10 @@ section:nth-child(2) {
 *   causes cells to be stacked on top eachotehr instead of side by side
 * To handle making header/footer disappear when screen is too short, we use media quiery that tirggers when our viewpoet height has max value of 700 pixels. When it is true display propeerty for both header/footer to none so they will be hidden
 *   main element becomes only child and since it has flex of 1 it takes over everything
+
+## Framework
+* provides functions and components that commonly appear in web applications
+### Tailwind
+* Takes different approach that traditional CSS framework, instead of using large, rich, css rulesets it uses smaller definitions that are applied specifically to individual HTML elements
+  * Moves much of CSS out of file and direclty to HTML
+### Bootstrap

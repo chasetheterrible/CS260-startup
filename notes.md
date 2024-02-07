@@ -310,4 +310,14 @@ Canvas
 ### Media queries
 * one of main CSS features for creating responsive applications is (at symbol)media selector. It dynamically detecs sie and oientation of device and applies CSS rules to represent struture of HTML in way that accomodates the change
 * can use medai to tell which side of scree(technically viewpoet) is longest. takes 1 or more predicates spearated by boolean operatos. In out case we simply want to know if screen is oriented in portrain(short size on top) or not. If it is we transform all dive elements by rotating 270 degrees
-<!-- @media (orientation: portrait) { div { transform: rotate(270def); } }
+<!-- @media (orientation: portrait) { div { transform: rotate(270def); } } -->
+![Media querie stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/Media%20queries%201.png)
+![more stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/media%20queries%20syntax.png)
+![mmore more stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/media%20queries%20synta2.png)
+
+* can also use media queries to make entire pieces of applications disappear, or move to different location. For example, if we had aside that was helpful when screen is wide, but took to much room as got narrow, could use following to make it dissapear
+<!-- @media (orientation: portrait) { aside { display: none; } } -->
+
+## CSS Grid
+* Grid layout is useful when want to display a group of child elements in responsive grid. We start with container element that has bunch of elements
+

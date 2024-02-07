@@ -320,4 +320,28 @@ Canvas
 
 ## CSS Grid
 * Grid layout is useful when want to display a group of child elements in responsive grid. We start with container element that has bunch of elements
+![graph stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/Graph%20stuff%20CSS.png)
+![syntax for grid](https://github.com/chasetheterrible/CS260-startup/blob/main/CSS%20syntax%20for%20graph.png)
+![ex of grid](https://github.com/chasetheterrible/CS260-startup/blob/main/ex%20of%20graph.png)
+![more ex of graph](https://github.com/chasetheterrible/CS260-startup/blob/main/other%20graph%20example.png)
 
+## CSS Flexbox
+* flex display is usefule when want to partition app into areas that responsively move around as window resizes/orientation changes
+* Structure HTML
+<!-- <body>
+  <header>
+    <h1>CSS flex &amp; media query</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Controls</h2>
+    </section>
+    <section>
+      <h2>Content</h2>
+    </section>
+  </main>
+  <footer>
+    <h2>Footer</h2>
+  </footer>
+</body> -->
+* use flexbox to make it come alive. the display with val of felx tells borwser children of element are to be displayed in a flex row. We want top level flexbox childfren to be column oriented so we add flex-direct property wil value column. Then add some other declarations to 0 out margin and fill entire viewport with application

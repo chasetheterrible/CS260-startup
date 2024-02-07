@@ -344,7 +344,7 @@ Canvas
     <h2>Footer</h2>
   </footer>
 </body> -->
-* use flexbox to make it come alive. the display with val of felx tells borwser children of element are to be displayed in a flex row. We want top level flexbox childfren to be column oriented so we add flex-direct property wil value column. Then add some other declarations to 0 out margin and fill entire viewport with application
+* use flexbox to make it come alive. the display with val of flex tells browser children of element are to be displayed in a flex row. We want top level flexbox children to be column oriented so we add flex-direction property with value column. Then add some other declarations to 0 out margin and fill entire viewport with application
 <!--body {
   display: flex;
   flex-direction: column;
@@ -352,7 +352,7 @@ Canvas
   height: 100vh;
 } -->
 * To get division of space for flebox we add following flex properties to each of children
-*   header - Flex: 0 80px. 0 means it wont grow and 8- px means its has starting basis height of 80 pixels. Creates fixed size plot
+*   header - Flex: 0 80px. 0 means it wont grow and 80 px means its has starting basis height of 80 pixels. Creates fixed size plot
 *   Footer flex 0 80 like head it will not grow and has height 30 pixels
 *   main flex 1. One means it will get 1 fractional unit of gorwth, since it is the only child with non 0 growth it will get all remaining space. Main also gets additional properties because we want it to be a contaitner for controls and content area. So set dispaly to be flex and specify flex-direction to be a row so children are oriented by side
 <!--header {

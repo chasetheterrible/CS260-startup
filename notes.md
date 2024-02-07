@@ -327,6 +327,7 @@ Canvas
 
 ## CSS Flexbox
 * flex display is usefule when want to partition app into areas that responsively move around as window resizes/orientation changes
+* To make sure flex: 0 or flex: 1 works make sure html{} has height set to 100% as well as the body
 * Structure HTML
 <!-- <body>
   <header>

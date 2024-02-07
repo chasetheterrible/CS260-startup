@@ -270,3 +270,25 @@ Canvas
 *   do this wtih from and to
 ![keyframe](https://github.com/chasetheterrible/CS260-startup/blob/main/keyframe%20demo.png)
 * transform: translateX(50px) moves an element across the x axis 50 pixels
+
+### Responsive Design
+* Media quieries allow us to run series of tests(eg whethere users screen is greater than cedrtain width/resolution) and apply CSS selectively
+<!--Ex @media scree and (min-width: 80rem) { .container \n(not actaully just entered) margin: 1em 2em; } -->
+* This allows media query to see if current webpage is being displayed as screed media(not printed document) and viewport is 80 rem. CSS for .container selector will only be applied if these things are true
+* Can add multiple media quiereis withing a style sheet, tweking layout/parts of it to best suit various screen sizes(known as breakpoints)
+* common approac is designing simple singe column layout for narrow screens(mobile devices(
+#### Multicol
+* specifies column-count to indicate max numner of columns you want content to be split into. Browser works out the sizes
+<!-- .container { column-count: 3; } -->
+* if specify column-wdith, will create as many columns of width that will comfortably fit the screen, then share extra space between columns
+* <!-- .container [ column-width: 10em; } -->
+* Can use columns shorthanded to specifuy max number of columns and min column width
+
+### Display
+* Display css property sets whether element is treated as block or inline box and layout of its children such as flow layout, grid or flex
+* Formally the property sents elements inner and outer dislay types: outer sets elements participation in flow layout; the inner sets the layout of the children
+* display: none; - will not display element(still there but not rendered)
+* display: block; - displays elements wtih width that fills its parent element.
+*   A p or div element had block display by default
+* display: inline; displays elements with width only as big as content.
+*   B or span elements have this by default

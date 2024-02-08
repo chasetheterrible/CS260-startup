@@ -428,3 +428,4 @@ Buttons:
 * primary can be replaced by secondary(gray), success(green), danger(red), warning(yellow), info(turqouise), light(white?), dark(black) and linke(text blue white background)
 * for a large button throw btn-lg/sm
 * to create block level buttons add btn-block after btn-prumary/other
+* If wanting button bu tnot heft backgrouhnd color replace defualt mod(btn-Primary) with btn-outline-mod_class(primary/secondary...)

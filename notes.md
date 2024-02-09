@@ -220,6 +220,9 @@ Canvas
 *   siblings are on same tab spacing
 
 ### Class selector
+* To select a specific element if it has a reused class do: element(div or h2).class_name:nth-child(whichever child it is)
+  * to select the 7th use of the class you would do 7 at the end
+
 * select a class put a period in front of it. Ex if class='summary' .summary
 * can also combine element name and class selector to select all paragraphs with class summary ex p.summary
 

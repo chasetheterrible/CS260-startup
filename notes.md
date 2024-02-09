@@ -220,6 +220,9 @@ Canvas
 *   siblings are on same tab spacing
 
 ### Class selector
+* To select a specific element if it has a reused class do: element(div or h2).class_name:nth-child(whichever child it is)
+  * to select the 7th use of the class you would do 7 at the end
+
 * select a class put a period in front of it. Ex if class='summary' .summary
 * can also combine element name and class selector to select all paragraphs with class summary ex p.summary
 
@@ -392,3 +395,40 @@ section:nth-child(2) {
 *   causes cells to be stacked on top eachotehr instead of side by side
 * To handle making header/footer disappear when screen is too short, we use media quiery that tirggers when our viewpoet height has max value of 700 pixels. When it is true display propeerty for both header/footer to none so they will be hidden
 *   main element becomes only child and since it has flex of 1 it takes over everything
+
+## Framework
+* provides functions and components that commonly appear in web applications
+### Tailwind
+* Takes different approach that traditional CSS framework, instead of using large, rich, css rulesets it uses smaller definitions that are applied specifically to individual HTML elements
+  * Moves much of CSS out of file and direclty to HTML
+### Bootstrap
+* Content Delivery Network(CDN)
+* Feature packed front-end toolkit filled wtih CSS and javascript styling
+* To include CSS place a link tag(<link...info>) in the headd and a script tag before the closing body tag
+  * href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+  * then rel="stylesheet"
+  * the integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+  * after integrity is crossorigin=ananymous(in quotation marks)
+  * total line look liks this(its commented)
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">-->
+* For Javascript its similar but src=https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js
+  * with integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4'
+  * and crossorigin="anonymous"
+  * <script...info...><(backslash)script>
+* If not wanting to include dropdowns, popoevers or tooltips, don't include poppwer so use: <scrip src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"(close tag)<(backslash)script>
+
+### Using Bootstrap
+Buttons:
+* Once linked in GTMl can finally use componets
+* When use bootstep:**btn** CSS clas, button gets nice looking rounded appearance.
+  *  **btn-primary** CSS class shades button with current primary color for app, which defualt is blue
+  *  Ex between plain and bootstrap in comment below.
+<!--// Bootstrap styled button
+<button type="button" class="btn btn-primary">Bootstrap</button>
+
+// Default browser styled button
+<button type="button">Plain</button> -->
+* primary can be replaced by secondary(gray), success(green), danger(red), warning(yellow), info(turqouise), light(white?), dark(black) and linke(text blue white background)
+* for a large button throw btn-lg/sm
+* to create block level buttons add btn-block after btn-prumary/other
+* If wanting button bu tnot heft backgrouhnd color replace defualt mod(btn-Primary) with btn-outline-mod_class(primary/secondary...)

@@ -5,36 +5,49 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>About</title>
         <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="about.css" />
+        <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+        />
+
     </head>
-    <body>
-        <header>
-            <h1>Paired Up</h1>
-            <nav>
-                <menu>
-                    <li><a href="index.html">Home</a> </li>
-                    <li><a href="about.html">About</a> </li>
-                    <li><a href="play.html">Play</a></li>
-                    <li><a href="scores.html">Scores</a></li>
+    <body class="bd-dark text-white">
+        <header class="container-fluid">
+            <nav class="navbar fixed-top navbar"> 
+                <h1>Paired Up</h1>  
+                <menu class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a> </li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a> </li>
+                    <li class="nav-item"><a class="nav-link" href="play.html">Play</a></li>
+                    <li class="nave-item"><a class="nav-link" href="scores.html">Scores</a></li>
                 </menu>
             </nav>
             <hr />
         </header>
-        <main>
-            <!--Class allows css and java to perform tasks on element specified by class-->
-            <div id="picture" class="picture-box"><img width="400px" src="https://media.istockphoto.com/id/952655342/photo/padre-bay-rock-in-lake-powell.jpg?s=612x612&w=0&k=20&c=G0TiUNmV28ObzmK7foI3AjDz0Vnv2DDIGY3J-PmYEBw=" alt="random"
-            /></div>
-            <p>Paired up is timed memory game where you tap or click on two tiles to reveal their number. The goal is to match the two tiles. If the tiles do not match they will flip back over, and you must try again until all tiles have been matched. The faster you match the tiles the better your score will be.</p>
 
-            <div id="quote">
-                <div>Programming is the art of telling another human being what one wants the computer to do.</div>
-                <div>― Donald Ervin Knuth</div>
+        <main>
+            <div>
+                <div id="picture" class="picture-box"><img width="400px" src="https://media.istockphoto.com/id/952655342/photo/padre-bay-rock-in-lake-powell.jpg?s=612x612&w=0&k=20&c=G0TiUNmV28ObzmK7foI3AjDz0Vnv2DDIGY3J-PmYEBw=" alt="random"
+                /></div>
+                <p>Paired up is timed memory game where you tap or click on two tiles to reveal their number. The goal is to match the two tiles. If the tiles do not match they will flip back over, and you must try again until all tiles have been matched. The faster you match the tiles the better your score will be.</p>
+
+                <div id="quote" class="quote-box bg-light text-dark">
+                    <div class="quote">Programming is the art of telling another human being what one wants the computer to do.</div>
+                    <div class="author">― Donald Ervin Knuth</div>
+                </div>
             </div>
         </main>
-        <footer>
-            <hr>
-            <span class="text-reset">Chase Cook</span>
-            <br>
-            <a href="https://github.com/chasetheterrible/CS260-startup/tree/main">Github</a>
+
+        <footer class="bg dark text-white">
+            <div class="container-fluid">
+                <span class="text-reset">Chase Cook</span>
+                <!-- text reset sets color to parent color, this case white -->
+                <a class="text-rest" href="https://github.com/chasetheterrible/CS260-startup/tree/main">Github</a>
+            </div>
         </footer>
     </body>
 </html>

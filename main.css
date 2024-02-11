@@ -1,0 +1,52 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 375px;
+}
+
+header {
+    flex: 8 80px
+}
+
+main {
+    flex: 1 calc(100vh - 100px);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+footer {
+    flex: 0 30px
+}
+
+menu {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar-brand {
+    padding-left: 0 0.3cm;
+    border-bottom: solid;
+}
+
+menu .nav-item {
+    padding: .3cm;
+}
+/* targets the a tag elemnt in the footer section */
+footer a {
+    float: right;
+}
+
+/* when hieght is 600px or less of viewport the header and footer dissapear */
+@media (max-height: 600px) {
+    header {
+        display: none;
+    }
+    footer {
+        display: none;
+    }
+    main {
+        flex: 1 100vh;
+    }
+}

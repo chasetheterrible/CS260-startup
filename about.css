@@ -1,0 +1,30 @@
+.picture-box {
+    height: 120px;
+    margin-bottom: 1em;
+    padding: 1em;
+    background: gray;
+}
+
+.quote-box {
+    margin-top: 1em;
+    padding: 0.5em;
+}
+
+.quote {
+    font-style: italic;
+}
+
+.author {
+    text-align: right;
+}
+
+.author::before {
+    /* This is a pseudo-element selector that selects and styles the virtual content inserted before the actual content of the selected element */
+    content: " - "
+}
+
+
+#picture img {
+    width: 100%;
+    height: 100%
+}

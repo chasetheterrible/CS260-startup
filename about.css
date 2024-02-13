@@ -1,5 +1,5 @@
 .picture-box {
-    height: 120px;
+    height: calc(100px + 1em);
     margin-bottom: 1em;
     padding: 1em;
     background: gray;

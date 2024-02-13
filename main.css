@@ -5,7 +5,7 @@ body {
 }
 
 header {
-    flex: 8 80px
+    flex: 0 80px;
 }
 
 main {
@@ -23,7 +23,7 @@ footer {
 menu {
     flex: 1;
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     list-style: none;
 }
 
@@ -38,6 +38,7 @@ menu .nav-item {
 /* targets the a tag elemnt in the footer section */
 footer a {
     float: right;
+    height: 0 30 px;
 }
 
 /* when hieght is 600px or less of viewport the header and footer dissapear */

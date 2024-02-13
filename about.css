@@ -1,5 +1,5 @@
 .picture-box {
-    height: calc(100px + 1em);
+    height: calc(300px + 1em);
     margin-bottom: 1em;
     padding: 1em;
     background: gray;
@@ -8,6 +8,7 @@
 .quote-box {
     margin-top: 1em;
     padding: 0.5em;
+    border-radius: 5px;
 }
 
 .quote {

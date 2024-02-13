@@ -21,30 +21,61 @@
     color: skyblue;
 }
 
+.player-data {
+    color: white;
+}
+
 .system-event {
     color: orange;
 }
 
 .game {
-    background: black;
     width: 80 vw;
     height: 80 vw;
-    position: abaolute;
     min-width: 350px;
     min-height: 350px;
     max-width: min(80vmin, 1000px);
-    max-height: min(80vmin, 1000px)
+    max-height: min(80vmin, 1000px);
+
+}
+
+.game-timer{
+    justify-content:flex-start;
+}
+
+
+button {
+    background-color: black;
+    text-align: center;
+}
+
+button:active {
+    background-color: aquamarine;
+    color: coral;
+}
+
+.reset-time {
+    background-color: white;
+    padding: 0px;
+    justify-content:left;
+    background-color: white;
 }
 
 .button-container {
-    width: 100%;
-    height: 100%;
-    display: grid;
+    justify-content:space-evenly;
+    display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 40px;
+    gap: 20px;
+    width: 90%;
+    height: 90%;
 }
 
-.first-first {
-
+@media (max-height: 600px){
+    .reset-time {
+        display: none;
+    }
+    .game-timer {
+        display: none;
+    }
 }

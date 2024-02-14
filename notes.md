@@ -548,3 +548,12 @@ Buttons:
 * **Break and continue**
   * all of above follow either break or continue statements
   * let i = 0; while (true) { console.log(i); if (i === 0) { i++; continue; } else { break; } }
+## JS String
+
+
+## JS array
+* array objectss represent sequence of other objects and primitives. Can reference members of araay using 0 based index. Created using the array constructor or using the array literal notations as shown beloe
+  * const a = [1,2,3]; console.log(a[1]); --> 2(index notation)
+  * console.log(a.length) --> 3
+### Object function
+* array object has everal interesting static functions associated with it

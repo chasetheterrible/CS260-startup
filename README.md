@@ -28,3 +28,11 @@ This is a sequence diagram that shows how to people would interact with the back
 * DB/Login - Store users, time scores and data in database. Register and login users. Credentials securely stored in database. Can't play unless authenticated
 * Websocket - As each user finishes the game, game highscores announcments are sent to users.
 * React - Application ported to use the React web framework.
+
+
+# CSS Deliverable
+* Header, Footer and Main content body
+* Navigation Elements
+* Responsive to window resizing
+* Application elements - contrast of whtiespace
+* Application text content - consistent fonts

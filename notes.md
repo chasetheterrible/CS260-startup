@@ -549,7 +549,45 @@ Buttons:
   * all of above follow either break or continue statements
   * let i = 0; while (true) { console.log(i); if (i === 0) { i++; continue; } else { break; } }
 ## JS String
-
+* primitivve types in JS surrounded by ' or " or `(backstick)
+  * backsitcks deine a string literal that may contain JS evaluated in place concatenatd into the string
+  * String literal repalcement specifier is declared wtih dollar sign folowed by curl brace pair, anything inside is evaluated as JS
+  * 'quoted text';
+  * const l = 'literal'
+  * console.log('string ${l + (1 + 1)} text'); --> string literal2 text
+### Unicode support
+* JS supports unicode by defining string as 16bit unsigned integer that represents utf-16 strings. Allows JS to represent most languages spoken on planet including languages read from right to left
+## String functions
+* length: number of characters in string
+* indexOf(): starting index of a given substring
+* split(): split string into array on given delimiter string
+* startsWith(): true if string has given prefix
+* endsWith(): True if string has given suffix
+* toLowerCase(): converts all characters to lowercase
+* const s = 'Example:조선글';
+  console.log(s.length); -->OUTPUT: 11
+  console.log(s.indexOf('조선글')); -->OUTPUT: 8
+  console.log(s.split(':')); --> OUTPUT: ['Example', '조선글']
+  console.log(s.startsWith('Ex')); -->true
+  console.log(s.endsWith('조선글')); --> true
+  console.log(s.toLowerCase()); --> example:조선글
+## Functions
+* JS functions are first class obkjects. Meaning they can be assigned a name, passed as a parameter, returned as a result, and referenced from an object or array
+* basic syntax is function keyword followed by 0+ parameters and a body that may contain 0+ return statements. Return statement may return a single value.
+  * no type declarations, as type is always inferred by assignment of value to parameter
+* function hello(who) {
+  return 'hello ' + who;
+}
+console.log(hello('world')); --> OUTPUT: hello world
+* function without return value usually exists to produce some side effect like modifying a parameter or interacting with an externa program
+  * function hello(who) {
+      who.count++;
+      console.log('hello ' + who.name);
+}
+hello({ name: 'world', count: 0 }); --> OUTPUT: hello world
+### Function parameters
+* when functions are claled the caller may choose what parameters to provide
+* if parameter is not defined it is given undefined when function executes
 
 ## JS array
 * array objectss represent sequence of other objects and primitives. Can reference members of araay using 0 based index. Created using the array constructor or using the array literal notations as shown beloe
@@ -557,3 +595,79 @@ Buttons:
   * console.log(a.length) --> 3
 ### Object function
 * array object has everal interesting static functions associated with it
+function labeler(value, title = 'title') {
+  console.log(${title}=${value});
+}
+labeler(); --> title=undefined
+labeler('fish'); --> title=fish
+labeler('fish', 'animal'); --> animal=fish
+
+### Anonymous functions
+* functions in JS are commonly assigned to a variable so that they can be passed as a parameter to some other function or stored as an object property. To easily support can define function anonymously and assign it to a variable
+
+function doMath(operation, a, b) {
+  return operation(a, b);
+}
+
+const add = function (a, b) {
+  return a + b;
+};
+
+console.log(doMath(add, 5, 3)); --> OUTPUT: 8
+
+console.log(
+  doMath(
+    function (a, b) {
+      return a - b;
+    },
+    5,
+    3
+  )
+); --> OUTPUT: 2
+
+### Creating, passing and returning functions
+const add = function (a, b) {
+  return a + b;
+};
+
+function labeler(label, value) {
+  console.log(label + '=' + value);
+}
+
+function addAndLabel(labeler, label, adder, a, b) {
+  labeler(label, adder(a, b));
+}
+
+addAndLabel(labeler, 'a+b', add, 1, 3); --> OUTPUT: a+b=4
+
+function labelMaker(label) {
+  return function (value) {
+    console.log(label + '=' + value);
+  };
+}
+
+const nameLabeler = labelMaker('name');
+
+nameLabeler('value');
+// OUTPUT: name=value
+
+### Inner function
+* can also be declared inside other functions. Allows to modularize code wtihotu explosing private details
+
+function labeler(value) {
+  function stringLabeler(value) {
+    console.log('string=' + value);
+  }
+  function numberLabeler(value) {
+    console.log('number=' + value);
+  }
+
+  if (typeof value == 'string') {
+    stringLabeler(value);
+  } else if (typeof value == 'number') {
+    numberLabeler(value);
+  }
+}
+labeler(5); --> number=5
+
+labeler('fish'); --> string=fish

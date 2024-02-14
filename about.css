@@ -3,6 +3,7 @@
     margin-bottom: 1em;
     padding: 1em;
     background: gray;
+    display: inline-block;
 }
 
 .quote-box {
@@ -26,6 +27,6 @@
 
 
 #picture img {
-    width: 100%;
-    height: 100%
+    width: 400 px;
+    height: 100%;
 }

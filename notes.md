@@ -432,3 +432,128 @@ Buttons:
 * for a large button throw btn-lg/sm
 * to create block level buttons add btn-block after btn-prumary/other
 * If wanting button bu tnot heft backgrouhnd color replace defualt mod(btn-Primary) with btn-outline-mod_class(primary/secondary...)
+
+# JavaScript
+## Intro
+### Getting Started
+* Java script runtime built in function console.log to output string to debugger console
+  * ex console.log('hello' + ' ' + 'world'); will output hwllo world
+* Can also write own fuinction
+  * function join(a,b) { (indented)return a + ' ' + b; }
+  * console.log(join("hello', 'world') --> produces same output
+### Comments
+* To comment use line(//) or block(/* */)
+### Code delimiters
+* while not required in most cases, it is considered good form to end statments wtih semicolons. Code blocks, and resulting sscope are defined wtih curly braces
+### Playground
+1. use codepen to write whatever and you will immediately see results
+2. use browser debugger be doing f12 or inpsec, then select console meny option to dispaly java script interpreter
+
+## Console
+### Log
+* basic use of console is to output log message
+  * console.log('hello');
+* Can create formatted messages in log parameter
+  * console.log('hello %S', 'world');
+* can specify CSS declarations in order to style log output
+  * console.log('%c JavaScript Demo', 'font-size:1.5em; color:gree;'); --> Javascript Dmeo in large green text
+### Timers
+* if trying to see how long piece of code is running can wrap wtih time and timeEnd calls
+  * console.time('demo time'); --> some code that takes a long time
+  * console.timeEnd('demo time'): --> demo time: 9762.74 ms
+### Count
+* to see number of times block of code is called used count function
+  * console.count('a'); --> 1
+  * console.count('a'); --> 2
+  * console.count('b'); --> 1
+## Adding JavaScript to HTML
+* can insert to HTML by directly including withinn (<script>) element or by using src attribute
+<!--<head>
+  <script src="javascript.js"></script>
+</head>
+<body>
+  <button onclick="sayHello()">Say Hello</button>
+  <button onclick="sayGoodbye()">Say Goodbye</button>
+  <script>
+    function sayGoodbye() {
+      alert('Goodbye');
+    }
+  </script>
+</body> -->
+* notice we call sayHello and sayGoodbye from HTML oneclick attribute of button element. Special attributes like oneclick auto create event listeners for different DOM events that call code contained in attributes vale. Code specified by attributes can be simple call to function or any JS code
+<!--<button onclick="let i=1;i++;console.log(i)">press me</button> -->
+<!-- OUTPUT: 2 -->
+
+## JS type and construct
+### Declaring variables
+* variables are declared with let of const keyword. Let allows you to change the variable while const is constant and will throw an error if you try to change
+  * let x=1;
+  * const y=2;
+* Null type: variable that has not been assigned
+* undefined: variable that has not been defined
+* Boolean: true or false
+* numebr: 64bug signed number
+* BigInt: number of arbitrary magnitude
+* String: textual sequence
+* Symbol: unique value
+### object types
+* object: collection of properties represented by name-value pairs({a;3, b:'fish'})
+* function: object with ability to be called --> function a() {}
+* Date: calendar dates and times --> new Date('1995-12-17')
+* Array: ordered dequence of any type: ([3, 'fish'])
+* Map: collection of key-value paris that support efficient lookups new Map()
+* JSON lightweight data-interchange used to share info across programs --> {'a':3, 'b':'fish'}
+### Common operators
+* when dealing with number variables, JS supports mathematical operatros
+### Type conversions
+* JS is weakly typed language, meaning variables always have a type, but variable can change type when assigned a new value
+  * 2 + '3'; --> 23
+  * 2 * '3'; --> 6
+  * [2] + [3]; --> 23
+  * true + null --> 1
+  * true + undefined; --> NaN
+* getting unexpected results is common when dealing with equality(==) operators
+  * 1 == '1' --> True
+  * null == undefined; --> true
+  * '' == false; --> true
+
+* unexpected results happen becuase JS uses complex rules for defining equality referred to as falsy and truthy. To remove JS introduced strict equality(===+ and inequality(!==). Skips type conversion when computing equlaity
+  * 1 === '1' --> false
+  * null === undefined --> false
+  * '1' === false --> false
+* **Strict equality** is more intuitive and almost alwyas preferred and should be used
+
+### Conditionals
+* JS supports commaon programming language, including if, else, and if else statements
+  * if (a === 1) { } else if (b === 2) {} else {}
+* can also use ternary operator, which provides compact if else representation
+  * a === 1 ? console.log(1) : console.long('not 1');
+* can use boolean operatorin expression to ceate complex predicatres such as && || and !
+  * if (true && (!false || true)) {}
+ ### Loops
+ * for, for in, for of, while, do while, and swtich
+* **for**
+  * (let i=0; i<2; i++) { console.log(i);} --> 0 1
+  * i++ adds one to a numner
+* **do while**
+  * let i = 0; do { console.log(i); i++;} whilte (i<2); --> same output
+* **while**
+  * let i = 0; while(i<2) { console.log(i); i++;)
+* **for in**
+  * iterates over objects property names
+  * const obj = { a: 1, b: 'fish' }; for (const name in arr) { console.log(name);
+* **for of**
+  * iterates over iterables(arrays, maps, set) property values
+  * const arr = ['a', 'b']; for (const val of arr) { console.log(val); }
+* **Break and continue**
+  * all of above follow either break or continue statements
+  * let i = 0; while (true) { console.log(i); if (i === 0) { i++; continue; } else { break; } }
+## JS String
+
+
+## JS array
+* array objectss represent sequence of other objects and primitives. Can reference members of araay using 0 based index. Created using the array constructor or using the array literal notations as shown beloe
+  * const a = [1,2,3]; console.log(a[1]); --> 2(index notation)
+  * console.log(a.length) --> 3
+### Object function
+* array object has everal interesting static functions associated with it

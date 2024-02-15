@@ -671,3 +671,40 @@ function labeler(value) {
 labeler(5); --> number=5
 
 labeler('fish'); --> string=fish
+### Arrow functions
+* because there are first order objects in JS they can be declared anywhere and passed as parameters. This results in code with lots of ananymous functions cluttering things up
+  * to make code more compact the **arrow** syntax replace the need for the function keyword wtih the symbol => after parameter declaration
+* () => 3; will always return 3
+const a=[1,2,3,4];
+a.sort(function (v1, v2)  { return v1 - v2; });
+a.sort((v1,v2) => v1-v2);
+* besides being compact, the arrow syntax has importat semanitc difference from standard function syntax. Including restriction that arrow functions cannot be used for constructors/iterator generators
+### Return Values
+* arrow functions also have special return keuword. optional if no culry braces are provided for function and it contains single expression
+* if curly braces are provided then arrow function behaves jsut like a standard function
+() => 3;
+// RETURNS: 3
+
+() => {
+  3;
+};
+// RETURNS: undefined
+
+() => {
+  return 3;
+};
+// RETURNS: 3
+### This pointer
+* arrow functions inherit he **this** pointer from the scope where it was created. This makes it knows as closure. A closure allows a function to continue referencing its creation scope, even after it has passed out of that scope
+* function makeClosure returns anonymous function using arrows syntax. Notice a parameter is overridden, a new b variagle is created and both a and b are referecend in arrow function. Becuase of the rerrerence they are both part of the closure for returned function
+function makeClosure(a) {
+  a = 'a2';
+  const b = 'b2';
+  return () => [a, b];
+}
+const a = 'a';
+const b = 'b';
+const closure = makeClosure(a);
+
+When we call closure function it will output values contained in scope where it was created instead of current values of variables
+

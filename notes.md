@@ -707,4 +707,222 @@ const b = 'b';
 const closure = makeClosure(a);
 
 When we call closure function it will output values contained in scope where it was created instead of current values of variables
+## JSON
+* JSON doc contains one of the following data types: string, number, boolean, array, object(delimited with curly braces), null
+* Most commonly it contains an object. They contain zero or more key value pairs. Key is always a string and value must be one of the valid JSON data types
+**EX**
+{
+  "class": {
+    "title": "web programming",
+    "description": "Amazing"
+  },
+  "enrollment": ["Marco", "Jana", "فَاطِمَة"],
+  "start": "2025-02-01",
+  "end": null
+}
+* JSON is always encoded with UTF-*
+* can converty JSON to and from JS using JSON.parse and JSON.stringify functions
+  * const obj = { a: 2, b: 'crockford', c: undefined };
+const json = JSON.stringify(obj);
+const objFromJson = JSON.parse(json);
 
+console.log(obj, json, objFromJson);
+
+// OUTPUT:
+// {a: 2, b: 'crockford', c: undefined}
+// {"a":2, "b":"crockford"}
+// {a: 2, b: 'crockford'}
+* JSOn cannon represen cannot represent JS undefiend object and so it gets dropped when converting JS to JSON
+## JS object and classes
+* JS object represents collection of name value pairs referred to as properties. Objects also have common object orriented functionality such as constructors, a this pointer, static properties and functions, and inheritance.
+* New objects can be created with new operator and once declared can add properties to object by simply referencing the property naem in assignment
+  * Any type of variable can be assigned to a property, and is referrenced wtih dot(obj.prop) or bracket(obj['prop']) notation
+const obj = new Object({ a: 3 });
+obj['b'] = 'fish';
+obj.c = [1, 2, 3];
+obj.hello = function () {
+  console.log('hello');
+};
+
+console.log(obj);
+// OUTPUT: {a: 3, b: 'fish', c: [1,2,3], hello: func}
+### Object literals
+* can declare variable object type with object-literal syntax, which allows you to provide initial composition of object
+const obj = { a:3 b: 'fish', };
+### Object funtions
+* has seveal interesting static funcitons associated with it
+  * enteries: returns array of key vale pairs
+  * keys: returns array of keys
+  * values: returns an array of value
+const obj = {
+  a: 3,
+  b: 'fish',
+};
+console.log(Object.entries(obj));
+// OUTPUT: [['a', 3], ['b', 'fish']]
+console.log(Object.keys(obj));
+// OUTPUT: ['a', 'b']
+console.log(Object.values(obj));
+// OUTPUT: [3, 'fish']
+### Constructor
+* any function that returns object is considered a constructor, invoked with **new** operator
+function Person(name) {
+  return {
+    name: name,
+  };
+}
+
+const p = new Person('Eich');
+console.log(p);
+// OUTPUT: {name: 'Eich'}
+
+* because objects have any type you can create mehtods on object as part of its encapsulation
+
+function Person(name) {
+  return {
+    name: name,
+    log: function () {
+      console.log('My name is ' + this.name);
+    },
+  };
+}
+
+const p = new Person('Eich');
+p.log();
+// OUTPUT: My name is Eich
+
+### This pointer
+* in above example use of **this** keywordis referred to name property(this.name). Meaning of this depends upon scope of where it is used but in context of object refers to a pointer of the object
+### Classes
+* use classes to define objects. Using class clarifies intent to creat reusable component rather than one-off object. Class declarations look similar to declaing an object. Person object from above would look like following when converted to class
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  log() {
+    console.log('My name is ' + this.name);
+  }
+}
+
+const p = new Person('Eich');
+p.log();
+// OUTPUT: My name is Eich
+* can make properties and functions of classes private by prefixing them with #
+class Person {
+  #name;
+
+  constructor(name) {
+    this.#name = name;
+  }
+}
+
+const p = new Person('Eich');
+p.#name = 'Lie';
+// OUTPUT: Uncaught SyntaxError: Private field '#name' must be declared in an enclosing class
+
+### Inheritance
+* Classes can be extracted using the extends keyword to define inheritance. Parameters that need to be passsed to parent class are delivered using super function. Any function defined on child that has same name as parent overrieds parents implementation
+  * can be explicitly accessed using super keyword
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  print() {
+    return 'My name is ' + this.name;
+  }
+}
+
+class Employee extends Person {
+  constructor(name, position) {
+    super(name);
+    this.position = position;
+  }
+
+  print() {
+    return super.print() + '. I am a ' + this.position;
+  }
+}
+
+const e = new Employee('Eich', 'programmer');
+console.log(e.print());
+// OUTPUT: My name is Eich. I am a programmer
+
+### JS RegEx
+* Build inot JS
+* Can create Regex using class constructor or regex literal
+const objRegex = new RegExp('ab*', 'i');
+const literalRegex = /ab*/i;
+* string class has several fucntions that accept Regex. Including match, repalce, search, split
+  * can use test function to match Regex object
+const petRegex = /(dog)|(cat)|(bird)/gim;
+const text = 'Both cats and dogs are pets, but not rocks.';
+
+text.match(petRegex);
+// RETURNS: ['cat', 'dog']
+
+text.replace(petRegex, 'animal');
+// RETURNS: Both animals and animals are pets, but not rocks.
+
+petRegex.test(text);
+// RETURNS: true
+
+### JS rest and spread
+* sometimes we want a function with unknown number of parameters, ex checking to see if number in list is equal to given number, could write using an array
+function hasNumber(test, numbers) {
+  return numbers.some((i) => i === test);
+}
+
+const a = [1, 2, 3];
+hasNumber(2, a);
+// RETURNS: true
+* however sometime we don't have an array, in this case we coudl create one on the fly
+function hasTwo(a, b, c) {
+  return hasNumber(2, [a, b, c]);}
+
+* JS provides erst syntax to make this easier. Think of it as a parameter that contains the rest of the parameters
+  * to turn last paremeter into rest you prefix it with thre periods. Can then call it with any number o fparaemets an will auto combined into an array
+**function hasNumber(test, ...numbers) {
+  return numbers.some((i) => i === test);
+}
+
+hasNumber(2, 1, 2, 3);
+// RETURNS: true**
+* can only make last parameter a rest parameter. Otherwise JS doesnt' know which to combine into an array
+### Spread
+* does opposite of rest, i takes object that is terable and expands it itno a functions parameters
+function person(firstName, lastName) {
+  return { first: firstName, last: lastName };
+}
+
+const p = person(...['Ryan', 'Dahl']);
+console.log(p);
+// OUTPUT: {first: 'Ryan', last: 'Dahl'}
+## JS exceptions
+* JS supports exception handling using try catch and throw syntax. Exception is triggered whenever code genarates an exceptions using throw keyword, or when exception is generated by JS runtime
+* TO catch excpetion must wrap code in try keyword and follow try block wtih cath blcok. If withing try block, including any functoin that blocks calls, exception is thrown, then all code after is ignored
+* In addition to catch block, can specify finally block that is always called whenever try block is exited regardless if an exception was ever thrown
+try {
+  // normal execution code
+} catch (err) {
+  // exception handling code
+} finally {
+  // always called code}
+
+* when using exception handling its tempting to use it as way to handle normal flow of execution, however it should only be used when something truly eceptional occurs
+### Fallbacks
+* fallback pattern is commonly implemented using exception handling, to implement fallback you must put normal feature path in try block and provide fallback impplementation in catch block. Ex when gettig high scores for a game, if network isn't available then locally cahced bersion of last available scores is used
+* allows always something to return even if desired feature is temp unavailable
+function getScores() {
+  try {
+    const scores = scoringService.getScores();
+    // store the scores so that we can use them later if the network is not available
+    window.localStorage.setItem('scores', scores);
+    return scores;
+  } catch {
+    return window.localStorage.getItem('scores');
+  }
+  }
+## Desstructuring
+  

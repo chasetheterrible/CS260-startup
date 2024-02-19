@@ -924,5 +924,202 @@ function getScores() {
     return window.localStorage.getItem('scores');
   }
   }
-## Desstructuring
-  
+## Destructuring
+* not to be confused with destructing, its the process of pulling individual items out or removing structure. Can do this with arrays or objects and helps when you only care abous certain items
+
+const a = [1, 2, 4, 5];
+const [b, c] = a;
+console.log(b, c); --> 1, 2
+* even thout it looks liks declaring an array wtih syntx on left side it is pnly specifying wanting to destructure those values out of array
+* Can also combine multiple items using rest syntax
+
+const [b, c, ...others] = a;
+
+console.log(b, c, others);
+// OUTPUT: 1, 2, [4,5]
+
+* can also specify properties wanting to pull from source object
+
+const o = { a: 1, b: 'animals', c: ['fish', 'cats'] };
+const { a, c } = o;
+console.log(a, c); --> 1, ['fish', 'cats']
+
+* can also map names to new variables instead of just using origianl property names
+
+const o = { a: 1, b: 'animals', c: ['fish', 'cats'] };
+const { a: count, b: type } = o;
+console.log(count, type); --> 1, animals
+
+* default values can be used for missning ones
+const { a, b = 22 } = {};
+const [c = 44] = [];
+console.log(a, b, c); --> undefined, 22, 44
+
+* all above examples created enw constant variables, but can also use destructuring to reasign existing variables
+let a = 22;
+
+[a] = [1, 2, 3];
+
+console.log(a); --> 1
+
+## Scope
+* global: visible to all
+* module: visible to all code running in module
+* function: withing function
+* block: visible within block of code delimited by curly braces
+### Var
+* originally JS used VAR to declare variables, the problem is that it ignores block scope
+  * logically hosted to the top of the function
+var x = 10;
+console.log('start', x); --> start 10
+
+for (var x = 0; x < 1; x++) {
+  console.log('middle', x); --> middle 0
+}
+console.log('end', x); --> end 1
+
+  * the for loop reassigns the value of x to 0, after the iteration x becomes 1
+  * I assume it will always be 0 in the loop, not completely sure why
+* few cases when to use var unless we fully know, so use **const and let**
+### This
+* **This** represents variable that points to obejct that contains context within scope of currently executing line
+  * automatically declared and can refereence anywhre in JS program
+  * becaise **this** depends on context in being reference there are 3 diff context that this can refer to
+      * global: refers to globalThis which represents context for runtime environment, ex when running browser it refers to browsers window object
+      * function: referst o object that owns function. Eitehr one defined or globalThis if function is defined outside of object, In JS strict mode global function this variable is undefiend instead of globalThis
+      * Object: when **this** is referenced an object refers to the object
+   
+'use strict';
+
+// global scope
+console.log('global:', this);
+console.log('globalThis:', globalThis);
+
+// function scope for a global function
+function globalFunc() {
+  console.log('globalFunctionThis:', this);
+}
+globalFunc();
+
+// object scope
+class ScopeTest {
+  constructor() {
+    console.log('objectThis:', this);
+  }
+
+  // function scope for an object function
+  objectFunc() {
+    console.log('objectFunctionThis:', this);
+  }
+}
+
+new ScopeTest().objectFunc();
+**output:**
+global: Window
+globalThis: Window
+globalFunctionThis: undefined
+objectThis: ScopeTest
+objectFunctionThis: ScopeTest
+
+### Closure
+* Defined as functoin and surrounding state, meaning whatever variables accessible when funciton is created are availabel inside the function
+  * holds true een in pass funcion outside of scope
+
+globalThis.x = 'global';
+
+const obj = {
+  x: 'object',
+  f: function () {
+    console.log(this.x);
+  },
+};
+obj.f(); --> object
+* arrow functions are different because they inherit the this pointer of their creation context, so if we change previous example to return arrow function then the **this** pointer at time of creation will be globablThis
+
+globalThis.x = 'global';
+
+const obj = {
+  x: 'object',
+  f: () => console.log(this.x),
+};
+
+obj.f();
+// OUTPUT: global
+
+* if we make function return arrow function then the **this** pointer will be the objects **this** pointer since that was the active context at time arrow function was created
+
+globalThis.x = 'global';
+
+const obj = {
+  x: 'object',
+  make: function () {
+    return () => console.log(this.x);
+  },
+};
+
+const f = obj.make();
+f();
+// OUTPUT: object
+## JS modules
+* Allows partioning and sharing of code, initially JS had no support for modules
+* Because modules create file-based scope for code they represent, you must explicitly **export** objects from one file then **import** them into another file
+
+**alert.js**
+export function alertDisplay(msg) {
+  alert(msg);
+}
+
+* can import moduels into another module using export
+**main.js**
+import { alertDisplay } from './alert.js';
+alertDisplay('called from main.js');
+### ES modules in browser
+* when use ES modiuels via HTML script reference, things get complicated. The key thing to understand is that modules can only be called from other module
+  * can't access Js contained in module from global scope that your non module JS in executing it
+* From HTML can specify you are using ES module by including **type** **attribue** with value of **module** in **script** element, and can import and use other mods
+Index.html EX:
+<!-- <script type="module">
+  import { alertDisplay } from './alert.js';
+  alertDisplay('module loaded');
+</script> -->
+* if we want to use module in global scope our HTML or other non-module JS is executing in, we must leak it into global scope
+  * do this by attaching an event handler or explicitily adding function to global window object
+  * in Ex below we expose alertDisplay imported module by attaching to global JS **window** object so it can be called from button onclick handler, also expose module function by attaching a keypress event
+index.html EX
+<!--<html>
+  <body>
+    <script type="module">
+      import { alertDisplay } from './alert.js';
+      window.btnClick = alertDisplay;
+
+      document.body.addEventListener('keypress', function (event) {
+        alertDisplay('Key pressed');
+      });
+    </script>
+    <button onclick="btnClick('button clicked')">Press me</button>
+  </body>
+</html> -->
+* when button/key is pressed, ES module funciotn willl be called
+### Moduels with web frameworkd
+* Fortunatley wen use web framework bundelr, discussed later, to generate web app distribution code, usually don't have to worry about differentiating between global scope and ES module scope. Bundler will inject all necessary syntax to conenct HTML to modules
+
+## Document Object Model(DOM)
+* an object representation of HTML elemtn that browser uses to reder display
+  * browser also exposes DOM to external code so you can write programs that write progrmas to dynamically manipulate HTML
+* Browser provides access to DOM through global variable named **document** **that** points to root element of DOM. If open browsers debugger console window and type variable name **document** will see DOM for doc browser is currently rendering
+EX HTML
+<!-- > document
+
+<html lang="en">
+  <body>
+    <p>text1 <span>text2</span></p>
+    <p>text3</p>
+  </body>
+</html> -->
+EX CSS
+p {
+  color: red;
+}
+* everything in HTML doc there is a node in the DOM including elements, attributes, text, comments, and whites[ace
+  * all notes form a big tree, with doc node at top
+### Accessing DOM

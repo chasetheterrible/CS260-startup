@@ -1197,3 +1197,46 @@ submitDataEl.addEventListener('click', function (event) {
 
 * can also add event listeners directly in HTML, ex onclick handler tha is attached to button
 (<)button onclick='alert("clicked")'>click me</button(>)
+
+## Local storage
+* browsers **localStorage** API provides ability to store and retreive data(ie scores, usernaes, etc) on users browser across sessions and HTML page renderings
+  * ex frontend JS stores users name on one HTML page and then retrieve name later when dif page is loaded
+  * in addition to data between page rendering, **localStorage** is also used as cache for when data can't be obtained from server ex when storing scores from server then displauying in future if service isn't available
+### How to use
+* set|item(name, value): sets named items value into local storage
+* get|item(name): gets named items value from local storage
+* removeitem(name): removes named item from local storage
+* clear(): clears all items in local storage
+
+* local storage vale must be type string, number or boolean. If want to store JS object or array must convert to JSON string with JSON.stringify() on insertion, and pare back to JS with JSON.parse() when retrieved
+
+EX(commented code)
+<!-- let user = 'Alice';
+
+let myObject = {
+  name: 'Bob',
+  info: {
+    favoriteClass: 'CS 260',
+    likesCS: true,
+  },
+};
+
+let myArray = [1, 'One', true];
+
+localStorage.setItem('user', user);
+localStorage.setItem('object', JSON.stringify(myObject));
+localStorage.setItem('array', JSON.stringify(myArray));
+
+console.log(localStorage.getItem('user'));
+console.log(JSON.parse(localStorage.getItem('object')));
+console.log(JSON.parse(localStorage.getItem('array')));
+
+OUTPUT:
+
+Alice
+{name: 'Bob', info: {favoriteClass: 'CS 260', likesCS: true}
+[1, 'One', true] -->
+
+* notice you are able to see round tripe journey of local storage values in console output. if wanto to see what values are currently set for app, open **Application** tab of dev tools and select storage > local storage then domain name
+  * with dev tools can add, view, delete any local strage values
+## Promises

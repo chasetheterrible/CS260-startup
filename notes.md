@@ -1123,3 +1123,77 @@ p {
 * everything in HTML doc there is a node in the DOM including elements, attributes, text, comments, and whites[ace
   * all notes form a big tree, with doc node at top
 ### Accessing DOM
+* Every element in HTML doc implements DOM element interface, which is derived from DOM node interface. **DOM element interface** provides means for iteraitng child elements, accessing parent element and manipulating element attributes
+  * from JS code can start **document** variable and walk thorugh every element in tree
+function displayElement(el) {
+  console.log(el.tagName);
+  for (const child of el.children) {
+    displayElement(child);
+  }
+}
+
+displayElement(document);
+
+* can provide CSS selector to **querySelectorALl** fucntion to select elements from the document
+  * **textContent** property contains all elements text, and can access textual representation of elements HTML content with innerHTML property
+
+const listElements = document.querySelectorAll('p');
+for (const el of listElements) {
+  console.log(el.textContent);
+}
+
+### Modifying the DOM
+* DOM supports ability to insert, mod or delete elements in DOM
+* To create new element must first create element on DOM document, then can insert new element
+
+function insertChild(parentSelector, text) {
+  const newChild = document.createElement('div');
+  newChild.textContent = text;
+
+  const parentElement = document.querySelector(parentSelector);
+  parentElement.appendChild(newChild);
+}
+
+insertChild('#courses', 'new course');
+
+* to delete elements call **removeCHild** function on parent element
+
+function deleteElement(elementSelector) {
+  const el = document.querySelector(elementSelector);
+  el.parentElement.removeChild(el);
+}
+
+deleteElement('#courses div');
+
+### Injecting HTML
+* The DOM also allows you to inject entire blocks of HTML into element, following code finds first **div** element in DOM and replaces all HTML it contains
+
+const el = document.querySelector('div');
+el.innerHTML = '<div class="injected"><b>Hello</b>!</div>';
+
+* Direclty injecting hoever as a block of text is a common attack vectros for hackers
+  * if untrusted party can inject JS anywhere in app then that JS can represent itself as current user of app
+  * Attacker can make requests for sensitive dara, monitor activity and steal credentials
+    (<)img src="bogus.png" onerror="console.log('All your base are belong to us')" /(>)
+    
+* if injecting HTML, make sure it cannont be maniulated by user
+  * common injection paths include HTML input control, URL parameters, and HTTP headers
+  * Either sanitize any HTML that contains variables or simply use DOM manipulation functions instead of using **innerHTML**
+
+### Event listeners
+* All DOM elements support ability to attach function that gets called when even occurs on element, these functions are called **event listeners**
+
+const submitDataEl = document.querySelector('#submitData');
+submitDataEl.addEventListener('click', function (event) {
+  console.log(event.type);
+});
+
+**EVENT CATEGORIES**
+  * clipboard: cut, copied, paste
+  * foucus: an element gets focus
+  * Keyboard: keys are presed\
+  * Mouse: click events
+  * text selection: when text is selected
+
+* can also add event listeners directly in HTML, ex onclick handler tha is attached to button
+(<)button onclick='alert("clicked")'>click me</button(>)

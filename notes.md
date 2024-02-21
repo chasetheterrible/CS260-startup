@@ -1239,4 +1239,95 @@ Alice
 
 * notice you are able to see round tripe journey of local storage values in console output. if wanto to see what values are currently set for app, open **Application** tab of dev tools and select storage > local storage then domain name
   * with dev tools can add, view, delete any local strage values
+
 ## Promises
+* Rendering thread of HTML executes single threaded, meaing cannont take long time processing JS on main rendering thread
+* Long running, or blocking should be executed wtih JS **Promise**
+  * execution of promist allows main rendering thread to continue while some action is executed in background
+* Create promist by calling Promist obekct constructor, passing in executor function that runs asyncrhonous operation
+* Executing aysncrhornously means promist constructor is always in one of 3 main statements
+  * pending: currenlty running
+  * fulfileld: completed successfuly
+  * rejectedL failed to complete
+* use setTimeout to demonstrate aysnchronous execution to create delay in execution of the code
+  * takes the number of milisecions to wait and a function to call after the time has expred
+  * call delay finction in for loop in promist executro and also for loop outside so both code block are running paraellel
+ 
+const delay = (msg, wait) => {
+  setTimeout(() => {
+    console.log(msg, wait);
+  }, 1000 * wait);
+};
+
+new Promise((resolve, reject) => {
+  // Code executing in the promise
+  for (let i = 0; i < 3; i++) {
+    delay('In promise', i);
+  }
+});
+
+// Code executing after the promise
+for (let i = 0; i < 3; i++) {
+  delay('After promise', i);
+}
+
+// OUTPUT:
+//   In promise 0
+//   After promise 0
+//   In promise 1
+//   After promise 1
+//   In promise 2
+//   After promise 2
+### Resolving and rejecting
+* need to be albe to set state to **fufilled** if correctly completed, **rejected** if not
+* Exercutor takes two parameters **resolve** and **reject**
+  * calling resolve sets promist to fulfilled state, and calling reject sets primist to rejected state
+**EX**
+const coinToss = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (Math.random() > 0.5) {
+      resolve('success');
+    } else {
+      reject('error');
+    }
+  }, 10000);
+});
+^^ Math.random chooses from 0-1 to .5 is the middle
+* if log coinToss direclty to console immediately calling constructor, it will display it is in pending state:
+
+**console.log(coinToss);
+// OUTPUT: Promise {<pending>}**
+
+If we wait ten seconds(10,000ms/1000 = 10 secc) state will either show fulfilled or rejected depending on way coin landed
+
+**console.log(coinToss);
+// OUTPUT: Promise {<fulfilled>}**
+
+### Then, Catch, Finally
+* With abiity to execute and set resulting state, we now need wayu to generically do something with result of promist after it resolves
+  * done wtih funcionality similar to exception handling
+* Promise object has three functions: **then**, **catch**, **finally**
+  * **then** function called if promist is fulfilled
+  * **catch** called if rejected
+  * **finally** always called after all processing completed
+* 1- percent time coin falls of table to rejected state
+const coinToss = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (Math.random() > 0.1) {
+      resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+    } else {
+      reject('fell off table');
+    }
+  }, 10000);
+});
+
+* we then chain **then, catch, and finally** functions to coinToss object in order to handle each of possible results
+
+coinToss
+  .then((result) => console.log(`Coin toss result: ${result}`))
+  .catch((err) => console.log(`Error: ${err}`))
+  .finally(() => console.log('Toss completed'));
+
+// OUTPUT:
+//    Coin toss result: tails
+//    Toss completed

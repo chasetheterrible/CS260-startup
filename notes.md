@@ -1331,3 +1331,99 @@ coinToss
 // OUTPUT:
 //    Coin toss result: tails
 //    Toss completed
+
+## JS Async/await
+* Promise objects are great for asycnhronous execution, larger systems were build they wanted more concise representation
+* Provided with introduction of async/await syntax
+* **await** keyword wraps execution of promise and removed need to chain functions
+  * will block until promise state moves fulfilled, or throws exceptions if state is moved to rejected
+ 
+const coinToss = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() > 0.1) {
+        resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+      } else {
+        reject('fell off table');
+      }
+    }, 1000);
+  });
+};
+
+* can create equivalent executinos with a promise **then/catch** chian or an **await** with a **try/catch** block
+
+coinToss()
+  .then((result) => console.log(`Toss result ${result}`))
+  .catch((err) => console.error(`Error: ${err}`))
+  .finally(() => console.log(`Toss completed`));
+
+try {
+  const result = await coinToss();
+  console.log(`Toss result ${result}`);
+} catch (err) {
+  console.error(`Error: ${err}`);
+} finally {
+  console.log(`Toss completed`);
+}
+
+### Async
+* in important restriction working wtih await is you cannot call awaut unless called at top level of JS, or is in function defined wtih **async** keyword
+* applying **async** keyword transforms function so it returns promise that will resolve to value previously returned by function, basically turns any function into asynchronous function so it can in turn make asyncrhonous requests
+
+function cow() {
+  return 'moo';
+}
+console.log(cow());
+// OUTPUT: moo
+
+* if designate function to be asynch then reitrn values becomes promise is immediately resloved and has value that is the return val of function
+
+async function cow() {
+  return 'moo';
+}
+console.log(cow());
+// OUTPUT: Promise {<fulfilled>: 'moo'}
+
+* when chagne cow function to explicilty create promist instead of auto generated primsit that the await keyword generates
+
+async function cow() {
+  return new Promise((resolve) => {
+    resolve('moo');
+  });
+}
+console.log(cow());
+// OUTPUT: Promise {<pending>}
+
+* can see promise is in pendind state becuase promise execution function has not yet resolved
+### Await
+* **async** keyword declares function returns promist. **Await** wraps call to async function, blocks execution till promise is resolved, then returns result of promise
+* Can demonstrate **await** in action wtih cow promise from above
+* if log output from involing cow we see reuturn is promise, if prefix call with await keywrod execution will stop till promise has resolved, at which result of promise is returned instead of actual promise
+
+console.log(cow());
+// OUTPUT: Promise {<pending>}
+
+console.log(await cow());
+// OUTPUT: moo
+
+* by combining **async**, to define functions that return promise with **await**, to wait on promise can create code that is asynchronous, but sill maintains flow of code
+### Putting it together
+* can see benefit of async/await by considering case where multiple promises are requred. Ex when calling fetch web API on endpoint that returns JSON, would need to resolve, one for netowrk call and other reverting to JSON
+
+const httpPromise = fetch('https://simon.cs260.click/api/user/me');
+const jsonPromise = httpPromise.then((r) => r.json());
+jsonPromise.then((j) => console.log(j));
+console.log('done');
+
+// OUTPUT: done
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+
+* with async/awaut can clarigy code intent by hiding promise syntax, and also make execution block until promise is resolved
+
+const httpResponse = await fetch('https://simon.cs260.click/api/user/me');
+const jsonResponse = await httpResponse.json();
+console.log(jsonResponse));
+console.log('done');
+
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+// OUTPUT: done

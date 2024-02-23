@@ -299,19 +299,9 @@ body
 * display: flex; displays elements children in flexible orientaiton
 * display: grid; displays elements children in grid orientation
 * **If applying the display: rule to a default tag it will overide it**
-
-### Media q
-* Media quieries allow us to run series of tests(eg whethere users screen is greater than cedrtain width/resolution) and apply CSS selectively
-<!--Ex @media screen and (min-width: 80rem) { .container \n(not actaully just entered) margin: 1em 2em; } -->
-* This allows media query to see if current webpage is being displayed as screed media(not printed document) and viewport is 80 rem. CSS for .container selector will only be applied if these things are true
-* Can add multiple media quiereis withing a style sheet, tweking layout/parts of it to best suit various screen sizes(known as breakpoints)
-* common approac is designing simple singe column layout for narrow screens(mobile devices(
-### Multicol
-* specifies column-count to indicate max numner of columns you want content to be split into. Browser works out the sizes
-<!-- .container { column-count: 3; } -->
-* if specify column-wdith, will create as many columns of width that will comfortably fit the screen, then share extra space between columns
-* <!-- .container [ column-width: 10em; } -->
-* Can use columns shorthanded to specifuy max number of columns and min column width
+![Dispaly HTML](https://github.com/chasetheterrible/CS260-startup/blob/main/Display%20HTML.png)
+![Display CSS](https://github.com/chasetheterrible/CS260-startup/blob/main/Display%20CSS.png)
+![Visual display](https://github.com/chasetheterrible/CS260-startup/blob/main/Display%20Results.png)
 
 ### Viewport meta tag
 * when mobile devies gained pop they began to be used to view websites however they were optimized for desktop disply and not mobile screen. To chagne web spps scaled to screen size it got in the ay. Solution is to include meta tag in head element of all HTML pages to not scale the page
@@ -334,6 +324,19 @@ body
 
 * can also use media queries to make entire pieces of applications disappear, or move to different location. For example, if we had aside that was helpful when screen is wide, but took to much room as got narrow, could use following to make it dissapear
 <!-- @media (orientation: portrait) { aside { display: none; } } -->
+
+### Media quries MDN
+* Media quieries allow us to run series of tests(eg whethere users screen is greater than cedrtain width/resolution) and apply CSS selectively
+<!--Ex @media screen and (min-width: 80rem) { .container \n(not actaully just entered) margin: 1em 2em; } -->
+* This allows media query to see if current webpage is being displayed as screed media(not printed document) and viewport is 80 rem. CSS for .container selector will only be applied if these things are true
+* Can add multiple media quiereis withing a style sheet, tweking layout/parts of it to best suit various screen sizes(known as breakpoints)
+* common approac is designing simple singe column layout for narrow screens(mobile devices(
+### Multicol MDN
+* specifies column-count to indicate max numner of columns you want content to be split into. Browser works out the sizes
+<!-- .container { column-count: 3; } -->
+* if specify column-wdith, will create as many columns of width that will comfortably fit the screen, then share extra space between columns
+* <!-- .container [ column-width: 10em; } -->
+* Can use columns shorthanded to specifuy max number of columns and min column width
 
 ## CSS Grid
 * Grid layout is useful when want to display a group of child elements in responsive grid. We start with container element that has bunch of elements

@@ -54,7 +54,7 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 # **Notes for HTML**
 ## Elements and Tags
 * p(paragrph tag)
-* Closing teg has </character>
+* Closing tag has (<)/character()
 * "<html>" represents top level page structure
 *   followed by head containing metadata bout the page/page title
 *   <head>, next line tabed <title>title name</title>
@@ -93,6 +93,16 @@ cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Re
 *   ": &quot;
 *   ' &apos;
 *   smiley face: &#128521
+
+### Input element
+
+* can include things liek text, passwords, email sign in, checkbox, radion,, adates...
+* To create myst specify desired **type** attribute wtih any other associated with that specific input
+* Ex radio: (<)label for='checkbox1'>CheckMe(name)(<)/label(>) (<)input type='checkbox' name='varcheckbox' value='checkbox1' checked />
+  * name: name of the input
+  * disabled: disables abilty of user to interact
+  * value: initial value of input
+  * requred: sgnigifes value required to be valid
 
 ## HTML structure
 ![HTML Code examplpe.](https://github.com/chasetheterrible/CS260-startup/blob/main/Example%20html%20code.png)

@@ -41,15 +41,15 @@ To command SSH to server:  ssh -i /Users/chasecook/Downloads/Chase\'s\ AWS\ keyp
 # The Console
 * in the warp app do  pwd to see which directory you are in
 *   list all files using ls(list files) and ls -la for hidden ones in a long format
-*   Commands: echo - Output the parameters of the command
-cd - Change directory/ mkdir - Make directory/ rmdir - Remove directory/ rm - Remove file(s)/ mv - Move file(s)/ cp - Copy files/ ls - List files/ curl -/ Command line client URL browser/ grep - Regular expression search/ find - Find files/ top - View running processes with CPU and memory usage/ df - View disk statistics/ cat - Output the contents of a file/ less - Interactively output the contents of a file/ wc - Count the words in a file/ ps - View the currently running processes/ kill - Kill a currently running process/ sudo - Execute a command as a super user (admin)/ ssh - Create a secure shell on a remote computer/ scp - Securely copy files to a remote computer/ history - Show the history of commands/ ping - Check if a website is up/ tracert - Trace the connections to a website/ dig - Show the DNS information for a domain/ man - Look up a command in the manual
+*   Commands: **echo** - Output the parameters of the command
+**cd** - Change directory/ **mkdi**r - Make directory/ **rmdir** - Remove directory/ **rm** - Remove file(s)/ **mv** - Move file(s)/ cp - Copy files/ ls - List files/ curl -/ Command line client URL browser/ grep - Regular expression search/ find - Find files/ top - View running processes with CPU and memory usage/ df - View disk statistics/ cat - Output the contents of a file/ less - Interactively output the contents of a file/ wc - Count the words in a file/ ps - View the currently running processes/ kill - Kill a currently running process/ sudo - Execute a command as a super user (admin)/ ssh - Create a secure shell on a remote computer/ scp - Securely copy files to a remote computer/ history - Show the history of commands/ ping - Check if a website is up/ tracert - Trace the connections to a website/ dig - Show the DNS information for a domain/ man - Look up a command in the manual
 * | takes output from command on left and pipes/passes it to command on right
 * '>' redirects output to file(overwrites if exists)
 * '>>' redirects to file(appends if file exists)
 *   ls -l | grep 'Nov' | wc -l takes files in directory, pip into grep to serach for files created in Nov then pipes into WC to count number of files fwould with date of NOV
 *   CTRL-R: use type ahead to find previous command
 *   CTRL-C kill curretly running command
-[The Console info]<https://github.com/webprogramming260/.github/blob/main/profile/essentials/console/console.md>
+
 
 # **Notes for HTML**
 ## Elements and Tags
@@ -264,22 +264,23 @@ body
 ![Color examples](https://github.com/chasetheterrible/CS260-startup/blob/main/color%20methods.png)
 
 ## Fonts
-* font-family property defines what fonts should be used. Represents ordered list of fonts. First font in list available will be used
+* **font-family** property defines what fonts should be used. Represents ordered list of fonts. First font in list available will be used
 ### Font families
 * 4 major families 1) Serif 2)sans-serif 3)fixed 4) symbol
 *   serif is a small stroke attached to ends of a characters major stroke
 *   sans-seirf do not have extra strokes
 *   fixed are all same size
 ### Importing fonts
-* to import to @font-face(squigly brackets)
-*   on inside to font-family: font_name; as well as src: url(link to font);
-* or can do @import url(url); then p squicly brackets font-family: font_name;
+* to import ex @font-face { font-family: name; src: url('link_to_font')
+  * can do @import url(url);
+* to apply to paragraphy tags: p {font-family: font_name; }
+* If not wanting to hose font file on server can import ex @import url(link to font)
 ### CSS Animation
-* create CSS animation using animagtion properties and defining keyframes from what elements should look like
-* EX we select p(paragraph element) of center text and want to zoom till 20% view height
+* create CSS animation using animation properties and defining keyframes from what elements should look like
+* EX we have a paragraph centered text and want to zoom till 20% of view height 
 *   p squicgly brackets(text-align: center; font-szie: 20vh;)
 * To make happen specifuy animating selected elements by adding **animation-name**  property with value. This name refers to name of keyfames we wills specify. Also add animation-duration to specify animation to last 3 seconds
-*   same as abovee but including animation-name: demo(will store what it does somewhere else); animation-duration: 3s;
+*   same as above but including animation-name: demo(will store what it does somewhere else); animation-duration: 3s;
 * Now we need to create keyframe
 * don't need define every milisecond but key points
 *   do this wtih from and to
@@ -287,18 +288,6 @@ body
 * transform: translateX(50px) moves an element across the x axis 50 pixels
 
 ## Responsive Design
-* Media quieries allow us to run series of tests(eg whethere users screen is greater than cedrtain width/resolution) and apply CSS selectively
-<!--Ex @media scree and (min-width: 80rem) { .container \n(not actaully just entered) margin: 1em 2em; } -->
-* This allows media query to see if current webpage is being displayed as screed media(not printed document) and viewport is 80 rem. CSS for .container selector will only be applied if these things are true
-* Can add multiple media quiereis withing a style sheet, tweking layout/parts of it to best suit various screen sizes(known as breakpoints)
-* common approac is designing simple singe column layout for narrow screens(mobile devices(
-### Multicol
-* specifies column-count to indicate max numner of columns you want content to be split into. Browser works out the sizes
-<!-- .container { column-count: 3; } -->
-* if specify column-wdith, will create as many columns of width that will comfortably fit the screen, then share extra space between columns
-* <!-- .container [ column-width: 10em; } -->
-* Can use columns shorthanded to specifuy max number of columns and min column width
-
 ### Display
 * Display css property sets whether element is treated as block or inline box and layout of its children such as flow layout, grid or flex
 * Formally the property sents elements inner and outer dislay types: outer sets elements participation in flow layout; the inner sets the layout of the children
@@ -310,6 +299,19 @@ body
 * display: flex; displays elements children in flexible orientaiton
 * display: grid; displays elements children in grid orientation
 * **If applying the display: rule to a default tag it will overide it**
+
+### Media q
+* Media quieries allow us to run series of tests(eg whethere users screen is greater than cedrtain width/resolution) and apply CSS selectively
+<!--Ex @media screen and (min-width: 80rem) { .container \n(not actaully just entered) margin: 1em 2em; } -->
+* This allows media query to see if current webpage is being displayed as screed media(not printed document) and viewport is 80 rem. CSS for .container selector will only be applied if these things are true
+* Can add multiple media quiereis withing a style sheet, tweking layout/parts of it to best suit various screen sizes(known as breakpoints)
+* common approac is designing simple singe column layout for narrow screens(mobile devices(
+### Multicol
+* specifies column-count to indicate max numner of columns you want content to be split into. Browser works out the sizes
+<!-- .container { column-count: 3; } -->
+* if specify column-wdith, will create as many columns of width that will comfortably fit the screen, then share extra space between columns
+* <!-- .container [ column-width: 10em; } -->
+* Can use columns shorthanded to specifuy max number of columns and min column width
 
 ### Viewport meta tag
 * when mobile devies gained pop they began to be used to view websites however they were optimized for desktop disply and not mobile screen. To chagne web spps scaled to screen size it got in the ay. Solution is to include meta tag in head element of all HTML pages to not scale the page

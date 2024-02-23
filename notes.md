@@ -177,7 +177,7 @@ Canvas
 ## CSS intro
 * Converts structure/content of HTML into vibrant responsive experience
 * CSS is primarily concerned with defining ruleents, or simply rules. Rules are comprised of a selector that selects elements to apply rule to, and one or more declarations that represents property to style with given property value
-* p { font-family: ; font-size: ; color:; text-shadow:; }
+* p { font-family: ; font-size: in pixels, em ; color:; text-shadow:; }
 *   selects all paragrpah elements and changes font, font size, color, and creates gray shadow for the text
 ### Associating CSS wtih HTML
 * 3 ways to associate CSS with HTML, fist is to use style attribute of HTML elemtn and explicitly assign one or more declarations
@@ -201,7 +201,7 @@ Canvas
 *   Can use the asteriks(*) to select all elements as well
 ### Combinators
 *sections should always have a heading
-"(<body>
+body
   <h1>Departments</h1>
   <p>welcome message</p>
   <section id="physics">
@@ -216,7 +216,7 @@ Canvas
     <p>Text</p>
     <p class="summary">Summary</p>
   </section>
-</body>)"
+</body>
 
 * Say we want to change the h2 color but only for the sections for each department we provide a descednat cobinator where each item in lst is descendant of previous item so selector would be all h2 descendants of section elements
 *   ex section h2 { color: #004400  }
@@ -239,10 +239,12 @@ Canvas
 ### ID selector
 * reference ID of element. All ids should be unique
 * to select id put a # in front of it. Ex #summary(selects anything with id as summary)
-## Attribute selector
+
+### Attribute selector
 * Allows to select element based upon attributes
 * can select any element with given attribute a[href]. Can also specify required value for attribute a[href]=.fish.png] for selector to match
 * also supports wildcards siuch as ability to select attribute contaning values specific text p[href*=https://}
+
 ### Pseufo selector
 * Select based on positional relationship, mouse interaction, hyperlink visitation states, and attributes
 * suppose we wnat purple highlight bar to appear only when mouse hovers over text. To accomplish this we change ID selector to select whenever section is hovered over

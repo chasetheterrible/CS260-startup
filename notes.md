@@ -866,8 +866,16 @@ const e = new Employee('Eich', 'programmer');
 console.log(e.print());
 // OUTPUT: My name is Eich. I am a programmer
 
-### JS RegEx
-* Build inot JS
+## JS RegEx
+* Build into JS
+* Enclosed between slashes
+### Types
+* /abc/ looks for exact copies of the exact order of abc
+* (asterics) folloiwng letter/number means 0 or more occurences
+* [a-z] selects any letter in that range
+* \w selects all numbers and letters, not case sensitive
+
+
 * Can create Regex using class constructor or regex literal
 const objRegex = new RegExp('ab*', 'i');
 const literalRegex = /ab*/i;
@@ -1444,3 +1452,16 @@ console.log('done');
 
 // OUTPUT: {email: 'bud@mail.com', authenticated: true}
 // OUTPUT: done
+
+
+# **Random notes**
+* ++ in Js is th incriment
+* equal sign like function f(x) = {} is not valid
+* valid JS object assgns values with semi colon like { propteryName: value }
+* textContent Propertu sets child text of an element
+* JSON only accepts double quotation marks
+*   undefined is not a possible value
+* CHMOD +x deploy.sh makes script executable
+* To point to another DNS record use CNAME
+* query selector only selects 1 element
+* In regex i makes it not-case sensitive

@@ -1465,4 +1465,4 @@ console.log('done');
 * To point to another DNS record use CNAME
 * query selector only selects 1 element
 * In regex i makes it not-case sensitive
-* ![Example domain name and stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-02-26%20at%203.27.20%20PM.png)
+![Example domain name and stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-02-26%20at%203.27.20%20PM.png)

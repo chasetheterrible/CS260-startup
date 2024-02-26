@@ -1466,3 +1466,10 @@ console.log('done');
 * query selector only selects 1 element
 * In regex i makes it not-case sensitive
 ![Example domain name and stuff](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-02-26%20at%203.27.20%20PM.png)
+
+* **DND record types**
+* A / AAAA - Address. Specific IP addresses. IPV4 and IPV6
+* CNAME - Canonical Name. Alias 
+* NS - Name Server. Authority for queries and proof of ownership
+* TEXT - Metadata. Used for policies and verification
+* SOA - Start of Authority. Propagation information

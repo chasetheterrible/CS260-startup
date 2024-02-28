@@ -7,8 +7,17 @@ function shuffleArray(array) {
     }
 }
 
+function createButtons(buttonContainer) {
+    buttonContainer.innerHTML = "";
 
-shuffleArray(cardValues);
+    for (let i = 0; i < cardValues.length; i++) {
+        const button = document.createElement("button");
+        button.textContent = cardValues[i];
+        button.dataset.matched = "false";
+        buttonContainer.appendChild(button);
+        button.addEventListener("click", handleButtonClick);
+    }
+}
 
 const buttonContainers = document.getElementsByClassName("button-container")
 

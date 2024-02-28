@@ -20,18 +20,13 @@ function createButtons(buttonContainer) {
 }
 
 const buttonContainers = document.getElementsByClassName("button-container")
+const countInput = document.getElementById("count");
+const resetButton = document.querySelector('.reset-time');
+let elapsedTime = 0;
+let clickedButton = null;
+let timerInterval;
 
 
-
-for (const buttonContainer of buttonContainers) {
-    for (let i = 0; i < cardValues.length; i ++) {
-        const button = document.createElement("button");
-        button.textContent = cardValues[i];
-        buttonContainer.appendChild(button);
-        button.addEventListener("click", handleButtonClick)
-    }
-        
-}
 
 function startTimer() {
     clearInterval(timerInterval);
@@ -60,5 +55,5 @@ function formatTime(seconds) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
-
     startTimer();
+

@@ -6,3 +6,14 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+
+shuffleArray(cardValues);
+
+const buttonContainer = document.getElementsByClassName("button-container")
+
+for (let i = 0; i < cardValues.length; i ++) {
+    const button = document.createElement("button");
+    button.textContent = cardValues[i];
+    buttonContainer.appendChild(button);
+}

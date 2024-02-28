@@ -1,7 +1,7 @@
-const cardValues= [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8]
+const cardValues = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
 
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i -- ) {
+    for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
@@ -55,39 +55,44 @@ function formatTime(seconds) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
-    startTimer();
+startTimer();
 
-    function handleButtonClick(event) {
-        const button = event.target;
-    
-        if (clickedButton) {
-            if (clickedButton.textContent === button.textContent) {
-                button.style.backgroundColor = "aquamarine";
-                button.style.color = "coral";
-                button.dataset.matched = "true";
-                button.dataset.matched = "true";
-                clickedButton.dataset.matched = "true";
-                clickedButton = null;
+function handleButtonClick(event) {
+    const button = event.target;
+    // turns card over no matter what
+    button.style.backgroundColor = "aquamarine";
+    button.style.color = 'coral';
+    // if previously clicked on
+    if (clickedButton) {
+        // if current clicked = previous clicked
+        if (clickedButton !== clickedButton && clickedButton.textContent === button.textContent) {
+            button.style.backgroundColor = "aquamarine";
+            button.style.color = "coral";
+            button.dataset.matched = "true";
+            button.dataset.matched = "true";
+            clickedButton.dataset.matched = "true";
+            clickedButton = null;
 
-                if (allButtonsMatched()) {
-                    clearInterval(timerInterval);
-                    alert("Congratulations! You matched all the numbers")
+            if (allButtonsMatched()) {
+                clearInterval(timerInterval);
+                alert("Congratulations! You matched all the numbers")
 
-            } 
+            }
+        // if current != previous
         } else {
+
+            // after 1 sec flip both back over
             setTimeout(() => {
                 clickedButton.style.backgroundColor = "black";
                 clickedButton.style.color = "black";
                 button.style.backgroundColor = "black";
                 button.style.color = "black";
-                clickedButton = null; 
+                clickedButton = null;
             }, 1000);
         }
     } else {
-        button.style.backgroundColor = "aquamarine";
-        button.style.color = 'coral';
         clickedButton = button;
-     }
+    }
 }
 
 
@@ -101,11 +106,27 @@ function allButtonsMatched() {
     return true;
 }
 
-    resetButton.addEventListener("click", resetTimer)
-    shuffleArray(cardValues);
-    for (const buttonContainer of buttonContainers) {
-        createButtons(buttonContainer);
-        }
-    
-    startTimer();
-    
+resetButton.addEventListener("click", resetTimer)
+shuffleArray(cardValues);
+for (const buttonContainer of buttonContainers) {
+    createButtons(buttonContainer);
+}
+
+startTimer();
+
+function getPlayerName() {
+    return localStorage.getItem('Username') ?? 'Mystery player';
+}
+
+function saveTime(time) {
+    const userName = this.getPlayerName();
+    let times = [];
+    const timesText = localStorage.getItem('times')
+    if (timesText) {
+        times = JSON.parse(timesText);
+    }
+    times = this.updateScores(userName, time, times)
+}
+
+const playerName = getPlayerName();
+console.log(playerName)

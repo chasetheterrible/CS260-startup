@@ -21,26 +21,6 @@ function createButtons(buttonContainer) {
 
 const buttonContainers = document.getElementsByClassName("button-container")
 
-let clickedButtons = [];
-
-function handleButtonClick(event) {
-    const button = event.target;
-    button.classList.toggle("clicked")
-    clickedButtons.push(button.textContent);
-    if (clickedButtons.length === 2) {
-        if (clickedButtons[0] === clickedButtons[1]) {
-            alert("Match found!");
-        } else {
-            setTimeout(() => {
-                for (const clickedButton of document.querySelectorAll(".clicked")) {
-                    clickedButton.classList.remove("clicked");
-                }
-            }, 1000);
-        }
-
-        clickedButtons = [];
-    }
-}
 
 
 for (const buttonContainer of buttonContainers) {
@@ -51,4 +31,25 @@ for (const buttonContainer of buttonContainers) {
         button.addEventListener("click", handleButtonClick)
     }
         
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        elapsedTime++;
+        countInput.value = formatTime(elapsedTime);
+    }, 1000);
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    elapsedTime = 0;
+    countInput.value = "";
+
+    shuffleArray(cardValues);
+    for (const buttonContainer of buttonContainers) {
+        createButtons(buttonContainer);
+    }
+    clearInterval(timerInterval);
+    startTimer();
 }

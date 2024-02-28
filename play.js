@@ -57,3 +57,55 @@ function formatTime(seconds) {
 
     startTimer();
 
+    function handleButtonClick(event) {
+        const button = event.target;
+    
+        if (clickedButton) {
+            if (clickedButton.textContent === button.textContent) {
+                button.style.backgroundColor = "aquamarine";
+                button.style.color = "coral";
+                button.dataset.matched = "true";
+                button.dataset.matched = "true";
+                clickedButton.dataset.matched = "true";
+                clickedButton = null;
+
+                if (allButtonsMatched()) {
+                    clearInterval(timerInterval);
+                    alert("Congratulations! You matched all the numbers")
+
+            } 
+        } else {
+            setTimeout(() => {
+                clickedButton.style.backgroundColor = "black";
+                clickedButton.style.color = "black";
+                button.style.backgroundColor = "black";
+                button.style.color = "black";
+                clickedButton = null; 
+            }, 1000);
+        }
+    } else {
+        button.style.backgroundColor = "aquamarine";
+        button.style.color = 'coral';
+        clickedButton = button;
+     }
+}
+
+
+function allButtonsMatched() {
+    const buttons = document.querySelectorAll('.button-container button');
+    for (const button of buttons) {
+        if (button.dataset.matched !== "true") {
+            return false;
+        }
+    }
+    return true;
+}
+
+    resetButton.addEventListener("click", resetTimer)
+    shuffleArray(cardValues);
+    for (const buttonContainer of buttonContainers) {
+        createButtons(buttonContainer);
+        }
+    
+    startTimer();
+    

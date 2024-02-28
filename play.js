@@ -65,7 +65,7 @@ function handleButtonClick(event) {
     // if previously clicked on
     if (clickedButton) {
         // if current clicked = previous clicked
-        if (clickedButton !== clickedButton && clickedButton.textContent === button.textContent) {
+        if (clickedButton !== button && clickedButton.textContent === button.textContent) {
             button.style.backgroundColor = "aquamarine";
             button.style.color = "coral";
             button.dataset.matched = "true";

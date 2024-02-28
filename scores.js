@@ -1,4 +1,4 @@
-function loadScores() {
+function loadTimes() {
     let times = [];
     const timesText = localStorage.getItem('times');
     if (timesText) {
@@ -31,3 +31,5 @@ function loadScores() {
         tableBodyEl.innerHTML = '<tr><td colSpan=4>Be the first to play</td></tr>';
     }
 }
+
+loadTimes();

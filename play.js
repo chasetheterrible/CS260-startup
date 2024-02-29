@@ -76,6 +76,7 @@ function handleButtonClick(event) {
             if (allButtonsMatched()) {
                 clearInterval(timerInterval);
                 alert("Congratulations! You matched all the numbers")
+                saveTime(elapsedTime)
 
             }
         // if current != previous
@@ -137,8 +138,8 @@ function updateTimes(userName, time, times) {
     const newTime = {name: userName, time: time, date: date};
 
     let found = false;
-    for (const [i, prevScore] of times.entries()) {
-        if (score > prevScore.score) {
+    for (const [i, prevTime] of times.entries()) {
+        if (time > prevTime.time) {
             times.splice(i, 0, newTime);
             found = true;
             break;

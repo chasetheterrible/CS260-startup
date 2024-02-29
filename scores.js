@@ -2,7 +2,7 @@ function loadTimes() {
     let times = [];
     const timesText = localStorage.getItem('times');
     if (timesText) {
-        times = JSON.parse(scoresText);
+        times = JSON.parse(timesText);
     }
 
     const tableBodyEl = document.querySelector('#times')
@@ -16,7 +16,7 @@ function loadTimes() {
 
             positionTdEl.textConent = i + 1;
             nameTdEl.textContent = time.name;
-            timeTdEl.textContent = time.score;
+            timeTdEl.textContent = time.time;
             dateTdEl.textContent = time.date;
 
             const rowEl = document.createElement('tr');

@@ -159,5 +159,5 @@ function updateTimes(userName, time, times) {
 setInterval(() => {
     const time = Math.floor(Math.random() * 50);
     const chatText = document.querySelector('#player-messages');
-    chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> timed ${time}</div>` + chatText.innerHTML;
+    chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> <span class="timed" style="color: white;">timed with ${time} seconds</span></div>` + chatText.innerHTML;
 }, 5000);

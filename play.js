@@ -52,7 +52,7 @@ function resetTimer() {
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    return `${remainingSeconds}`;
 }
 
 startTimer();
@@ -115,7 +115,7 @@ for (const buttonContainer of buttonContainers) {
 startTimer();
 
 function getPlayerName() {
-    return localStorage.getItem('Username') ?? 'Mystery player';
+    return localStorage.getItem('userName') ?? 'Mystery player';
 }
 
 function saveTime(time) {
@@ -125,8 +125,39 @@ function saveTime(time) {
     if (timesText) {
         times = JSON.parse(timesText);
     }
-    times = this.updateScores(userName, time, times)
+    times = this.updateTimes(userName, time, times);
+    localStorage.setItem('times', JSON.stringify(times));
 }
 
 const playerName = getPlayerName();
 console.log(playerName)
+
+function updateTimes(userName, time, times) {
+    const date = new Date().toLocaleDateString();
+    const newTime = {name: userName, time: time, date: date};
+
+    let found = false;
+    for (const [i, prevScore] of times.entries()) {
+        if (score > prevScore.score) {
+            times.splice(i, 0, newTime);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        times.push(newTime);
+    }
+
+    if (times.length > 10) {
+        times.length = 10;
+    }
+
+    return times;
+}
+
+setInterval(() => {
+    const time = Math.floor(Math.random() * 50);
+    const chatText = document.querySelector('#player-messages');
+    chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> timed ${time}</div>` + chatText.innerHTML;
+}, 5000);

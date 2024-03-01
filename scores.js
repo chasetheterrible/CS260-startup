@@ -23,10 +23,10 @@ function loadTimes() {
             rowEl.appendChild(dateTdEl);
 
             tableBodyEl.appendChild(rowEl);
+            
         } 
     }   else {
         tableBodyEl.innerHTML = '<tr><td colSpan=4>Be the first to play</td></tr>';
     }
 }
-
 loadTimes();

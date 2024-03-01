@@ -120,13 +120,13 @@ function getPlayerName() {
 }
 
 function saveTime(time) {
-    const userName = this.getPlayerName();
+    const userName = getPlayerName();
     let times = [];
     const timesText = localStorage.getItem('times')
     if (timesText) {
         times = JSON.parse(timesText);
     }
-    times = this.updateTimes(userName, time, times);
+    times = updateTimes(userName, time, times);
     localStorage.setItem('times', JSON.stringify(times));
 }
 
@@ -139,7 +139,7 @@ function updateTimes(userName, time, times) {
 
     let found = false;
     for (const [i, prevTime] of times.entries()) {
-        if (time > prevTime.time) {
+        if (time < prevTime.time) {
             times.splice(i, 0, newTime);
             found = true;
             break;
@@ -158,7 +158,7 @@ function updateTimes(userName, time, times) {
 }
 
 setInterval(() => {
-    const time = Math.floor(Math.random() * 50);
+    const time = Math.floor(Math.random() * 10);
     const chatText = document.querySelector('#player-messages');
     chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> <span class="timed" style="color: white;">timed with ${time} seconds</span></div>` + chatText.innerHTML;
 }, 5000);

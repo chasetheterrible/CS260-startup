@@ -1473,3 +1473,40 @@ console.log('done');
 * NS - Name Server. Authority for queries and proof of ownership
 * TEXT - Metadata. Used for policies and verification
 * SOA - Start of Authority. Propagation information
+
+
+
+
+
+# Webservice
+## The internet
+* globally connects independent networkds and computing devices
+### Making connections
+* when one device wants to talk to another it must have IP address
+* Can look up any IP address for any domain name ising dif console utility
+  * ex dig byu.edu will give the IP address
+### Traceroute
+* can determine hops in connection using traceroute console utility
+* Sees the IP address of the home computer and steps it takes to get to computer at BYU
+### Network internals
+* Application(HTTPS): functionality like web browsing
+* Transpot(TCP): Moving connection information packets
+* Internet(IP): Establishing connections
+* Link(Fiber, hardware): physical connections
+
+## Web services
+### Monolithcin web servers
+* in early days web programming wouls buy massive, complex, expensive software that spoke HTTP and instaled hardware server
+### Combining web and app services
+* Most mondern programming languages include librareis that provide ability to make connections and serve HTTp
+
+## Domain Name
+* Simply a text string that follows specific naming conventoin and listed in special database called domain name repository
+* Broken up into root domain with one or more possible subdomain prefixes
+  * represented by secondary level domain and top level tomain(TLD) represented bu com, edu, or click, so root would be like google.coom
+* owners of root tmains can create any # of subdomains off root domain, each may resovle different IP address
+* Can get info using whois console utility
+  * whois byu.edu
+### DNS
+* onnce domain name is in registry
+

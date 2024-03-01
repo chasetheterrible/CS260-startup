@@ -36,3 +36,13 @@ This is a sequence diagram that shows how to people would interact with the back
 * Responsive to window resizing
 * Application elements - contrast of whtiespace
 * Application text content - consistent fonts
+
+# Javascript Deliverable
+* I implimented javascript so the application works for a single user with their local storage, and added placeholders for future technologies
+* login: when you press the login button it takes you to the play page
+* Database: displayed the time(completion of game), position relative to other scores, name(username), and date of the payer
+* websocket: displays on the play screen mock created users wtih a mock game completion time
+* application logic: the matching game changes every time and user input allows them to play and complete the game
+## **Added**
+* I modified the play html and got rid of the hardcoded buttons, instead I have javascript create and keep track of those buttons
+* Added a functional timer which keeps trak of the amount of time it takes to complete the game

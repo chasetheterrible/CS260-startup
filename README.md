@@ -40,7 +40,7 @@ This is a sequence diagram that shows how to people would interact with the back
 # Javascript Deliverable
 * I implimented javascript so the application works for a single user with their local storage, and added placeholders for future technologies
 * login: when you press the login button it takes you to the play page
-* Database: displayed the time(completion of game), position relative to other scores, name(username), and date of the payer
+* Database: displayed the time(completion of game), position relative to other scores, name(username from login page), and date of the payer
 * websocket: displays on the play screen mock created users wtih a mock game completion time
 * application logic: the matching game changes every time and user input allows them to play and complete the game
 ## **Added**

@@ -1494,7 +1494,7 @@ console.log('done');
 * Internet(IP): Establishing connections
 * Link(Fiber, hardware): physical connections
 
-## Web services
+## Web servers
 ### Monolithcin web servers
 * in early days web programming wouls buy massive, complex, expensive software that spoke HTTP and instaled hardware server
 ### Combining web and app services
@@ -1509,4 +1509,163 @@ console.log('done');
   * whois byu.edu
 ### DNS
 * onnce domain name is in registry
+* DNS database records facilitarte mapping of domain names to IP adddresses come in several flavors
+* main is address(A) and cannocial name(CNAME)
+  * a recrod stragiht mapping from domain name to IP address
+  * CNAME maps one domain nane to another domain name byu.com -> byu.edu
+ 
+## Web servuces intro
+* files that run on browser are fronntend of application
+* To make web service request we supply URL of web to fetch, which is build into browser
+* Web service provides static frontedn files with function to handle fetch requests
+* Functionality provided by web serice represents backend of appplicaiton
+* Endpoints are the functions provided by the web service
 
+## URL
+* Uniform Resource Locator(URL) represents location of web resoirce such as web page, font, image, JSON object and more
+* Follows notation: Scheme(ex https), domain name(byu.edu), port(3000), path(/school/byu/user/8014), parameters(filter=names&highlight=intro,summary), anchor(summary)
+* https://byu.edu:443/cs/260/student?filter=accepted#summary
+* <scheme>://<domain name>:<port>/<path>?<parameters>#<anchor>
+* Scheme is protocol required for asking resources usually HTTPS or FTP or Mailto]
+* port specifies numbered network port to connect to domain server
+  * lower numbers are reserbed for common internete protocols, highers are for any purpose
+  * 80 for HTTP
+  * 443 if HTTPS
+* Will hear URN or URI when talking about web resources. **Uniform Resource Name** is unique resource name does not specify lofation information
+  * like an ISBN number
+* **Uniform Resource Identifier** is general resorue indentifier that could refer to URL or URN
+* With web programming we will almost alwys use URL
+
+## Ports
+* when connect to device on internet needs IP addtress and numbered port
+* Port numbers allow single device to support multiple protocols as well as different types of services
+* **IANA** the internet governing body, defines standard usage for port numbers
+* Ports 0 - 1023 represents standard protocol
+  * generally web service should avoid thse ports unless its providing protocol reprsened by the standard
+* ports from 1024 - 49141 represent ports that have been assigned to requesting entities, these are very common ports to be used
+* ports 49152 to 65535 are considered dynamic and are considered dynamic and used to create dynamic connections to a device
+### Common Ports
+* 20: file transfer protocol(FTP) for data transfer
+* 22: Secure shell(SSH) for connecting remote devices
+* 25: Simple Mail Transfer protocol(SMTP) for sending email
+* 53: Domain name System(DNS) for looking up IP addresses
+* 80: Hyptertext transfer protocol(HTTP) for web requests
+* 110: post office protocol(POP3) for retrieving email
+* 123: Network time protocol(NTP) for managing time
+* 161: simple network management protocol(SNMP) for managing network devices such as routers or printers
+* 194: internet relay chat(IRC)
+* 443: http secure(HTTPS) for secure web requests
+### Your ports
+* when building web we externally expose port 22 to SSH inot remote console on server, port 443 secures HTTP communication and port 80 for unsecure HTTP communication
+* on caddy, it listends to ports 80 and 443, when caddy gets request on port 80 it auto redirects request to port 443 so secure connection is used, then when it hits 443 it examines path provided in HTTP
+
+## HTTP
+* Hypertext transfer protocol(HTTP) is how web talks
+* When browswer makes request it does so using HTTP protocol
+* When web cliet and web server talk they exchange HTTP request and responses, browser will make HTTP request and server will generate an HTTP response
+* Can see HTTP exchange by using browsers debugger of by using consols tool like **curl**
+  * ex can use curl on console to make following request: curl -v -s http://info.cern.ch/hypertext/WWW/Helping.html
+### Request
+* HTTP request for above comamnd looks like following
+GET /hypertext/WWW/Helping.html HTTP/1.1
+Host: info.cern.ch
+Accept: text/html
+* HTTP request has this general syntax:
+<verb> <url path, parameters, anchor> <version>
+[<header key: value>]*
+[
+
+  <body>
+]
+* We are asking to GET resoiuce found at path(given above)
+### Response
+* response to above requests look like
+HTTP/1.1 200 OK
+Date: Tue, 06 Dec 2022 21:54:42 GMT
+Server: Apache
+Last-Modified: Thu, 29 Oct 1992 11:15:20 GMT
+ETag: "5f0-28f29422b8200"
+Accept-Ranges: bytes
+Content-Length: 1520
+Connection: close
+Content-Type: text/html
+
+<TITLE>Helping -- /WWW</TITLE>
+<NEXTID 7>
+<H1>How can I help?</H1>There are lots of ways you can help if you are interested in seeing
+the <A NAME=4 HREF=TheProject.html>web</A> grow and be even more useful...
+* HTTP response has following syntax
+<version> <status code> <status string>
+[<header key: value>]*
+[
+
+  <body>
+]
+### Verbs
+* GET: get requested resource, can represent request to get single resource or resource representing list of resources
+* POST: create new resource, the body of request contians resource. Response should include unique ID of newly created resource
+* PUT: update resoruce eithwer the URL path, HTTP header or body must contain unique ID of resource being updated. Should contain updated resources, and body may contain resulting updated resources
+* DELETE: deletes resource, either URL path of HTTP header, must contain unique ID of resource to delete
+* OPTIONS: get metadata about resource, usualy only HTTP headers are returned, the resoruce itself is not returned
+
+### Status code
+* 1xx: informational
+* 2xx: success
+* 3xx: redirects to some other location, or that previously cached resource is still valid
+* 5xx: server errors. Request cannot be satisfied due to error on server
+
+### Headers
+* HTTP headers specify metadata about request or response, including things like how to handle security, caching, data formats,, and cookies
+* Authorization: token that authorized user making request
+* Accept: format the client accepts, this may include wildcards
+* content-type: fomrat of content being sent, these are descrived using standard MIME types
+* Cookie: key value pairs that are generated by serber and stored on client
+* Host: domain name of server, requrired in all requests
+* Origin: identifies origin that caused request, howst may only allow requests from specific origings
+* Access-control-allow-origin: server response of waht origins can make request, may include wild card
+* Conent-length: number of bytes contaiend in response
+* Cache control: tells client how it can caceh the response
+* User-agent: client application making reqest
+
+### Body
+* format of body of HTTP request or response is defined by content-type header
+* May be HTML tex, a binary image format, JSON, or Javascript, Client may specify what formats it accepts using accept header
+
+### Cookies
+* HTTP itself is stateless, this means one HTTP requese doesn't know anything aobut a previous/future request, however it doens't mea server cannot track across requests
+* One method in doing so is cookie
+* Generated by server and passed to client as HTTP header
+
+## Fetch
+* ability to make HTTP requests from JA is one of main technologies that changed the web from static content oages to one of web applications that fully interact with user
+* Fetch function is built into browsers JS runtime, this means you can call it from JS code running in a browser
+* basoc usage takes URL and returns promis, promise **then** function takes callback function that is asynchronous called when requested URL content is obtained
+* If returned contenty is of type applicaiton/json, you can use json function on response object to convert to JS obkect
+* Ex that makes fetch request to get and display inspirational quote
+fetch('https://api.quotable.io/random')
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    console.log(jsonResponse);
+  });
+**response**
+{
+  content: 'Never put off till tomorrow what you can do today.',
+  author: 'Thomas Jefferson',
+};
+
+* To do POST request you populate optiosn parameter wtih HTTP method and headers
+fetch('https://jsonplaceholder.typicode.com/posts', {
+  method: 'POST',
+  body: JSON.stringify({
+    title: 'test title',
+    body: 'test body',
+    userId: 1,
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    console.log(jsonResponse);
+  });

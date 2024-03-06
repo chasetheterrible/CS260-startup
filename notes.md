@@ -1669,3 +1669,177 @@ fetch('https://jsonplaceholder.typicode.com/posts', {
   .then((jsonResponse) => {
     console.log(jsonResponse);
   });
+## NODE JS
+* app for deploying JS outside browser
+* Browsers run JS using JS interpreter and execution engine
+* **TO INSTALL ON MACOS**
+  * curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash into console command
+  * Followed by . ~/.nvm/nvm.sh
+* in console app install long term support LTS version of Node
+  * nvm install --lts
+### Checking installation
+* Console app is simoly called node, and can verify its working by running node with -v parameter
+  * node -v --> version
+### Running programs
+* Can execute line of JS with node.js use -e parameter
+  * node -e "console.log(1+1)" --> 2
+  * however to do real work need to execute entire projects of dozens if not hundred of JS files we start by creating simple JS file that reference code found in project. Then execitue code by running node with file name(ex index.js) as a parameter
+
+function countdown() {
+  let i = 0;
+  while (i++ < 5) {
+    console.log(`Counting ... ${i}`);
+  }
+}
+countdown();
+* if this is whats in index.js file when we call in using node index.js it looks like:
+Counting ... 1
+Counting ... 2
+Counting ... 3
+Counting ... 4
+Counting ... 5
+
+* Can also run node in interpretive mode by executing without any parameters and then typing JS code directly into interpreter
+
+➜ node
+Welcome to Node.js v16.15.1.
+> 1+1
+2
+> console.log('hello')
+hello
+
+### Package manager
+* could write all JS for everything need, its always good to usee preexisting packages of JS to impliment common tasks
+* To load package must so two things
+  1) First install package locally on machine using Node Package Manager(NPM)
+  2) Include require statement in code that references package name. NPM auto installed wtih you install Node.js
+* NPM knows how to access preexisting packages
+  * must create directory that will contain JS and then runn npm init. NPM will step through serires of questions about project, then can press return of each questions it want to accept defualts
+    * if always accepting defauls use **npm init -y** to skip Q&A
+➜  mkdir npmtest
+➜  cd npmtest
+➜  npm init -y
+
+### package.json
+* if list files in directory, will notice it has created file named package.json, those fiels contain 3 things
+  1) Metadata about prokject such as name and defualt entry JS file
+  2) Commands(Scripts) to execute things like run, test, or distribute code
+  3) packages that this project depends upon
+* with NPM installed can now install node packages like give-me-a-joke
+  * to do so must type npm install give-me-a-joke
+* when you examin contents of packages.json will see refercene to newly installed package dependencey
+* If no longer want package can alwaus remove wtih npm uninstall <package name>
+
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+**VERSUS**
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+
+* When start instlalling packages, NPM will create aditioanl file named package-lock.json and directory named node_modules in project directory.
+  * node_modules contains actual JS files for package and all its dependent packages
+  * Directory will start to get very largw **and you don't want to** check directory into source control sustem since it can be rebuilt using info contained in package.json and package-lock.json
+  * make sure to include node_modules in .gitignore file
+ 
+* When clone source code from github to new location, first run npm install in project directory. This will cause NPM to download all of previously installed packages and recreate node_modules
+* package-lock.json fils tracks verison of package that I install. That way if rebuild node_modules will have verison of package you initially installed and not lates available bersion, which might not be compatible with code
+* With NPM and joke package installed, can now use joke packagee in JS file by referencing package name as parameter to require function, its then followed by a call to the jokes okect getRandomDadJoke function to actually generate joke
+
+**index.js**
+const giveMeAJoke = require('give-me-a-joke');
+giveMeAJoke.getRandomDadJoke((joke) => {
+  console.log(joke);
+});
+
+**node.js**
+➜  node index.js
+What do you call a fish with no eyes? A fsh.
+
+**REMEMBER STEPS**
+1) Create project directory
+2) Inistialize it for use wtih NPM by running npm init -y
+3) make sure .gitignore file contains node_modules
+4) install any desired packages with npm install package_name
+5) Add require('package_name') to apps JS
+6) us code package provides in JS
+7) run code with node.index.js
+
+
+### Creating web service
+* with JS we can write code taht listens on network port, recieves HTTP request, processes them, and then responds. We can use this to create simple seb serve we execute using Node.js
+
+**Create**
+➜ mkdir webservicetest
+➜ cd webservicetest
+➜ npm init -y
+
+Next open VS code and create file index.js, and paste code into file and save:
+const http = require('http');
+const server = http.createServer(function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.write(`<h1>Hello Node.js! [${req.method}] ${req.url}</h1>`);
+  res.end();
+});
+
+server.listen(8080, () => {
+  console.log(`Web service listening on port 8080`);
+});
+
+* This code uses Node.js built in http package to create HTTP server using http.createServer function along with callback that takes req(request) and res(response) object
+* That function is called whenever server receives HTTP request
+* In example callback always returns same HTML snipet with status code 200 and content type header, no matter what request is made
+* server.listen call starts listening on port 8080 and blocks until porgram is terminated
+
+* Program is executed by going back to console window and running Node.js to exectire our index.js file. If servic starts up correclty then it should look like the following:
+➜ node index.js
+Web service listening on port 8080
+
+## Express
+* We learned how to use JS to create simple web server, this works great for little projects, howeeer to really build a production-ready applicatoin we need a framework with bit more functionality for easily implementing full web-service
+* This is where **Node** package **Express** comes in
+  1) Routing requets for service endpoints
+  2) manipulating HTTP requests with JSON body content
+  3) Generating HTTP responses
+  4) Using **middleware** to add functionality
+
+* Everything in express revolves around creatind/using HTTP routing middleware functions, you create express application by using NPM to install express package and then call express constructor to create express app and listen for HTTP requets on desired port
+
+➜ npm install express
+const express = require('express');
+const app = express();
+
+app.listen(8080);
+
+* with **app** object you can now add HTTP routing and middlewar funcions to application
+
+### Defining routes
+* HTTP endpoints are implimented in express by defining routes that call function based upon HTML patth
+* Express **app** object supports all HTTP verbs as functions on object
+  * for ex if wwant to route function that handles HTTP get request for URL path /store/provo would call get method on app
+
+app.get('/store/provo', (req, res, next) => {
+  res.send({name: 'provo'});
+});
+* **get** takes two parameters, url path matching pattern, and callback function that is invoked when pattern matches. Path mathcing parameter is used to match agaisnt URL path of an incoming HTTP request
+* callback funtion has 3 parameters taht represent HTTp request(**req**), the HTTP response(**res**) and the **next** routing function that express expects to be called if routing function wnats another function to generate response
+* Express **app** compares routing function patters in order that they are added to express **app** object. So if you have two routing functions with pattern that both match, the first one added will be called and given next matching funtion in next parameter

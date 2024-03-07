@@ -54,6 +54,8 @@ function formatTime(seconds) {
     const remainingSeconds = seconds % 60;
     return `${remainingSeconds}`;
 }
+const playerNameEl = document.querySelector('.player-name');
+playerNameEl.textContent = this.getPlayerName();
 
 startTimer();
 

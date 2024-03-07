@@ -1669,3 +1669,297 @@ fetch('https://jsonplaceholder.typicode.com/posts', {
   .then((jsonResponse) => {
     console.log(jsonResponse);
   });
+## NODE JS
+* app for deploying JS outside browser
+* Browsers run JS using JS interpreter and execution engine
+* **TO INSTALL ON MACOS**
+  * curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash into console command
+  * Followed by . ~/.nvm/nvm.sh
+* in console app install long term support LTS version of Node
+  * nvm install --lts
+### Checking installation
+* Console app is simoly called node, and can verify its working by running node with -v parameter
+  * node -v --> version
+### Running programs
+* Can execute line of JS with node.js use -e parameter
+  * node -e "console.log(1+1)" --> 2
+  * however to do real work need to execute entire projects of dozens if not hundred of JS files we start by creating simple JS file that reference code found in project. Then execitue code by running node with file name(ex index.js) as a parameter
+
+function countdown() {
+  let i = 0;
+  while (i++ < 5) {
+    console.log(`Counting ... ${i}`);
+  }
+}
+countdown();
+* if this is whats in index.js file when we call in using node index.js it looks like:
+Counting ... 1
+Counting ... 2
+Counting ... 3
+Counting ... 4
+Counting ... 5
+
+* Can also run node in interpretive mode by executing without any parameters and then typing JS code directly into interpreter
+
+➜ node
+Welcome to Node.js v16.15.1.
+> 1+1
+2
+> console.log('hello')
+hello
+
+### Package manager
+* could write all JS for everything need, its always good to usee preexisting packages of JS to impliment common tasks
+* To load package must so two things
+  1) First install package locally on machine using Node Package Manager(NPM)
+  2) Include require statement in code that references package name. NPM auto installed wtih you install Node.js
+* NPM knows how to access preexisting packages
+  * must create directory that will contain JS and then runn npm init. NPM will step through serires of questions about project, then can press return of each questions it want to accept defualts
+    * if always accepting defauls use **npm init -y** to skip Q&A
+➜  mkdir npmtest
+➜  cd npmtest
+➜  npm init -y
+
+### package.json
+* if list files in directory, will notice it has created file named package.json, those fiels contain 3 things
+  1) Metadata about prokject such as name and defualt entry JS file
+  2) Commands(Scripts) to execute things like run, test, or distribute code
+  3) packages that this project depends upon
+* with NPM installed can now install node packages like give-me-a-joke
+  * to do so must type npm install give-me-a-joke
+* when you examin contents of packages.json will see refercene to newly installed package dependencey
+* If no longer want package can alwaus remove wtih npm uninstall <package name>
+
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+**VERSUS**
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+
+* When start instlalling packages, NPM will create aditioanl file named package-lock.json and directory named node_modules in project directory.
+  * node_modules contains actual JS files for package and all its dependent packages
+  * Directory will start to get very largw **and you don't want to** check directory into source control sustem since it can be rebuilt using info contained in package.json and package-lock.json
+  * make sure to include node_modules in .gitignore file
+ 
+* When clone source code from github to new location, first run npm install in project directory. This will cause NPM to download all of previously installed packages and recreate node_modules
+* package-lock.json fils tracks verison of package that I install. That way if rebuild node_modules will have verison of package you initially installed and not lates available bersion, which might not be compatible with code
+* With NPM and joke package installed, can now use joke packagee in JS file by referencing package name as parameter to require function, its then followed by a call to the jokes okect getRandomDadJoke function to actually generate joke
+
+**index.js**
+const giveMeAJoke = require('give-me-a-joke');
+giveMeAJoke.getRandomDadJoke((joke) => {
+  console.log(joke);
+});
+
+**node.js**
+➜  node index.js
+What do you call a fish with no eyes? A fsh.
+
+**REMEMBER STEPS**
+1) Create project directory
+2) Inistialize it for use wtih NPM by running npm init -y
+3) make sure .gitignore file contains node_modules
+4) install any desired packages with npm install package_name
+5) Add require('package_name') to apps JS
+6) us code package provides in JS
+7) run code with node.index.js
+
+
+### Creating web service
+* with JS we can write code taht listens on network port, recieves HTTP request, processes them, and then responds. We can use this to create simple seb serve we execute using Node.js
+
+**Create**
+➜ mkdir webservicetest
+➜ cd webservicetest
+➜ npm init -y
+
+Next open VS code and create file index.js, and paste code into file and save:
+const http = require('http');
+const server = http.createServer(function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.write(`<h1>Hello Node.js! [${req.method}] ${req.url}</h1>`);
+  res.end();
+});
+
+server.listen(8080, () => {
+  console.log(`Web service listening on port 8080`);
+});
+
+* This code uses Node.js built in http package to create HTTP server using http.createServer function along with callback that takes req(request) and res(response) object
+* That function is called whenever server receives HTTP request
+* In example callback always returns same HTML snipet with status code 200 and content type header, no matter what request is made
+* server.listen call starts listening on port 8080 and blocks until porgram is terminated
+
+* Program is executed by going back to console window and running Node.js to exectire our index.js file. If servic starts up correclty then it should look like the following:
+➜ node index.js
+Web service listening on port 8080
+
+## Express
+* We learned how to use JS to create simple web server, this works great for little projects, howeeer to really build a production-ready applicatoin we need a framework with bit more functionality for easily implementing full web-service
+* This is where **Node** package **Express** comes in
+  1) Routing requets for service endpoints
+  2) manipulating HTTP requests with JSON body content
+  3) Generating HTTP responses
+  4) Using **middleware** to add functionality
+
+* Everything in express revolves around creatind/using HTTP routing middleware functions, you create express application by using NPM to install express package and then call express constructor to create express app and listen for HTTP requets on desired port
+
+➜ npm install express
+const express = require('express');
+const app = express();
+
+app.listen(8080);
+
+* with **app** object you can now add HTTP routing and middlewar funcions to application
+
+### Defining routes
+* HTTP endpoints are implimented in express by defining routes that call function based upon HTML patth
+* Express **app** object supports all HTTP verbs as functions on object
+  * for ex if wwant to route function that handles HTTP get request for URL path /store/provo would call get method on app
+
+app.get('/store/provo', (req, res, next) => {
+  res.send({name: 'provo'});
+});
+* **get** takes two parameters, url path matching pattern, and callback function that is invoked when pattern matches. Path mathcing parameter is used to match agaisnt URL path of an incoming HTTP request
+* callback funtion has 3 parameters taht represent HTTp request(**req**), the HTTP response(**res**) and the **next** routing function that express expects to be called if routing function wnats another function to generate response
+* Express **app** compares routing function patters in order that they are added to express **app** object. So if you have two routing functions with pattern that both match, the first one added will be called and given next matching funtion in next parameter
+* in above example we hard coded the store name to be provo. Real store endpoint would allow any store_name to be provided as parameter in path. Express supports path parameters by prefixing parameter name with colon. Express creates map of path parameters and populates it with matching valiues found in URL path. You then reference the parameters using the **req.params** object. Using this patter can reqrite getStore endpoint as follows
+
+app.get('/store/:storeName', (req, res, next) => {
+  res.send({name: req.params.storeName});
+});
+
+* if we run our JS using Node we can see result when we make an HTTP request using URL
+➜ curl localhost:8080/store/orem
+{"name":"orem"}
+
+* If you watned enpoint that used **post** or **delete** HTTP vvery then just use post or delete function on Express app object
+
+// Wildcard - matches /store/x and /star/y
+app.put('/st*/:storeName', (req, res) => res.send({update: req.params.storeName}));
+
+// Pure regular expression
+app.delete(/\/store\/(.+)/, (req, res) => res.send({delete: req.params[0]}));
+
+### Using middleware
+* standard mediator/middlewar desgien pattern has 2 peices: mediator and middlewar
+  * middleware representes comproneitzed pieces of functionality
+  * mediateor laods middleware components and determiens order of execution. When request coems to mediator it passes requesr around to middleware componets
+  * Following patter, Express is mediate and middlwarew functions are middleware components
+ 
+* Express coems with standard functions. They privide functionality like routing, authentication, CORS, sessions, serving static web files, cookies and logging.
+* Some are provided by default, others must ne installed using NPM before you can use them
+
+* Function looks pretty similar to routing function. That is because routing functions are middleware functions, the only differnece being routing functions are only called if associated pattern matches, middleware functions are always called for eery HTTP request unless preceding function does not call a **next**
+
+* Following pattern:
+function middlewareName(req, res, next)
+
+* Middleware function parameters represent HTTP request object(req), HTTP response and next middleware function to pass processing to. You should usually call next function after completing processin gso next middleware function can execute
+
+### Create own middleware
+* Can create functions that logs out the URL of the request then passes processing to next middleware function
+**EX:**
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+* remember order you add middleware to express app object controls the order that functions are called, any middleware that does not call next function after doing processing stops middleware chain from continuing
+
+### Bulitin Middleware
+* In additon to creating own middleware function, can use build it middlware functoin
+* **EX STATIC**
+app.use(express.static('public'));
+* if you create subdirectory in project and name it publix you can serve up any subdirectory you would like. Ex can create index.html file that is default content for webs ervice, then when you call web service wihtout only path the index.html will be returned
+
+### Third party middleware
+* can also you 3rd party functions by using NPM to install pacages and include packages in JS with require function
+* Ex uses cookie-parser package to simplify the generation and access of cookies
+
+**➜ npm install cookie-parser
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+
+app.post('/cookie/:name/:value', (req, res, next) => {
+  res.cookie(req.params.name, req.params.value);
+  res.send({cookie: `${req.params.name}:${req.params.value}`});
+});
+
+app.get('/cookie', (req, res, next) => {
+  res.send({cookie: req.cookies});
+});**
+
+* common for middleware to add fields and functions to req and res objects so other middleware can access functionality. Happens when cookie-parser adds req.cookies object for reading cookies, and also adds res.cookig function in order to make it ewasy to add cookit to a response
+
+### Putting it all together
+* here is full example of web service build using express
+* const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
+
+// Third party middleware - Cookies
+app.use(cookieParser());
+
+app.post('/cookie/:name/:value', (req, res, next) => {
+  res.cookie(req.params.name, req.params.value);
+  res.send({cookie: `${req.params.name}:${req.params.value}`});
+});
+
+app.get('/cookie', (req, res, next) => {
+  res.send({cookie: req.cookies});
+});
+
+// Creating your own middleware - logging
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+
+// Built in middleware - Static file hosting
+app.use(express.static('public'));
+
+// Routing middleware
+app.get('/store/:storeName', (req, res) => {
+  res.send({name: req.params.storeName});
+});
+
+app.put('/st*/:storeName', (req, res) => res.send({update: req.params.storeName}));
+
+app.delete(/\/store\/(.+)/, (req, res) => res.send({delete: req.params[0]}));
+
+// Error middleware
+app.get('/error', (req, res, next) => {
+  throw new Error('Trouble in river city');
+});
+
+app.use(function (err, req, res, next) {
+  res.status(500).send({type: err.name, message: err.message});
+});
+
+// Listening to a network port
+const port = 8080;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+

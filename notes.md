@@ -1843,3 +1843,123 @@ app.get('/store/provo', (req, res, next) => {
 * **get** takes two parameters, url path matching pattern, and callback function that is invoked when pattern matches. Path mathcing parameter is used to match agaisnt URL path of an incoming HTTP request
 * callback funtion has 3 parameters taht represent HTTp request(**req**), the HTTP response(**res**) and the **next** routing function that express expects to be called if routing function wnats another function to generate response
 * Express **app** compares routing function patters in order that they are added to express **app** object. So if you have two routing functions with pattern that both match, the first one added will be called and given next matching funtion in next parameter
+* in above example we hard coded the store name to be provo. Real store endpoint would allow any store_name to be provided as parameter in path. Express supports path parameters by prefixing parameter name with colon. Express creates map of path parameters and populates it with matching valiues found in URL path. You then reference the parameters using the **req.params** object. Using this patter can reqrite getStore endpoint as follows
+
+app.get('/store/:storeName', (req, res, next) => {
+  res.send({name: req.params.storeName});
+});
+
+* if we run our JS using Node we can see result when we make an HTTP request using URL
+➜ curl localhost:8080/store/orem
+{"name":"orem"}
+
+* If you watned enpoint that used **post** or **delete** HTTP vvery then just use post or delete function on Express app object
+
+// Wildcard - matches /store/x and /star/y
+app.put('/st*/:storeName', (req, res) => res.send({update: req.params.storeName}));
+
+// Pure regular expression
+app.delete(/\/store\/(.+)/, (req, res) => res.send({delete: req.params[0]}));
+
+### Using middleware
+* standard mediator/middlewar desgien pattern has 2 peices: mediator and middlewar
+  * middleware representes comproneitzed pieces of functionality
+  * mediateor laods middleware components and determiens order of execution. When request coems to mediator it passes requesr around to middleware componets
+  * Following patter, Express is mediate and middlwarew functions are middleware components
+ 
+* Express coems with standard functions. They privide functionality like routing, authentication, CORS, sessions, serving static web files, cookies and logging.
+* Some are provided by default, others must ne installed using NPM before you can use them
+
+* Function looks pretty similar to routing function. That is because routing functions are middleware functions, the only differnece being routing functions are only called if associated pattern matches, middleware functions are always called for eery HTTP request unless preceding function does not call a **next**
+
+* Following pattern:
+function middlewareName(req, res, next)
+
+* Middleware function parameters represent HTTP request object(req), HTTP response and next middleware function to pass processing to. You should usually call next function after completing processin gso next middleware function can execute
+
+### Create own middleware
+* Can create functions that logs out the URL of the request then passes processing to next middleware function
+**EX:**
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+* remember order you add middleware to express app object controls the order that functions are called, any middleware that does not call next function after doing processing stops middleware chain from continuing
+
+### Bulitin Middleware
+* In additon to creating own middleware function, can use build it middlware functoin
+* **EX STATIC**
+app.use(express.static('public'));
+* if you create subdirectory in project and name it publix you can serve up any subdirectory you would like. Ex can create index.html file that is default content for webs ervice, then when you call web service wihtout only path the index.html will be returned
+
+### Third party middleware
+* can also you 3rd party functions by using NPM to install pacages and include packages in JS with require function
+* Ex uses cookie-parser package to simplify the generation and access of cookies
+
+**➜ npm install cookie-parser
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+
+app.post('/cookie/:name/:value', (req, res, next) => {
+  res.cookie(req.params.name, req.params.value);
+  res.send({cookie: `${req.params.name}:${req.params.value}`});
+});
+
+app.get('/cookie', (req, res, next) => {
+  res.send({cookie: req.cookies});
+});**
+
+* common for middleware to add fields and functions to req and res objects so other middleware can access functionality. Happens when cookie-parser adds req.cookies object for reading cookies, and also adds res.cookig function in order to make it ewasy to add cookit to a response
+
+### Putting it all together
+* here is full example of web service build using express
+* const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
+
+// Third party middleware - Cookies
+app.use(cookieParser());
+
+app.post('/cookie/:name/:value', (req, res, next) => {
+  res.cookie(req.params.name, req.params.value);
+  res.send({cookie: `${req.params.name}:${req.params.value}`});
+});
+
+app.get('/cookie', (req, res, next) => {
+  res.send({cookie: req.cookies});
+});
+
+// Creating your own middleware - logging
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+
+// Built in middleware - Static file hosting
+app.use(express.static('public'));
+
+// Routing middleware
+app.get('/store/:storeName', (req, res) => {
+  res.send({name: req.params.storeName});
+});
+
+app.put('/st*/:storeName', (req, res) => res.send({update: req.params.storeName}));
+
+app.delete(/\/store\/(.+)/, (req, res) => res.send({delete: req.params[0]}));
+
+// Error middleware
+app.get('/error', (req, res, next) => {
+  throw new Error('Trouble in river city');
+});
+
+app.use(function (err, req, res, next) {
+  res.status(500).send({type: err.name, message: err.message});
+});
+
+// Listening to a network port
+const port = 8080;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+

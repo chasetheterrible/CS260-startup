@@ -15,6 +15,7 @@ async function loadTimes() {
         displayTimes(times);
     }
 
+function displayTimes(times) {
     const tableBodyEl = document.querySelector('#times')
 
     if (times.length) {
@@ -33,10 +34,10 @@ async function loadTimes() {
             rowEl.appendChild(dateTdEl);
 
             tableBodyEl.appendChild(rowEl);
-            
-        } 
-    }   else {
+        }
+    } else {
         tableBodyEl.innerHTML = '<tr><td colSpan=4>Be the first to play</td></tr>';
     }
 }
+
 loadTimes();

@@ -121,27 +121,38 @@ function getPlayerName() {
     return localStorage.getItem('userName') ?? 'Mystery player';
 }
 
-function saveTime(time) {
+async function saveTime(time) {
     const userName = getPlayerName();
-    let times = [];
-    const timesText = localStorage.getItem('times')
-    if (timesText) {
-        times = JSON.parse(timesText);
+    const date = new Date().toLocaleDateString();
+    const newTime = {name: userName, time: time, date: date};
+
+    try {
+        const response = await fetch('/api/time', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(newTime),
+        });
+
+        const times = await response.json();
+        localStorage.setItem('times', JSON.stringify(times));
+    } catch {
+        this.updateTimesLocal(newTime);
     }
-    times = updateTimes(userName, time, times);
-    localStorage.setItem('times', JSON.stringify(times));
 }
 
 const playerName = getPlayerName();
 console.log(playerName)
 
-function updateTimes(userName, time, times) {
-    const date = new Date().toLocaleDateString();
-    const newTime = {name: userName, time: time, date: date};
+function updateTimesLocal(newTime) {
+    let times = [];
+    const timesText = localStorage.getItem('scores');
+    if (timesText) {
+        times = JSON.parse(timesText);
+    }
 
     let found = false;
     for (const [i, prevTime] of times.entries()) {
-        if (time < prevTime.time) {
+        if (newTime < prevTime.time) {
             times.splice(i, 0, newTime);
             found = true;
             break;
@@ -156,7 +167,7 @@ function updateTimes(userName, time, times) {
         times.length = 10;
     }
 
-    return times;
+    localStorage.setItem('times', JSON.stringify(times));
 }
 
 setInterval(() => {

@@ -1,8 +1,18 @@
-function loadTimes() {
+async function loadTimes() {
     let times = [];
-    const timesText = localStorage.getItem('times');
-    if (timesText) {
-        times = JSON.parse(timesText);
+    try {
+        const response = await fetch('/api/times');
+        times = await response.json();
+
+        localStorage.setItem('times', JSON.stringify(times));
+    } catch {
+        const timesText = localStorage.getItem('times');
+        if (timesText) {
+            times = JOSN.parse(timesText);
+        }
+    }
+
+        displayTimes(times);
     }
 
     const tableBodyEl = document.querySelector('#times')

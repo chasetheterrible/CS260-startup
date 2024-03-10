@@ -14,6 +14,7 @@ function displayPicture() {
             containerEl.appendChild(imgEl);
         });
 } 
+
 function displayQuote(data) {
     fetch('https://dad-jokes.p.rapidapi.com/random/joke')
     .then((response) => response.json)
@@ -30,5 +31,8 @@ function displayQuote(data) {
 
         containerEl.appendChild(jokeEl)
         containerEl.appendChild(authorEl);
-    })
+    });
 }
+
+displayPicture();
+displayQuote();

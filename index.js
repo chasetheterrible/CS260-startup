@@ -20,7 +20,7 @@ apiRouter.post('/time', (req, res) => {
 });
 
 app.use((_req, res) => {
-    res.sendFile('index.html', {root: 'publix'});
+    res.sendFile('index.html', {root: 'public'});
 });
 
 app.listen(port, () => {
@@ -28,7 +28,23 @@ app.listen(port, () => {
 });
 
 let times = [];
-function updateTimes(newTimes, times) {
+function updateTimes(newTime, times) {
     let found = false;
-    for
+    for (const [i, prevTime] of times.entries()) {
+        if (newTime.time < prevTime.time) {
+            times.splice(i, 0, newTime);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        times.push(newTime);
+    }
+
+    if (times.length > 10) {
+        times.length = 10;
+    }
+
+    return times;
 }

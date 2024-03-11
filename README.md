@@ -46,3 +46,10 @@ This is a sequence diagram that shows how to people would interact with the back
 ## **Added**
 * I modified the play html and got rid of the hardcoded buttons, instead I have javascript create and keep track of those buttons
 * Added a functional timer which keeps trak of the amount of time it takes to complete the game
+
+# Service deliverable
+* Node,js/express HTTP service - done
+* static maiddleware for frontend - done
+* calls to third party endpoint
+* Backedn service endpoints - placeholders for login info that stores user on server, enpoints for the imes
+* front end call service endpoings - completed using fetch

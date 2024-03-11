@@ -5,7 +5,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
 app.use(express.json());
 
-app.use(express.static('public'));
+app.use(express.static('Public'));
 
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
@@ -20,7 +20,7 @@ apiRouter.post('/time', (req, res) => {
 });
 
 app.use((_req, res) => {
-    res.sendFile('index.html', {root: 'public'});
+    res.sendFile('index.html', {root: 'Public'});
 });
 
 app.listen(port, () => {

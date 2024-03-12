@@ -1963,3 +1963,24 @@ app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
 
+## SOP and CORS
+* Same Origin Policy
+* Cross Origin Resource Sharing
+
+* Security should always be on the mind
+
+* **SOP** was created, which only allows JS to make requests to domain if it is the same domain user is currently viewing
+
+* If you wanted to build a service that any web app can use it would also violate SOP and fail, to address this CORS was invented
+  * allows client(browser) to specify origin of request then let server respond wiht what origins are allowed
+  * server may say all origins are alloweed
+  * In CORS it is the browser that is protecting user from accessing course enpoint from wrong origin
+  * Only meant to alert user that something nefarious is being attempted
+ 
+### Third paty services
+* when making requests to own web services, always on sam origin so will not violate sop, however if want to make request to diff domain than one web app is hosted on, need to make sure domain allows requests as defined by Access-Control-Allow-Origin
+
+
+## Service design
+* provdies interactive, functionality of web app
+* Commonly authenticate users, track session state, provide, store and analyze data, connect peers, and aggr

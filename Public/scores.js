@@ -8,7 +8,7 @@ async function loadTimes() {
     } catch {
         const timesText = localStorage.getItem('times');
         if (timesText) {
-            times = JOSN.parse(timesText);
+            times = JSON.parse(timesText);
         }
     }
 

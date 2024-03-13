@@ -2096,19 +2096,17 @@ app.listen(port, function () {
     <script defer src="frontend.js"></script>
   </body>
 </html> -->
-* Frontend HS handles u0laoding fiel to server then uses filena,e returned from server to set src attribute of image in DOM:
+* Frontend HS handles u0laoding fiel to server then uses filename returned from server to set src attribute of image in DOM:
 
 (async function uploadFile(fileInput) {
   const file = fileInput.files[0];
   if (file) {
     const formData = new FormData();
     formData.append('file', file);
-
     const response = await fetch('/upload', {
       method: 'POST',
       body: formData,
     });
-
     const data = await response.json();
     if (response.ok) {
       document.querySelector('#upload').src = `/file/${data.file}`;

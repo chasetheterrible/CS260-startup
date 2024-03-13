@@ -2118,3 +2118,31 @@ app.listen(port, function () {
 
 ### Backend code
 * To build storage inot server must install Multer NPm package to our project
+  * npm install multer
+* multer handles reading file from HTTP request, enforcing size limit of upload, and storing file in uplaods directory
+  * should additionaly handle requests for static files, handle erroes and provoide a GET endpoint to serve a file from uploads directory
+### Where to store files
+1) only have so much available space, server only has 8gb by defualt. Once space is used server will fail to operate and may need to rebuild it
+2) In production system servers are tranient and often replaced as new versions are released, or capacity requirements change. That means you will lose anys tate that you store on server
+3) Server storage is not usually backed, if server fails you will lose customers data
+4) If you have multiple application servers then you can't assume that server you uploaded data to is going to be one request download from
+* We will want to use a dedicated storage service that has druability guarantees, is not tied to your compute compacity, and can be accessed by multiple application servers
+
+## Storage service
+### AWS S3
+1) unlimted capacity
+2) only pay for storage you use
+3) optimized for global access
+4) keeps multiple redudant compies of files
+5) can cerions files
+6) permannt
+7) supports metadata tags
+8) can make files publically available from S3
+9) Keep fiels private and only accessible to applicaiton
+
+* We will not be using storage service for simon project. If howeverf you want to use S3 as storage servie for startup app, then need to learn how to use AWS SDK
+  1) create S3 bucket to store data in
+  2) Get credentials so app can access bucket
+  3) using credentials in app
+  4) Using SDK to write, list, read, and delete files from bucket
+# **DO NOT INCLUDE CREDENTIALS IN CODE! Make sure they are in a .gitignore file**

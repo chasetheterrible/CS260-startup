@@ -2146,3 +2146,50 @@ app.listen(port, function () {
   3) using credentials in app
   4) Using SDK to write, list, read, and delete files from bucket
 # **DO NOT INCLUDE CREDENTIALS IN CODE! Make sure they are in a .gitignore file**
+
+## Data Services
+* web apps commonly use data persistently. Data can be many things, but is is usually representation of things like user profile, organized structure, game play info, usage history, billing info, peer relatioship, library catalog, and so forth
+* SQl have served as general purpose data service but now we have
+    * MySQL: relational queries
+    * Redis: memory cached objects
+    * Elastic Search: Ranled free text
+    * MongoDB: JSON object
+    * DynamoDB: key value pairs
+    * Neo4J: grpah based data
+    * InfluxDG: time series data
+ 
+### MongoDB
+* for projects in this course that require data services we will use MongoDB
+* Increases developer productvity by using JSON obejects as core data model,, this makes it easy to have app that uses JSOn from top down
+* Stores data in arrays that look like they contain things comparable to key:value pairs
+* unlike relational databases that require rigid table definintion whre each columnb is strictly typed beforehand, mongo has no strict schema requirements
+* To add new field to collection you insert field into doc as desried. If field is not present of has diff type in document then doc simply doesn't match query criteria
+
+### Using MongoDB in app
+* First step is to install mongoDB package using NPM
+  * npm install mongodb
+* with that done can use **MongoClient** object to make client connection to database server
+  * requires username, password and hostname of DB server
+  * const { MongoClient } = require('mongodb');
+
+const userName = 'holowaychuk';
+const password = 'express';
+const hostname = 'mongodb.com';
+
+const url = `mongodb+srv://${userName}:${password}@${hostname}`;
+
+const client = new MongoClient(url);
+
+* WIll have own user, password and hostname when creating account
+* To query for other docs use **find** function on collection object
+    * note find function is asychronous so we use await keyword for promise to reslove before we write them out to console
+
+const cursor = collection.find();
+const rentals = await cursor.toArray();
+rentals.forEach((i) => console.log(i));
+
+### Managed services
+* each application dev team would have developers that managed data serice, acuiring hardware, insalling DB software, monitor memory, cpu, and diskapce, control data scheam, and handle migrations and upgrades
+* Much of that work is not moved to services that are hoste and managed by 3rd part
+
+### MongoDB atlast

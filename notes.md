@@ -1983,4 +1983,140 @@ app.listen(port, function () {
 
 ## Service design
 * provdies interactive, functionality of web app
-* Commonly authenticate users, track session state, provide, store and analyze data, connect peers, and aggr
+* Commonly authenticate users, track session state, provide, store and analyze data, connect peers, and aggrgate user information
+* Service endpoints are often called **A**pplication **P**rogramming **I**nterface or **API**
+* When desgingin endpoints, think about grammar, readability, and discoverability
+
+### RPC
+* Remote procedure calls(RPC) expose service endpoints as simple function calls
+* when used over HTTP usually leverages POST HTTP verb but called with function name
+  * like deleteOrder of updateOrder
+  * nane of function is either entire path of URL of parameter in POST body
+
+### Rest
+* Reprsentation State Transfer(REST) attemps to take advantage of foundational principles of HTTP
+* REST verbs always act upon resource
+* Operations on resoiurce impact the state of resource as it is trasnferred by a REST endpoing call. THIS allows for caching functionalitu of HTTp to work optimall. For example, GET will always return same resource until PUT is executed on resource
+* When PUT is used, cahced resource is replaced with updated resource
+
+### GraphQL
+* focuses on manipulation of data instead of function call(RPC) or resoure(REST)
+* Heart of graphql is a query that specifies the desired data and how it should be joined and filtered
+* instead of making calls for getting a store, then bunch more for getting orders, employee names etx... graph sends single query that requesr all needed info in one big JSON. Server would examine query, join desired data then filter unwatned
+
+## PM2
+* When running program from consle, program will auto terminate when close console or if computer restarts
+  * To keep running after shitdown you need to register it as a **daemon**
+  * Term daemon comes from idea of somehthing always working in the backgound
+* PM2 is an easy way to stop and start web services, which we already have by starting up AWS
+  * scripts found in simnon deployment auto mods PM2 to register and restart webservice, meaing you should not need to do anything with PM2, however if running into problems such as service not running, here are some commands
+
+* SSH into server: pm2 ls
+* pm2 monit: visual monitor
+* ' ' start index.js -n simon: adds new process with explicit name
+* '' '                 ' startup --4000: adds new process with name and port parameter
+* stop: stops processs
+* restart: restarts process
+* delete: deletes process form being hosted
+* delete all: deletes all processes
+* save: saves current proceess across reboot
+* restart all: reload all processes
+* restart simon --update-env reload process and update node verion to current environment
+* update: reload pm2
+* start env.js --wathc --ignore-watch="node_modules": auto reload service when index.js changes
+* describe simon: describes detailed processs information
+* startup: displauys command to rund to keep PM2 running after reboot
+* logs simon: display process logs
+* env 0: display enviornment variables for process, us Pm2 ls to get process ID
+
+### Register new web service
+* If want to set up new sub-domain tha accesses differnet web serive on web server need
+  1) add rule to caddyfile to tell how to direct requests for domain
+  2) create direcory and add fiels for webservice
+  3) configure PM2 to host web service
+### Moddify caddy
+* ssh into server, copy section for startup domain and alter so it represents deisred subdomain and ifve differnet port number
+* Restart caddy wtih sudo service caddy restart
+### Create web service
+* copy ~/services/startup directory to directory that represents purpose of service
+
+## Debuggin Node.js
+* Previously JS debugging was done in live server VS code. Now that we are writing JS that runs NODE  we need way to launch and debug code that runs outside browser
+* To debug in JS first need some JS to debug
+* To debug ex a file named main.js, execute by with Start Debuggind command by pressing F5. First time you furn VS will ask what debugger you want to use, select Node.js
+* Code will execute and window will open to show debugger output to see results of two console log statements
+* Can puase execution by setting breakpoints
+* Start debugger prcess again by pressing F5, and code will start running, but pause on line with breakpoint
+
+### Debuggin Node.js web service
+* to debug web service we must first write code
+* Switch console app and run npm init -y and npm install express from code directory so we can use express package to write simple web service
+* use F11 to step through
+
+### Nodemon
+* once start writing complex web apps, will need to find yourself making chagnges in middle of debuggin session and you would liek to have node restart automatically and update changes
+* Nodemon package is a wrapper around node that watches for files in project directory to chagnes, when detects you saved somehtin git will auto restart node
+* To use install: **npm install -g nodemon**
+* Becase VS doesn't know how to luanch Nodemon automatically, need to create VS code launch config
+* Command-SHIFT-P and type Debug: Add configuration
+* Type: Node.js and select Node.js: Nodemon setup option
+* Change program from app.js to main.jss or whatever main JS file is for app and save config file
+* When press F5 will run Nodemon inand changes will auito upsate app when saved
+
+## Development and Production environments
+* when working on commercial web apps, its critical to separate where you develop app from where the production relase of appis made publicly available
+* A developer will not have access to production environemnt in order to prevent develope for nefariously manipulationg entire comapny asses, instead automated integreation process called continuous integration CI checkout app code, builds it, tests it, stages it, then finllay deploys in when completeed
+* For our work we will use use and manage development enviornment and production environment(AWS) however should never consider prodiciton enviornment as place for development or experiment with app
+* May shell into program to configure app to debug but deployment of app should happen using automated CI process, for ours we will use a simple Shell script
+### Automating deployment
+* Advnatage of auto deployment is reproducible, we don't accidentlay delte a feile or misonfigure somehting with a stray keystrok
+* to run deployment scrip from console window do something like: ./deployService.sh -k ~/prod.pem -h yourdomain.click -s simon
+* -k parameter provides crediential file necessary to access production environment
+* -h parameter is domain name of production environment
+* -s represents name of app you are deploying, either simon of startup for us
+* This will make more sense as we gradually build technologies
+
+## Uploading files
+* Web app often needs to uplaod one or more files from frontend to backend service, can accomplish with HTML unput element type file on frontend and Multer NPM package on backend
+### Frontend Code
+* Following code registers event handler for when selected file changes and only accepts file type .png, .jpeg .jpg. Also create img placeholder to display uplloaded image once stored on server:
+<!-- <html lang="en">
+  <body>
+    <h1>Upload an image</h1>
+    <input
+      type="file"
+      id="fileInput"
+      name="file"
+      accept=".png, .jpeg, .jpg"
+      onchange="uploadFile(this)"
+    />
+    <div>
+      <img style="padding: 2em 0" id="upload" />
+    </div>
+    <script defer src="frontend.js"></script>
+  </body>
+</html> -->
+* Frontend HS handles u0laoding fiel to server then uses filena,e returned from server to set src attribute of image in DOM:
+
+(async function uploadFile(fileInput) {
+  const file = fileInput.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      document.querySelector('#upload').src = `/file/${data.file}`;
+    } else {
+      alert(data.message);
+    }
+  }
+})
+
+### Backend code
+* To build storage inot server must install Multer NPm package to our project

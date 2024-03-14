@@ -2193,3 +2193,6 @@ rentals.forEach((i) => console.log(i));
 * Much of that work is not moved to services that are hoste and managed by 3rd part
 
 ### MongoDB atlast
+* All major cloud providers offer multiple services
+* For this class we wil use data service provided by MongoDB called Atlas
+* No credit card or payment is required to set up and use, as long as you stick to shraed cluster environment

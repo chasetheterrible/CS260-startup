@@ -1963,3 +1963,233 @@ app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
 
+## SOP and CORS
+* Same Origin Policy
+* Cross Origin Resource Sharing
+
+* Security should always be on the mind
+
+* **SOP** was created, which only allows JS to make requests to domain if it is the same domain user is currently viewing
+
+* If you wanted to build a service that any web app can use it would also violate SOP and fail, to address this CORS was invented
+  * allows client(browser) to specify origin of request then let server respond wiht what origins are allowed
+  * server may say all origins are alloweed
+  * In CORS it is the browser that is protecting user from accessing course enpoint from wrong origin
+  * Only meant to alert user that something nefarious is being attempted
+ 
+### Third paty services
+* when making requests to own web services, always on sam origin so will not violate sop, however if want to make request to diff domain than one web app is hosted on, need to make sure domain allows requests as defined by Access-Control-Allow-Origin
+
+
+## Service design
+* provdies interactive, functionality of web app
+* Commonly authenticate users, track session state, provide, store and analyze data, connect peers, and aggrgate user information
+* Service endpoints are often called **A**pplication **P**rogramming **I**nterface or **API**
+* When desgingin endpoints, think about grammar, readability, and discoverability
+
+### RPC
+* Remote procedure calls(RPC) expose service endpoints as simple function calls
+* when used over HTTP usually leverages POST HTTP verb but called with function name
+  * like deleteOrder of updateOrder
+  * nane of function is either entire path of URL of parameter in POST body
+
+### Rest
+* Reprsentation State Transfer(REST) attemps to take advantage of foundational principles of HTTP
+* REST verbs always act upon resource
+* Operations on resoiurce impact the state of resource as it is trasnferred by a REST endpoing call. THIS allows for caching functionalitu of HTTp to work optimall. For example, GET will always return same resource until PUT is executed on resource
+* When PUT is used, cahced resource is replaced with updated resource
+
+### GraphQL
+* focuses on manipulation of data instead of function call(RPC) or resoure(REST)
+* Heart of graphql is a query that specifies the desired data and how it should be joined and filtered
+* instead of making calls for getting a store, then bunch more for getting orders, employee names etx... graph sends single query that requesr all needed info in one big JSON. Server would examine query, join desired data then filter unwatned
+
+## PM2
+* When running program from consle, program will auto terminate when close console or if computer restarts
+  * To keep running after shitdown you need to register it as a **daemon**
+  * Term daemon comes from idea of somehthing always working in the backgound
+* PM2 is an easy way to stop and start web services, which we already have by starting up AWS
+  * scripts found in simnon deployment auto mods PM2 to register and restart webservice, meaing you should not need to do anything with PM2, however if running into problems such as service not running, here are some commands
+
+* SSH into server: pm2 ls
+* pm2 monit: visual monitor
+* ' ' start index.js -n simon: adds new process with explicit name
+* '' '                 ' startup --4000: adds new process with name and port parameter
+* stop: stops processs
+* restart: restarts process
+* delete: deletes process form being hosted
+* delete all: deletes all processes
+* save: saves current proceess across reboot
+* restart all: reload all processes
+* restart simon --update-env reload process and update node verion to current environment
+* update: reload pm2
+* start env.js --wathc --ignore-watch="node_modules": auto reload service when index.js changes
+* describe simon: describes detailed processs information
+* startup: displauys command to rund to keep PM2 running after reboot
+* logs simon: display process logs
+* env 0: display enviornment variables for process, us Pm2 ls to get process ID
+
+### Register new web service
+* If want to set up new sub-domain tha accesses differnet web serive on web server need
+  1) add rule to caddyfile to tell how to direct requests for domain
+  2) create direcory and add fiels for webservice
+  3) configure PM2 to host web service
+### Moddify caddy
+* ssh into server, copy section for startup domain and alter so it represents deisred subdomain and ifve differnet port number
+* Restart caddy wtih sudo service caddy restart
+### Create web service
+* copy ~/services/startup directory to directory that represents purpose of service
+
+## Debuggin Node.js
+* Previously JS debugging was done in live server VS code. Now that we are writing JS that runs NODE  we need way to launch and debug code that runs outside browser
+* To debug in JS first need some JS to debug
+* To debug ex a file named main.js, execute by with Start Debuggind command by pressing F5. First time you furn VS will ask what debugger you want to use, select Node.js
+* Code will execute and window will open to show debugger output to see results of two console log statements
+* Can puase execution by setting breakpoints
+* Start debugger prcess again by pressing F5, and code will start running, but pause on line with breakpoint
+
+### Debuggin Node.js web service
+* to debug web service we must first write code
+* Switch console app and run npm init -y and npm install express from code directory so we can use express package to write simple web service
+* use F11 to step through
+
+### Nodemon
+* once start writing complex web apps, will need to find yourself making chagnges in middle of debuggin session and you would liek to have node restart automatically and update changes
+* Nodemon package is a wrapper around node that watches for files in project directory to chagnes, when detects you saved somehtin git will auto restart node
+* To use install: **npm install -g nodemon**
+* Becase VS doesn't know how to luanch Nodemon automatically, need to create VS code launch config
+* Command-SHIFT-P and type Debug: Add configuration
+* Type: Node.js and select Node.js: Nodemon setup option
+* Change program from app.js to main.jss or whatever main JS file is for app and save config file
+* When press F5 will run Nodemon inand changes will auito upsate app when saved
+
+## Development and Production environments
+* when working on commercial web apps, its critical to separate where you develop app from where the production relase of appis made publicly available
+* A developer will not have access to production environemnt in order to prevent develope for nefariously manipulationg entire comapny asses, instead automated integreation process called continuous integration CI checkout app code, builds it, tests it, stages it, then finllay deploys in when completeed
+* For our work we will use use and manage development enviornment and production environment(AWS) however should never consider prodiciton enviornment as place for development or experiment with app
+* May shell into program to configure app to debug but deployment of app should happen using automated CI process, for ours we will use a simple Shell script
+### Automating deployment
+* Advnatage of auto deployment is reproducible, we don't accidentlay delte a feile or misonfigure somehting with a stray keystrok
+* to run deployment scrip from console window do something like: ./deployService.sh -k ~/prod.pem -h yourdomain.click -s simon
+* -k parameter provides crediential file necessary to access production environment
+* -h parameter is domain name of production environment
+* -s represents name of app you are deploying, either simon of startup for us
+* This will make more sense as we gradually build technologies
+
+## Uploading files
+* Web app often needs to uplaod one or more files from frontend to backend service, can accomplish with HTML unput element type file on frontend and Multer NPM package on backend
+### Frontend Code
+* Following code registers event handler for when selected file changes and only accepts file type .png, .jpeg .jpg. Also create img placeholder to display uplloaded image once stored on server:
+<!-- <html lang="en">
+  <body>
+    <h1>Upload an image</h1>
+    <input
+      type="file"
+      id="fileInput"
+      name="file"
+      accept=".png, .jpeg, .jpg"
+      onchange="uploadFile(this)"
+    />
+    <div>
+      <img style="padding: 2em 0" id="upload" />
+    </div>
+    <script defer src="frontend.js"></script>
+  </body>
+</html> -->
+* Frontend HS handles u0laoding fiel to server then uses filename returned from server to set src attribute of image in DOM:
+
+(async function uploadFile(fileInput) {
+  const file = fileInput.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await response.json();
+    if (response.ok) {
+      document.querySelector('#upload').src = `/file/${data.file}`;
+    } else {
+      alert(data.message);
+    }
+  }
+})
+
+### Backend code
+* To build storage inot server must install Multer NPm package to our project
+  * npm install multer
+* multer handles reading file from HTTP request, enforcing size limit of upload, and storing file in uplaods directory
+  * should additionaly handle requests for static files, handle erroes and provoide a GET endpoint to serve a file from uploads directory
+### Where to store files
+1) only have so much available space, server only has 8gb by defualt. Once space is used server will fail to operate and may need to rebuild it
+2) In production system servers are tranient and often replaced as new versions are released, or capacity requirements change. That means you will lose anys tate that you store on server
+3) Server storage is not usually backed, if server fails you will lose customers data
+4) If you have multiple application servers then you can't assume that server you uploaded data to is going to be one request download from
+* We will want to use a dedicated storage service that has druability guarantees, is not tied to your compute compacity, and can be accessed by multiple application servers
+
+## Storage service
+### AWS S3
+1) unlimted capacity
+2) only pay for storage you use
+3) optimized for global access
+4) keeps multiple redudant compies of files
+5) can cerions files
+6) permannt
+7) supports metadata tags
+8) can make files publically available from S3
+9) Keep fiels private and only accessible to applicaiton
+
+* We will not be using storage service for simon project. If howeverf you want to use S3 as storage servie for startup app, then need to learn how to use AWS SDK
+  1) create S3 bucket to store data in
+  2) Get credentials so app can access bucket
+  3) using credentials in app
+  4) Using SDK to write, list, read, and delete files from bucket
+# **DO NOT INCLUDE CREDENTIALS IN CODE! Make sure they are in a .gitignore file**
+
+## Data Services
+* web apps commonly use data persistently. Data can be many things, but is is usually representation of things like user profile, organized structure, game play info, usage history, billing info, peer relatioship, library catalog, and so forth
+* SQl have served as general purpose data service but now we have
+    * MySQL: relational queries
+    * Redis: memory cached objects
+    * Elastic Search: Ranled free text
+    * MongoDB: JSON object
+    * DynamoDB: key value pairs
+    * Neo4J: grpah based data
+    * InfluxDG: time series data
+ 
+### MongoDB
+* for projects in this course that require data services we will use MongoDB
+* Increases developer productvity by using JSON obejects as core data model,, this makes it easy to have app that uses JSOn from top down
+* Stores data in arrays that look like they contain things comparable to key:value pairs
+* unlike relational databases that require rigid table definintion whre each columnb is strictly typed beforehand, mongo has no strict schema requirements
+* To add new field to collection you insert field into doc as desried. If field is not present of has diff type in document then doc simply doesn't match query criteria
+
+### Using MongoDB in app
+* First step is to install mongoDB package using NPM
+  * npm install mongodb
+* with that done can use **MongoClient** object to make client connection to database server
+  * requires username, password and hostname of DB server
+  * const { MongoClient } = require('mongodb');
+
+const userName = 'holowaychuk';
+const password = 'express';
+const hostname = 'mongodb.com';
+
+const url = `mongodb+srv://${userName}:${password}@${hostname}`;
+
+const client = new MongoClient(url);
+
+* WIll have own user, password and hostname when creating account
+* To query for other docs use **find** function on collection object
+    * note find function is asychronous so we use await keyword for promise to reslove before we write them out to console
+
+const cursor = collection.find();
+const rentals = await cursor.toArray();
+rentals.forEach((i) => console.log(i));
+
+### Managed services
+* each application dev team would have developers that managed data serice, acuiring hardware, insalling DB software, monitor memory, cpu, and diskapce, control data scheam, and handle migrations and upgrades
+* Much of that work is not moved to services that are hoste and managed by 3rd part
+
+### MongoDB atlast

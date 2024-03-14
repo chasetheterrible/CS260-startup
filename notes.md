@@ -2196,3 +2196,73 @@ rentals.forEach((i) => console.log(i));
 * All major cloud providers offer multiple services
 * For this class we wil use data service provided by MongoDB called Atlas
 * No credit card or payment is required to set up and use, as long as you stick to shraed cluster environment
+
+### Keeping keys out of code
+* **PROTECT CREDENTIALS**
+* Do do so create a dbConfig.json in the same directory as the database JS file(ex database.js that you use to make database requests
+1) insert mango Db credentials into dbConfig.json file like example code but with own data:
+{
+  "hostname": "cs260.abcdefg.mongodb.net",
+  "userName": "myMongoUserName",
+  "password": "toomanysecrets"
+}
+2) imp dbConfig into database.js useing Node.js require statement
+const config = require('./dbConfig.json');
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+* MAKE SURE TO INCLDUE dbConfig.josn in .gitignore
+
+* To execute below code stored in a file named index.js run npm init -y, then npm install mangodb then node index.js:
+
+const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
+
+async function main() {
+  // Connect to the database cluster
+  const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+  const client = new MongoClient(url);
+  const db = client.db('rental');
+  const collection = db.collection('house');
+
+  // Test that you can connect to the database
+  (async function testConnection() {
+    await client.connect();
+    await db.command({ ping: 1 });
+  })().catch((ex) => {
+    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    process.exit(1);
+  });
+
+  // Insert a document
+  const house = {
+    name: 'Beachfront views',
+    summary: 'From your bedroom to the beach, no shoes required',
+    property_type: 'Condo',
+    beds: 1,
+  };
+  await collection.insertOne(house);
+
+  // Query the documents
+  const query = { property_type: 'Condo', beds: { $lt: 2 } };
+  const options = {
+    sort: { score: -1 },
+    limit: 10,
+  };
+
+  const cursor = collection.find(query, options);
+  const rentals = await cursor.toArray();
+  rentals.forEach((i) => console.log(i));
+}
+
+main().catch(console.error);
+
+should get the following
+
+{
+_id: new ObjectId("639b51b74ef1e953b884ca5b"),
+name: 'Beachfront views',
+summary: 'From your bedroom to the beach, no shoes required',
+property_type: 'Condo',
+beds: 1
+}
+
+

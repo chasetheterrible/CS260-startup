@@ -2453,3 +2453,5 @@ async function createUser(email, password) {
 ### Passing authentication tokens
 * now need to pass generated authentication token to browsser when login endpoint is called, and get it back subsequent request
 * To do we use HTTp cookies, the **cookie-parser** package provides middleware for coookies
+* import cookieParser object then tell app to ise it
+* use **httpOnly, secure, and sameSite** to make it secure as possible

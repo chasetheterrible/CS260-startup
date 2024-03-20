@@ -145,7 +145,7 @@ console.log(playerName)
 
 function updateTimesLocal(newTime) {
     let times = [];
-    const timesText = localStorage.getItem('scores');
+    const timesText = localStorage.getItem('times');
     if (timesText) {
         times = JSON.parse(timesText);
     }

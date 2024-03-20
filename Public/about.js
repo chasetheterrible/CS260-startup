@@ -6,7 +6,7 @@ function displayJoke(data) {
     
     jokeEl.textContent = data.content;
 
-    containerEl.appendChile(jokeEl);
+    containerEl.appendChild(jokeEl);
 }
 
 function callService(url, displayCallback) {

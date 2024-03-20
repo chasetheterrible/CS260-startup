@@ -1,5 +1,3 @@
-const { BulkOperationBase } = require("mongodb");
-
 (async () => {
     const userName = localStorage.getItem('userName');
     if(userName) {
@@ -12,11 +10,9 @@ const { BulkOperationBase } = require("mongodb");
     }
 })();
 
-
 async function loginUser() {
     loginOrCreate(`/api/auth/login`);
 }
-
 
 async function createUser() {
     loginOrCreate(`/api/auth/create`);
@@ -24,7 +20,7 @@ async function createUser() {
 
 async function loginOrCreate(endpoint) {
     const userName = document.querySelector('#userName')?.value;
-    const password = document.querySelector('userPassword')?.value;
+    const password = document.querySelector('#userPassword')?.value;
     const response = await fetch(endpoint, {
         method: 'post',
         body: JSON.stringify({ email: userName, password: password}),
@@ -32,6 +28,7 @@ async function loginOrCreate(endpoint) {
             'Content-type': 'application/json; charset=UTF-8'
         },
     });
+
     if (response.ok) {
         localStorage.setItem('userName', userName);
         window.location.href = 'play.html';
@@ -47,6 +44,7 @@ async function loginOrCreate(endpoint) {
 function play() {
     window.location.href = 'play.html'
 }
+
 function logout() {
     localStorage.removeItem('userName');
     fetch(`/api/auth/logout`, {
@@ -62,4 +60,11 @@ async function getUser(email) {
     } 
 
     return null
+}
+
+function setDisplay(controlId, display) {
+    const playControlEl = document.querySelector(`#${controlId}`);
+    if (playControlEl) {
+        playControlEl.style.display = display;
+        }
 }

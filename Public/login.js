@@ -10,6 +10,24 @@
     }
 })();
 
+
+async function loginUser() {
+    loginOrCreate(`/api/auth/login`);
+}
+
+
 async function createUser() {
     loginOrCreate(`/api/auth/create`);
+}
+
+async function loginOrCreate(endpoint) {
+    const Username = document.querySelector('#Username')?.value;
+    const password = document.querySelector('userPassword')?.value;
+    const response = await fetch(endpoint, {
+        method: 'post',
+        body: JSON.stringify({ email: Username, password: password}),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        },
+    });
 }

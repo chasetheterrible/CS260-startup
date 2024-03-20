@@ -8,4 +8,14 @@ function displayJoke(data) {
 
     containerEl.appendChile(jokeEl);
 }
-displayJoke();
+
+function callService(url, displayCallback) {
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            displayCallback(data);
+        });
+}
+
+const random = Math.floor(math.random() * 1000);
+callService('https://api.chucknorris.io/jokes/random?category=dev', displayJoke);

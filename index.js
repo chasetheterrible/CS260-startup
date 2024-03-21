@@ -1,5 +1,5 @@
 const cookieParser = require('cookie-parser');
-const bycrypt = require('bycrypt');
+const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const DB = require('./database.js');
@@ -104,4 +104,3 @@ apiRouter.post('/auth/create', async (req, res) => {
   app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
-  

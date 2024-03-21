@@ -1,5 +1,5 @@
 const { MogoClient } = require('mongodb');
-const bycrypt = require('bycrypt');
+const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const config = require('./dbConfig.json');
 

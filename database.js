@@ -42,8 +42,19 @@ function addTime(time) {
 }
 
 function getHighTimes() {
-    const query
+    const query = { time: { $gt: 0, $lt: 900 } };
+    const options = {
+        sort: { score:1 },
+        limit: 10
+    };
+    const cursor = timeCollectoin.find(query, options);
+    return cursor.toArray();
 }
 
-
-
+module.exports = {
+    getUser,
+    getUserByToken,
+    createUser,
+    addTime,
+    getHighTimes,
+};

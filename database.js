@@ -5,7 +5,7 @@ const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('Paired up');
+const db = client.db('Paired_up');
 const userCollection = db.collection('user');
 const timeCollectoin = db.collection('time');
 

@@ -7,7 +7,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('Paired up');
 const userCollection = db.collection('user');
-const timeCollectoin = db.collectoin('time');
+const timeCollectoin = db.collection('time');
 
 (async function testConnection() {
     await client.connect();

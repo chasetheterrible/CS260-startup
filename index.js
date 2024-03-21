@@ -1,14 +1,38 @@
+const cookieParser = require('cookie-parser');
+const bycrypt = require('bycrypt');
 const express = require('express');
 const app = express();
+const DB = require('./database.js');
 
+
+
+const authCookieName = 'token';
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 
+app.use(cookieParser());
+
 app.use(express.static('public'));
+
+app.set('trust proxy', true);
 
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
+
+
+apiRouter.post('/auth/login', async (req, res) => {
+    const user = await DB.getUser(req.body.email);
+    if (user) {
+        if (await bycrypt.compare(req.body.password, user.password)) {
+            setAuthCookie(res, user.token);
+            res.send({ id: user._id});
+            return;
+        }
+    }
+    res.status(401).send({ msg: 'Unauthorized' });
+});
+
 
 apiRouter.get('/times', (_req, res) => {
     res.send(times);

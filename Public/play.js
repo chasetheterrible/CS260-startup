@@ -135,6 +135,7 @@ async function saveTime(time) {
 
         const times = await response.json();
         localStorage.setItem('times', JSON.stringify(times));
+        updateTimesLocal(newTime);
     } catch {
         this.updateTimesLocal(newTime);
     }
@@ -149,22 +150,22 @@ function updateTimesLocal(newTime) {
     if (timesText) {
         times = JSON.parse(timesText);
     }
+    // let found = false;
+    // for (const [i, prevTime] of times.entries()) {
+    //     if (newTime.time < prevTime.time) {
+    //         times.splice(i, 0, newTime);
+    //         found = true;
+    //         break;
+    //     }
+    // }
 
-    let found = false;
-    for (const [i, prevTime] of times.entries()) {
-        if (newTime < prevTime.time) {
-            times.splice(i, 0, newTime);
-            found = true;
-            break;
-        }
-    }
-
-    if (!found) {
-        times.push(newTime);
-    }
-
+    // if (!found) {
+    //     times.push(newTime);
+    // }
+    times.push(newTime);
+    times.sort((a,b) => Number(a.time) - Number(b.time));
     if (times.length > 10) {
-        times.length = 10;
+        times = times.slice(0,10);
     }
 
     localStorage.setItem('times', JSON.stringify(times));

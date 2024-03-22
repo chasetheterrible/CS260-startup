@@ -7,7 +7,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('Paired_up');
 const userCollection = db.collection('user');
-const timeCollectoin = db.collection('time');
+const timeCollection = db.collection('time');
 
 (async function testConnection() {
     await client.connect();
@@ -38,16 +38,16 @@ async function createUser(email, password) {
 }
 
 function addTime(time) {
-    timeCollectoin.insertOne(time);
+    timeCollection.insertOne(time);
 }
 
 function getHighTimes() {
     const query = { time: { $gt: 0, $lt: 900 } };
     const options = {
-        sort: { score: -1 },
+        sort: { time: 1 },
         limit: 10
     };
-    const cursor = timeCollectoin.find(query, options);
+    const cursor = timeCollection.find(query, options);
     return cursor.toArray();
 }
 

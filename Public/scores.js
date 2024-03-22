@@ -4,7 +4,6 @@ async function loadTimes() {
         const response = await fetch('/api/times');
         times = await response.json();
 
-        localStorage.setItem('times', JSON.stringify(times));
     } catch {
         const timesText = localStorage.getItem('times');
         if (timesText) {

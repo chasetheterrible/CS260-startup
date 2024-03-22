@@ -53,3 +53,12 @@ This is a sequence diagram that shows how to people would interact with the back
 * calls to third party endpoint
 * Backedn service endpoints - placeholders for login info that stores user on server, enpoints for the imes
 * front end call service endpoings - completed using fetch
+
+
+# Login deliverable
+* MongoDB atlas DB created
+* Stores data in Mongo Db
+* *User registration: creates new account in DB
+* Existing user: stores times under same user if already exist
+* Mongo DB stores both user and times
+* Cannon play until logged in

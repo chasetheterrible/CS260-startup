@@ -26,7 +26,7 @@ function getUserByToken(token) {
 }
 
 async function createUser(email, password) {
-    const passwordHash = await bcrypt.has(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     const user = {
         email: email,
         password: passwordHash,
@@ -44,7 +44,7 @@ function addTime(time) {
 function getHighTimes() {
     const query = { time: { $gt: 0, $lt: 900 } };
     const options = {
-        sort: { score:1 },
+        sort: { score: -1 },
         limit: 10
     };
     const cursor = timeCollectoin.find(query, options);

@@ -22,21 +22,19 @@ async function loginOrCreate(endpoint) {
     const userName = document.querySelector('#userName')?.value;
     const password = document.querySelector('#userPassword')?.value;
     const response = await fetch(endpoint, {
-        method: 'post',
+        method: 'POST',
         body: JSON.stringify({ email: userName, password: password}),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8'
-        },
+        headers: { 'Content-type': 'application/json; charset=UTF-8' }
     });
 
     if (response.ok) {
         localStorage.setItem('userName', userName);
         window.location.href = 'play.html';
     } else {
-        const obdy = await response.json();
+        const body = await response.json();
         const modalEl = document.querySelector('#msgModal');
         modalEl.querySelector('.modal-body').textContent = `⚠ Error: ${body.msg}`;
-        const msgModal = new bootsrap.Modal(modalEl, {});
+        const msgModal = new bootstrap.Modal(modalEl, {});
         msgModal.show();
     }
 }

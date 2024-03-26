@@ -2682,3 +2682,22 @@ test('getStore returns the desired store', (done) => {
 * wben we run this test we see it passes without error(npm run test)
 * you can change the test to expect status code of 500(server error) if you want to see test fail
 * can change endpoint code to retirn 201 status code
+
+## Websocket
+* HTTP based on client-server architecture, a client initiates request and server responds
+* Websocket pakes it a peer peer connetcton where either party can efficiently send data
+  * if wanting to facilitate conversation between groups, must act as intermediary
+### creating websocket conversation
+* JS running on browser can initiate websocket connection API, but first must create Websocket object by specifying port you want to communicate on
+* Can send messages with **send** funtion and register a calback using **onmessage** function to receive
+
+const socket = new WebSocket('ws://localhost:9900');
+
+socket.onmessage = (event) => {
+  console.log('received: ', event.data);
+};
+
+socket.send('I am listening');
+
+* server uses **ws** package to create Websocket server that is listening on same port the browser is using
+* By specifying port when you create WSS you tell server to tlisten to HHTTp connections on that port and to automatically upgrade them to WS connection if request has a **connection: Upgrade** header

@@ -2836,3 +2836,31 @@ function sendMessage() {
 * If it is non secure HTTp then we sent WS protocol to be non secure WS(ws) othersise we use secure WS(wss)
 * Use that to then conect WS to same location that we loaded in HTMl from referncing the **window.location.host** variable
 * We can notify the user that chat is readu to go by listening to **onopen** event and appending some text to display using **appendMsg** function we created earlier
+
+// Adjust the webSocket protocol to what is being used for HTTP
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+// Display that we have opened the webSocket
+socket.onopen = (event) => {
+  appendMsg('system', 'websocket', 'connected');
+};
+
+* When WS recieves message from peer, it displays using **appendMsg** function:
+
+socket.onmessage = async (event) => {
+  const text = await event.data.text();
+  const chat = JSON.parse(text);
+  appendMsg('friend', chat.name, chat.msg);
+};
+
+* If the WS closes for any reason we also display that to the user and disable the controls:
+
+socket.onclose = (event) => {
+  appendMsg('system', 'websocket', 'disconnected');
+  document.querySelector('#name-controls').disabled = true;
+  document.querySelector('#chat-controls').disabled = true;
+};
+
+### Chat server
+

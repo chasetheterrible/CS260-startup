@@ -2791,3 +2791,48 @@ socket.send('I am listening');
   <script src="chatClient.js"></script>
 </html> -->
 * JS for app provides interaction with DOM for creating and displaying messages, and manaages the WS in order to connect, send, and receive messages
+
+### DOM interaction
+* we do not want to be able to send messages if user has not specified a name, so we add event listener on the name input and siable the chat controls if name is ever empty
+
+const chatControls = document.querySelector('#chat-controls');
+const myName = document.querySelector('#my-name');
+myName.addEventListener('keyup', (e) => {
+  chatControls.disabled = myName.value === '';
+});
+
+* we then create function that will update displayed messages by selecting the element with **chat-text** ID and appending the new messages to its HTML
+* Security minded developers will realize that manipulating DOM in this way will allow any chat user to execute code in context of application:
+
+function appendMsg(cls, from, msg) {
+  const chatText = document.querySelector('#chat-text');
+  chatText.innerHTML = `<div><span class="${cls}">${from}</span>: ${msg}</div>` + chatText.innerHTML;
+}
+
+* when user pressed enter key in message input we want to send message over socket, do this by selecting DOM element with **new-msg** ID and adding listener that wathces for **enter** keystroke:
+const input = document.querySelector('#new-msg');
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+* when enter is pressed the sendMessage function is called, this selects the test out of **new-msg** element and sends that over WS. Value of message element is then cleared so its ready for next message:
+
+function sendMessage() {
+  const msgEl = document.querySelector('#new-msg');
+  const msg = msgEl.value;
+  if (!!msg) {
+    appendMsg('me', 'me', msg);
+    const name = document.querySelector('#my-name').value;
+    socket.send(`{"name":"${name}", "msg":"${msg}"}`);
+    msgEl.value = '';
+  }
+}
+
+### WebSocket connection
+* now we can set up WS we want to be able to supoprt both secure and non-secure WS connections
+* To do this we look at protocol that is currently being used as representing by the **window.location.protocol** variable
+* If it is non secure HTTp then we sent WS protocol to be non secure WS(ws) othersise we use secure WS(wss)
+* Use that to then conect WS to same location that we loaded in HTMl from referncing the **window.location.host** variable
+* We can notify the user that chat is readu to go by listening to **onopen** event and appending some text to display using **appendMsg** function we created earlier

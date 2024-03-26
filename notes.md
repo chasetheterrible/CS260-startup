@@ -2611,3 +2611,74 @@ app.listen(port, function () {
     *  --> {"id":"639bb9d644416bf7278dde44"}
   * curl -b cookie.txt localhost:8080/user/me
     * {"email":"지안@id.com"}
+
+## UI testng
+* Test driven development(TDD) is proven method to acel app creation, prtect agiasnt bugs, and demonstrate correectness
+* problem is brower is required to execite UI code, meaning you must actually test app in browser
+* We are going to pick playright
+* EX code
+<!--<body>
+  <p id="welcome" data-testid="msg">Hello world</p>
+  <button onclick="changeWelcome()">change welcome</button>
+  <script>
+    function changeWelcome() {
+      const welcomeEl = document.querySelector('#welcome');
+      welcomeEl.textContent = 'I feel welcomed';
+    }
+  </script>
+</body> -->
+* First we would need to install playright
+  * npm init playwright@latest
+* NExt install exentsion for VS code
+  * install Playwright test for VScode
+* If testing a node.js based service run **npm run start**
+* To run test in VS code select test explorer tab
+  * should see test listed, select example.spex.js and press play button. It will start test, launch browser and displauy resutl
+  * In this case test should fail becuase result expected was I feel not welcomed
+## Endpoint testing
+1) To get started with Jest we need simple web service, in console widnwo create test directory, install express, and open vs code
+2) now create file named server.ks, use express to create app with two endpoints, one to get a store(geStore0 and another to update store
+3) To allow jest to start HTTP we initialize app a litt more
+   * normally we start listening on express app object after defined enpoints
+   * export express app object form server.js file then import app in index.js file
+   * can test working by debuggin f5 while viewing index.js file
+4) to lauch create another file with suffix .test.js
+   * any file with that suffix is considered testing file and will auto be discovered by jest and examing for tests to run
+### Simple test
+* before write tests for endpoints will write test that demostrates how jest works
+1) call jest function
+   * note don't need to include require statement
+2) create file named store.test.js
+test('that equal values are equal', () => {
+  expect(false).toBe(true);
+});
+  * test function takes description as **first** parameter, description is meant to be human readable, int his case it reads test that equat values are equal. **Second** parameteter is function to call, in thise our function just calls jest **expert**
+4) install with npm install jest -D
+5) replace scripts section of package.json with new command that will run tests
+"scripts": {
+  "test": "jest"
+},
+6) npm run test
+### Testing endpoings
+* to test endpoints we need another package so that we can make HTTP requets without having to actally send over the network
+* Done with **npm package called supertest**
+* npm install supertest -D
+* Can then aloter store.test.js to import express service and also request fimction from supertest to make HTTp requests
+* To make request we pass express app to supertest request function and then ciain HTTP verb function that we want to call, along with endpoint path
+* Can then chain as many expect functions as you would like
+* If something goes wrong, **end** function will contain error and we pass error to **done** function. Otherwise we just call **done** without error
+
+const request = require('supertest');
+const app = require('./server');
+
+test('getStore returns the desired store', (done) => {
+  request(app)
+    .get('/store/provo')
+    .expect(200)
+    .expect({ name: 'provo' })
+    .end((err) => (err ? done(err) : done()));
+});
+
+* wben we run this test we see it passes without error(npm run test)
+* you can change the test to expect status code of 500(server error) if you want to see test fail
+* can change endpoint code to retirn 201 status code

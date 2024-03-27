@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const DB = require('./database.js');
-
+const { peerProxy } = require('./peerProxy.js')
 
 
 const authCookieName = 'token';
@@ -60,7 +60,7 @@ apiRouter.post('/auth/create', async (req, res) => {
     res.status(404).send({ msg: 'Unknown' });
   });
 
-  var secureApiRouter = express.Router();
+  const secureApiRouter = express.Router();
   apiRouter.use(secureApiRouter);
   
   secureApiRouter.use(async (req, res, next) => {
@@ -101,6 +101,8 @@ apiRouter.post('/auth/create', async (req, res) => {
     });
   }
   
-  app.listen(port, () => {
+  const httpService = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
+
+  peerProxy(httpService)

@@ -16,14 +16,13 @@
     font-style: italic;
 }
 
-/* .author {
+.author {
     text-align: right;
-} */
+}
 
-/* .author::before {
-    /* This is a pseudo-element selector that selects and styles the virtual content inserted before the actual content of the selected element */
-    /* content: " - " */
-/* } */
+ .author::before {
+    content: " - " 
+}
 
 
 #picture img {

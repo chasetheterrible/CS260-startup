@@ -99,7 +99,7 @@ function handleButtonClick(event) {
     } else {
         clickedButton = button;
     }
-
+}
 
 function allButtonsMatched() {
     const buttons = document.querySelectorAll('.button-container button');
@@ -169,7 +169,7 @@ function updateTimesLocal(newTime) {
 //     chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> <span class="timed" style="color: white;">timed with ${time} seconds</span></div>` + chatText.innerHTML;
 // }, 5000);
 
-configureWebSocket() {
+configureWebSocket(); {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
     this.socket.onopen = (event)  => {
@@ -188,12 +188,12 @@ configureWebSocket() {
     };
 }
 
-displayMsg(cls, form, msg) {
+displayMsg(cls, form, msg); {
     const chatText = document.querySelector('#player-messages');
     chatText.innerHTML = `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
 }
 
-broadcastEvent(from, type, value) {
+broadcastEvent(from, type, value); {
     const event = {
         from: from,
         type: type,

@@ -2863,4 +2863,164 @@ socket.onclose = (event) => {
 };
 
 ### Chat server
+* chat server runs WS, serves up client code, mangages WS connections, and forwards messages from peers
 
+### Web services
+* WS is established using a simple express application, note that we serve up client using HTML, CSS, and JS files using the static middleware
+
+const { WebSocketServer } = require('ws');
+const express = require('express');
+const app = express();
+
+// Serve up our webSocket client HTML
+app.use(express.static('./public'));
+
+const port = process.argv.length > 2 ? process.argv[2] : 3000;
+server = app.listen(port, () => {
+  console.log(`Listening on ${port}`);
+});
+
+### WebSocket Server
+* when we create WS we do things a little differently than we did with simple connection example
+* Instead of letting WSServer control both HTTP connection and upgrading to WS, we want to use the HTTP conection that express is providing and handle the upgade to WS ourselves
+* This is done by specifuing the **noServer** option when creating the WSServer and then handling the **upgrade** notification that occurs when a client requets the upgrade of the protocol from HTTP ro WS
+
+
+// Create a websocket object
+const wss = new WebSocketServer({ noServer: true });
+
+// Handle the protocol upgrade from HTTP to WebSocket
+server.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, function done(ws) {
+    wss.emit('connection', ws, request);
+  });
+});
+
+### Forwarding messages
+* with WS server we can use the **connection, message, and close** events to forward messages between peers
+* on conention we inster objet representing connection into list of all connections from chat peers
+* Then when message is received we loop through peer connections and forward it on to everyone except peer who initated request
+* Finally we remove connection from peer connection list when its closed
+
+// Keep track of all the connections so we can forward messages
+let connections = [];
+
+wss.on('connection', (ws) => {
+  const connection = { id: connections.length + 1, alive: true, ws: ws };
+  connections.push(connection);
+
+  // Forward messages to everyone except the sender
+  ws.on('message', function message(data) {
+    connections.forEach((c) => {
+      if (c.id !== connection.id) {
+        c.ws.send(data);
+      }
+    });
+  });
+
+  // Remove the closed connection so we don't try to forward anymore
+  ws.on('close', () => {
+    connections.findIndex((o, i) => {
+      if (o.id === connection.id) {
+        connections.splice(i, 1);
+        return true;
+      }
+    });
+  });
+});
+
+### Keeping connections alive
+* WS connection will evv entlauu close automaticlaly if no data is sent across it
+* To prevent that from happening the WS protocol supports the ability to send a **ping** message to see if peer is still there and receive **pong** responses to indicate affirmative
+* To make this work we use setInterval to send out ping every 10 seconds to each of peer connections and clean up any connectoin that did no respond to previous ping
+
+setInterval(() => {
+  connections.forEach((c) => {
+    // Kill any connection that didn't respond to the ping last time
+    if (!c.alive) {
+      c.ws.terminate();
+    } else {
+      c.alive = false;
+      c.ws.ping();
+    }
+  });
+}, 10000);
+
+* in connection handler we listen for the **pong** response and mark the connection as alive
+
+// Respond to pong messages by marking the connection alive
+ws.on('pong', () => {
+  connection.alive = true;
+});
+
+* any connection that did not respond will reamin in the not alive state and get cleaned up on next pass
+
+## Security
+* internet allows to socially connect, conduct financial transaction, and providea cces to sensitive personal, corporate and government data
+* Accessible form eveyr corner of planet
+* Hacking: proccess of amking a system do somethings its not supposed to
+* Exploit: code or input that takes advantage of programming or configuration flow
+* Attack vector: methid hacker uses
+* Attack surface: exposer port of a system attacker can access
+* Attack payload: actual code or data that hacker uses to exploit
+* Input sanitiazation: 'cleaning' any input of potentially malicious data
+* Black box testing: tsting app without knowledge of internals of application
+* White box testing: testing app wtih knowledge of code and internal infrastructure
+* Penetration testing: attemp to gain access to exploit a suystem in ways anticipated by developers
+* Mitigation: action taked to remove, reduce a threat
+### Motivation for attackers
+* Disruption
+* Data exfiltration
+* Resource consumption
+
+## OWASP
+* Open Web Application Security Protocol is non-profit research entry that manages top ten list of most importatn web app security rissks
+### A01 Broken access control
+* Broken access control occurs when app doesn't properly enforece permission on useters(non-admin can do admin things)
+* Mitigation: strict access enforcment
+* clealruy defined roles and elevation paths
+### A02 cryptogrpahic failures
+* can occur when sensitive data is accessible either wihthout encryption, with weak enctyption of when protections are ignored
+* sending uncrypted data over public network connections allows attackers to capture data
+* Mitigation: use strong encryption for all data
+* update encryption algorithims as older become compromised
+* properly useing cryptographic safeguards
+### A03 injection
+* Injection exploits occur when attack is allowed to supply data that is injected into context where it vilates expected use of user input, for exapmle input field that should only contain a password, instead attack supplies SQL Db command in password input
+* mitigation: sanitizing input
+* use DB prepared statements
+* Restricting execution rights
+* limit output
+### A04 insecure design
+* insecure design broadly refers to architectural flaws that are unique for individual systems rather than implementaiton errors, this happens when application team doesn't focus on security when designing a system or doesn't continuously reevaluate apps security
+* Insecure design explours based on unexpected uses of business logic that controlls functionality of application
+* if app allows triual erros to be eaily created atacker could create denial of service attack by creating millions o f accounts
+* Mitigation: integration testing
+* strict access control
+* security educattion and desgin pattern usages
+* scenario reviews
+### A05 security misconfiguration
+* security misconfig attacks explout config of app(default passwrokds, not updating software
+* Mitigation: config review
+* Setting defaults to disable all access
+* automaged foncig audits
+* requir multiple layers o faccess for remote config
+### A06
+* Longer app has been deployed the more liekly it is that attack surfaces and corresponding exploits will increase, this is primarily due to cost of maintaining application and keeping it up to date to mitigate newlu discovered exploints
+* Mitigation: keping manifest of software inlcuding versions, reviwing security bulletins, regularly updating software, required componets to be up to date, replacing unsuported software
+### A07 identification and authentication failures
+* identification and authentication failures in any situtatoin where users identity can be impersonated  or assumed by attacker. Ex if attack can repeadetly attempt to guess users passwrod then eventually they will be successful
+* Mitgation: rate limiting requets, properly managing credentials, multifacort authentication, authentication recovery
+### A07
+* software and data integrity failrues represent attacks taht allow external, processes or data to compromise your application, modern web apps extensively use open source and commercially produced packages to provide cuntioanliuty
+* Without secuity adut gives unknown ammount of control over your app
+* Mitigations: only using truseted package respositories, using your own private vetted repository, audit all updates to 3rd party packages and data sources
+### A09
+* proper system monitoring, logging and alerting is critical to increasing security, one of the first things attacker will do after penetrating is deleting or altering any logs taht might reveal attackers presence
+* Secure system will store logs that are accessible, immmutable, and contain adequate info to detect inrusion and conduct post mortem analysis
+* Attack might try to create a smoke screen
+* Mitigation: real time log processing, automated log review, periotic log review, visual dashboard for key idicators
+### A10 Server side request forgery(SSRF)
+* cateory of attack cuases app service to make unintended interal requests that utilized services elevated prviliges in order to expose internal data or services
+* If service exposed enpoint that let user retrieve an external profile image based upon supplied URl, attacker could change URL to point to location that is normally only availoable to service internallyy
+* Mitigation: sanitzing returned data, not returning data, whitelisting accessible domains, rejecting HTTP requests

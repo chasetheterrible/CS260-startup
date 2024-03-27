@@ -1,3 +1,6 @@
+const GameEndEvent = 'gameEnd';
+const GameStartEvent = 'gameStart';
+
 const cardValues = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
 
 function shuffleArray(array) {
@@ -133,6 +136,7 @@ async function saveTime(time) {
             body: JSON.stringify(newTime),
         });
 
+        this.broadcastEvent(userName, GameEndEvent, newTime);
         const times = await response.json();
         localStorage.setItem('times', JSON.stringify(times));
         updateTimesLocal(newTime);
@@ -171,8 +175,13 @@ function updateTimesLocal(newTime) {
     localStorage.setItem('times', JSON.stringify(times));
 }
 
-setInterval(() => {
-    const time = Math.floor(Math.random() * 10);
-    const chatText = document.querySelector('#player-messages');
-    chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> <span class="timed" style="color: white;">timed with ${time} seconds</span></div>` + chatText.innerHTML;
-}, 5000);
+// setInterval(() => {
+//     const time = Math.floor(Math.random() * 10);
+//     const chatText = document.querySelector('#player-messages');
+//     chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> <span class="timed" style="color: white;">timed with ${time} seconds</span></div>` + chatText.innerHTML;
+// }, 5000);
+
+configureWebSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    this.socket = new WebSocket
+}

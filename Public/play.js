@@ -99,7 +99,6 @@ function handleButtonClick(event) {
     } else {
         clickedButton = button;
     }
-}
 
 
 function allButtonsMatched() {
@@ -154,18 +153,7 @@ function updateTimesLocal(newTime) {
     if (timesText) {
         times = JSON.parse(timesText);
     }
-    // let found = false;
-    // for (const [i, prevTime] of times.entries()) {
-    //     if (newTime.time < prevTime.time) {
-    //         times.splice(i, 0, newTime);
-    //         found = true;
-    //         break;
-    //     }
-    // }
-
-    // if (!found) {
-    //     times.push(newTime);
-    // }
+  
     times.push(newTime);
     times.sort((a,b) => Number(a.time) - Number(b.time));
     if (times.length > 10) {
@@ -205,4 +193,11 @@ displayMsg(cls, form, msg) {
     chatText.innerHTML = `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
 }
 
-broadcastEvent(from, type, value)
+broadcastEvent(from, type, value) {
+    const event = {
+        from: from,
+        type: type,
+        value: value,
+    };
+    this.socket.send(JSON.stringify(event));
+}

@@ -10,7 +10,7 @@ function peerProxy(httpServer) {
         });
     });
     
-    let connections = []
+    let connections = [];
     wss.on('connection', (ws) => {
         const connection = { id: uuid.v4(), alive: true, ws:ws };
         connections.push(connection);
@@ -48,4 +48,4 @@ setInterval(() => {
 }, 10000);
 }
 
-Module.exports = { peerProxy };
+module.exports = { peerProxy };

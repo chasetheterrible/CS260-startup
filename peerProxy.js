@@ -37,7 +37,7 @@ function peerProxy(httpServer) {
 });
 
 setInterval(() => {
-    connection.forEach((c) => {
+    connections.forEach((c) => {
         if (!c.alive) {
             c.ws.terminate();
         } else {
@@ -48,4 +48,4 @@ setInterval(() => {
 }, 10000);
 }
 
-mainModule.exports = { peerProxsy };
+Module.exports = { peerProxy };

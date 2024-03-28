@@ -62,3 +62,9 @@ This is a sequence diagram that shows how to people would interact with the back
 * Existing user: stores times under same user if already exist
 * Mongo DB stores both user and times
 * Cannon play until logged in
+
+# Websocket deliverable
+* Backend listgens for WS connections
+* Frontend makes WS connection
+* Data sent over WS connection
+* WS data displayed: all user times display in real time

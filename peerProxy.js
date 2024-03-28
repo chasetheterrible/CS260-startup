@@ -14,14 +14,12 @@ function peerProxy(httpServer) {
     wss.on('connection', (ws) => {
         const connection = { id: uuid.v4(), alive: true, ws:ws };
         connections.push(connection);
-    });
 
     ws.on('message', function message(data) {
         connections.forEach((c) => {
             if (c.id !== connection.id) {
                 c.ws.send(data);
             }
-
         });
     });
 
@@ -33,5 +31,21 @@ function peerProxy(httpServer) {
         }
     });
 
-    
+    ws.on('pong', () => {
+        conenction.alive = true;
+    });
+});
+
+setInterval(() => {
+    connection.forEach((c) => {
+        if (!c.alive) {
+            c.ws.terminate();
+        } else {
+            c.alive = false;
+            c.ws.ping();
+        }
+    });
+}, 10000);
 }
+
+mainModule.exports = { peerProxsy };

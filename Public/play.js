@@ -145,7 +145,7 @@ async function saveTime(time) {
 }
 
 const playerName = getPlayerName();
-console.log(playerName)
+console.log(playerName);
 
 function updateTimesLocal(newTime) {
     let times = [];
@@ -153,7 +153,14 @@ function updateTimesLocal(newTime) {
     if (timesText) {
         times = JSON.parse(timesText);
     }
-  
+    times.forEach((entry, index) => {
+        times[index] = {
+            name: entry.name,
+            times: entry.time,
+            date: entry.date
+        };
+    });
+
     times.push(newTime);
     times.sort((a,b) => Number(a.time) - Number(b.time));
     if (times.length > 10) {
@@ -169,7 +176,7 @@ function updateTimesLocal(newTime) {
 //     chatText.innerHTML = `<div class="event"><span class="player-event">Robin</span> <span class="timed" style="color: white;">timed with ${time} seconds</span></div>` + chatText.innerHTML;
 // }, 5000);
 
-configureWebSocket(); {
+async function configureWebSocket() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
     this.socket.onopen = (event)  => {
@@ -188,12 +195,12 @@ configureWebSocket(); {
     };
 }
 
-displayMsg(cls, form, msg); {
+function displayMsg(cls, from, msg) {
     const chatText = document.querySelector('#player-messages');
     chatText.innerHTML = `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
 }
 
-broadcastEvent(from, type, value); {
+function broadcastEvent(from, type, value) {
     const event = {
         from: from,
         type: type,
@@ -201,3 +208,4 @@ broadcastEvent(from, type, value); {
     };
     this.socket.send(JSON.stringify(event));
 }
+configureWebSocket();

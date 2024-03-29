@@ -24,7 +24,7 @@ function peerProxy(httpServer) {
     });
 
     ws.on('close', () => {
-        const pos = connection.findIndex((o, i) => o.id === connection.id);
+        const pos = connections.findIndex((o, i) => o.id === connection.id);
 
         if (pos >= 0) {
             connections.splice(pos, 1);
@@ -32,7 +32,7 @@ function peerProxy(httpServer) {
     });
 
     ws.on('pong', () => {
-        conenction.alive = true;
+        connection.alive = true;
     });
 });
 

@@ -3153,3 +3153,38 @@ function Demo() {
 <div>Component: <b>Hello world</b></div>
 
 ### Properties
+* React components also allow you to pass info to them in form of element properties
+* Component receives properties in its constructor and then can display them when it renders
+* JSX
+<div>Component: <Demo who="Walke" /><div>
+* React component
+function Demo(props) {
+  return <b>Hello {props.who}</b>;
+}
+* Resulting HTML
+<div>Component: <b>Hello Walke</b></div>
+
+### State
+* in addition to properties, component can have internal state. Component state is created by calling React.useState hook function
+* useState function retunrs variable that contains current state and function to update the state
+* Following example creates state varibale called **clicked** and toggles the click state in the **updateClicked** function that gets called whent he paragraph text is clicked
+
+const Clicker = () => {
+  const [clicked, updateClicked] = React.useState(false);
+
+  const onClicked = (e) => {
+    updateClicked(!clicked);
+  };
+
+  return <p onClick={(e) => onClicked(e)}>clicked: {`${clicked}`}</p>;
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clicker />);
+
+* NOTE: you can use JSX even without function, a simple variable representing JSC will work anyolace you would otherwise put component
+
+const hello = <div>Hello</div>;
+
+ReactDOM.render(hello, document.getElementById('root'));
+### Class style components

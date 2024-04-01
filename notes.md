@@ -3228,3 +3228,62 @@ root.render(<Clicker />);
   * Minifier: removes whitespace and reanmes variables in order to make code smaller and more efficient to deploy
   * Testing: automated tests at multiple levels to ensure correctness
   * Deployment: automated packaging and delivery of code from the development environment to production environment
+  * Tool chain we will use is Github as repository, Vite for JSX, TS, development and debugging support, ESBuild for converting Es6 and transpiling(with Babel), Rollup for bundling and tree shakking, PostCSS for CSS transpiling and finally simple bash script for deployment
+## Vite
+* Want to extend usage to include full web framework toolchain that allows to use JSX, minification, polyfills, and budling for simon and startup applications
+* Common way to confiure is to take advantage of CLI(command line interface) to initially set up web app
+  * saves trouble of congifuring toolchain parameters and gets us quickly started with default application
+* To create new react based web app using Viet open console and ruin following commands
+  1) npm create vite@latest demoVite -- --template react
+  2) cd demoVite
+  3) npm install
+  4) npm run dev
+* Will create new web app in demoVite direcotry, download required 3rd party packages, and start up application using local HTTP debugging server
+  * can tell Vite to open browser to URL that is hosting app by pression o, or press h to see all of Vite CLI options
+* Can terrturn to your console and stop vite from hosting application by pressing q
+### Generated project
+* / directory
+  * index.html: primary page for app, starting point to load of JSX begnning with main.jsx
+  * package.json: npm definition for package dependencies and script commands
+  * package-lock.json: version constratines for included packages(DO NOT EDIT)
+* /public
+  * vite.svg: vite logo for use as favicon and display in app
+* /src
+  * main.jsx: entry point for code execution, simply loads the app component found in *
+* app.jsx
+  * index.css: CSS for entire app
+  * app.jsx: jsx for top level app component, displays logs and implements click counter
+  * app.css: CSS for top level app component
+* /scr/assets
+  * react.svg: react logo for display in app
+ 
+* main files in app are index.html, main.jsx, and app.jsx
+* Browser loads index.html which provides HTML element(#root) that the react app will be injected into, it also includes script element to load main.jsx
+* Main.jsx creates react app by associating #root element with app component found in app.jsx
+* Causes all component redner functions to execute and the genrated HTML, CSS, JS to be executed in index.html
+
+### JSX vs JS
+* Vite CLU uses .jsx extention for JSX files intstead of .js extension
+* Babel transpiler will work with either one but some editor tools work differetly based on extension which is why its better to use .jsx for files that contain it
+### Building production release
+* when execute npm run dev you are bundling codee to temporary directory that vite debug HTTP server loads from
+* When want to bundle your app so you can deploy to production encironment ned to run **npm run build** which executres **build** script found in **package.json** and invokes vite CLI
+* **vite build** transpiles, minifies, injects proper JS and outputs everything to deployment-read version contained in distribution sub-directory named **dist**
+
+➜  npm run build
+
+> demovite@0.0.0 build
+> vite build
+
+vite v4.3.7 building for production...
+✓ 34 modules transformed.
+dist/index.html                   0.45 kB │ gzip:  0.30 kB
+dist/assets/react-35ef61ed.svg    4.13 kB │ gzip:  2.14 kB
+dist/assets/index-51439b3f.css    1.42 kB │ gzip:  0.74 kB
+dist/assets/index-58d24859.js   143.42 kB │ gzip: 46.13 kB
+✓ built in 382ms
+
+### Deploying production release
+* deployment script fo simon react(deployReact.sh) creates production distribution by callin npm run build and then copying resulting dist directory to your productoin server
+* Take time to build produiction rleasee by running npm run build then examine what vite actaully buidls by examining **dist** directory
+  * if lok at dist/assets will see bundled and minified JS and CSS file

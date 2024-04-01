@@ -3024,3 +3024,132 @@ ws.on('pong', () => {
 * cateory of attack cuases app service to make unintended interal requests that utilized services elevated prviliges in order to expose internal data or services
 * If service exposed enpoint that let user retrieve an external profile image based upon supplied URl, attacker could change URL to point to location that is normally only availoable to service internallyy
 * Mitigation: sanitzing returned data, not returning data, whitelisting accessible domains, rejecting HTTP requests
+
+# Web Frameworks
+## Web frameworkds
+* seeks to make job writing web app easier by providing tools for completing common application tasks such as modularizing code, creating sinlge page apps, simplifying reactivity, and supporting diverse hardware devices
+* Each has advangages and disadvantages, some are very prescriptibe(opinionated) about how to do things, some have major institutional backing, and others have strong open source community
+### Hello world example
+* Vue
+  * Vue combines HTML, CSS and JS into single file. HTML is represented by template slement that can be aggregated inot others
+<script>
+  export default {
+    data() {
+      return {
+        name: 'world',
+      };
+    },
+  };
+</script>
+
+<style>
+  p {
+    color: green;
+  }
+</style>
+
+<template>
+  <p>Hello {{ name }}!</p>
+</template>
+
+### Svelte
+* also vombines into single file, however it requires transpiler to generate browswer-ready code, instead of runtime virtual DOM
+
+<script>
+  let name = 'world';
+</script>
+
+<style>
+  p {
+    color: green;
+  }
+</style>
+
+<p>Hello {name}!</p>
+
+### React
+* Combines JS and HTML into component format, CSS must be declared outside of JSX file
+* Component itself highly leverages functionality of JS and can be represented as function or class
+
+import 'hello.css';
+
+const Hello = () => {
+  let name = 'world';
+
+  return <p>Hello {name}</p>;
+};
+
+p {
+  color: green;
+}
+
+###  Angular component
+* defines what JS, HTML, and CSS are combined together. Keeps fairly strong separatioon of files that are usually grou0ped together in directory rathe rthan using single file representation
+
+@Component({
+  selector: 'app-hello-world',
+  templateUrl: './hello-world.component.html',
+  styleUrls: ['./hello-world.component.css'],
+})
+export class HelloWorldComponent {
+  name: string;
+  constructor() {
+    this.name = 'world';
+  }
+}
+
+<p>hello {{name}}</p>
+
+p {
+  color: green;
+}
+
+## **React**
+* react and associated projects provide powerful web programming framework
+* Name react comes from focus on making reactive web page components that automatically update based on user interactions or changes in underlying data
+* Created by Jordan Walk for use at facebook
+* Abstracts HTML into JS variatn called JSX, which is converted into valid HTML and JS using preprocessor called Babel
+* Note example that has both HTML and JSS:
+
+const i = 3;
+const list = (
+  <ol class='big'>
+    <li>Item {i}</li>
+    <li>Item {3 + i}</li>
+  </ol>
+);
+
+* Babel will converty into valid JS
+
+const i = 3;
+const list = React.createElement(
+  'ol',
+  { class: 'big' },
+  React.createElement('li', null, 'Item ', i),
+  React.createElement('li', null, 'Item ', 3 + i)
+);
+
+* **React.createElement** function will then genarate DOM element and monitor data they represent for changes, when change is discovered trigger dependent changes
+
+## Components
+* React components allow modularizing functionality of app, which allows underlying code to directlyt represent components that user interacts with
+* Also enables code refuse as common app compononets often sho up repeatedly
+### Render function
+* one of primary purposes of component is to generate user interface, which is done wtih components **render** function
+* Whatever is returned from render is inserted into components HTML elemnet
+* Simple example, JSX file contaning react component elemnet named **Demo** would cause react to load that component, call render function and insert result into place of Demo element
+
+<div>
+  Component: <Demo />
+</div>
+* NOTE: Demo is not valid HTML element, tranplier will repalce this tage with resulting rendered HTML
+
+function Demo() {
+  const who = 'world';
+  return <b>Hello {who}</b>;
+}
+
+* Resulting HTML
+<div>Component: <b>Hello world</b></div>
+
+### Properties

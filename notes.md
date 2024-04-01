@@ -3188,3 +3188,43 @@ const hello = <div>Hello</div>;
 
 ReactDOM.render(hello, document.getElementById('root'));
 ### Class style components
+* In addition to preferred **function style** components demonstrated above, react also supports **class style** components
+* However, you should note react team is moving away from class style representation, so we whould probalby not use it
+* Should still be aware of syntax. Major difference is that properties are loaded on constructor and state is ste using **setState** funciton on component object
+
+class Clicker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicked: false,
+    };
+  }
+  onClicked() {
+    this.setState({
+      clicked: !this.state.clicked,
+    });
+  }
+  render() {
+    return <p onClick={(e) => this.onClicked(e)}>clicked: {`${this.state.clicked}`}</p>;
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clicker />);
+
+### Reactivity
+* Components properties and state are used by react framework to determine reactivity of interface
+* Reactivity conttols how component reacts to actions taken by user of events withing app
+* When components state or properties change, **render** function for component and all its dependent component **render** functions are caled
+
+## Tool Chains
+* As web programming becomes more and more complex, it became necessary to abstract away some of that complexity with series of tools
+  * Code repository: stores code in shared, versioned, location
+  * Linter: removes, or warns, of non-idiomatic code usage
+  * Prettier: formats code accoriding to shared standard
+  * transpilier: complies code into diff format; from JSX to JS, TypeScript to JS or SCSS to CSS
+  * Polyfill: generates backward compatible code for supporting old browser versions that do not support latest standards
+  * Bundler: packages code into bundles for delivery to browser, this enables compatibility(for ex Es6 module support) or performace(with lazy loading)
+  * Minifier: removes whitespace and reanmes variables in order to make code smaller and more efficient to deploy
+  * Testing: automated tests at multiple levels to ensure correctness
+  * Deployment: automated packaging and delivery of code from the development environment to production environment

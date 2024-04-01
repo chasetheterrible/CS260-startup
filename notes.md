@@ -3286,4 +3286,41 @@ dist/assets/index-58d24859.js   143.42 kB │ gzip: 46.13 kB
 ### Deploying production release
 * deployment script fo simon react(deployReact.sh) creates production distribution by callin npm run build and then copying resulting dist directory to your productoin server
 * Take time to build produiction rleasee by running npm run build then examine what vite actaully buidls by examining **dist** directory
-  * if lok at dist/assets will see bundled and minified JS and CSS file
+  * if lo0k at dist/assets will see bundled and minified JS and CSS file
+
+## Router
+* Web framework router provides essentiual functionality for single-page apps
+* With multi webpage apps the headers, footers, nave and common components must be duplicated in each HTML page, or injected before server sends page to browswer
+* With single page, browser only loads one HTML page then JS is used to manipulate DOM and give it appearance of multiple pages
+* Router defines routes a user can take through app
+* React does not have a standard router package, and there are many that you can choose from
+* We will use **react-router-dom** version 6
+* Simplified routing functionality of react-router-dom derives from project react-router for its core functionality
+* Do not confuse the two, or versions of react-router-dom before version 6, when rading tutorials and documentation
+* Basic implementation of router consits of **BrowserRouter** component that encapsulates entire app and controlls the routing action
+* The **Link** or **NavLink** component captures user navigation events and modifies what is rendered by **Routes** component by matching up **to** and **path** attributes
+
+// Inject the router into the application root DOM element
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  // BrowserRouter component that controls what is rendered
+  // NavLink component captures user navigation requests
+  // Routes component defines what component is routed to
+  <BrowserRouter>
+    <div className='app'>
+      <nav>
+        <NavLink to='/'>Home</Link>
+        <NavLink to='/about'>About</Link>
+        <NavLink to='/users'>Users</Link>
+      </nav>
+      main
+        <Routes>
+          <Route path='/' element={<Home />} exact />
+          <Route path='/about' element={<About />} />
+          <Route path='/users' element={<Users />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
+        </Routes>
+      </main>
+    /div
+  </BrowserRouter>
+);

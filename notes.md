@@ -3229,6 +3229,7 @@ root.render(<Clicker />);
   * Testing: automated tests at multiple levels to ensure correctness
   * Deployment: automated packaging and delivery of code from the development environment to production environment
   * Tool chain we will use is Github as repository, Vite for JSX, TS, development and debugging support, ESBuild for converting Es6 and transpiling(with Babel), Rollup for bundling and tree shakking, PostCSS for CSS transpiling and finally simple bash script for deployment
+
 ## Vite
 * Want to extend usage to include full web framework toolchain that allows to use JSX, minification, polyfills, and budling for simon and startup applications
 * Common way to confiure is to take advantage of CLI(command line interface) to initially set up web app
@@ -3324,3 +3325,11 @@ root.render(
     /div
   </BrowserRouter>
 );
+
+## Reactivity
+* making UI reacto to chnages in user input/data is one of architecutral foundations of react. React enables reactivity with 3 major pieces of react component: **props, state, and render**
+* When components JSX is rendered, react parses JSX and creates list of any references to components state or prop objects, react then monitors those objects and if it detencts they have changes, it will call components render function so impoac of change is visualized
+* Following ex contains two components: a parent <survey/> component and child <Quesition/>
+  * survey has sate named color, and question has property named color
+  * Survey passes color state to question as property, this means that any chagnge to survey color will also be reflected in questions color
+  * This is powerful mean for parent to conrol childs functionalit7

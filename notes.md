@@ -3332,4 +3332,62 @@ root.render(
 * Following ex contains two components: a parent <survey/> component and child <Quesition/>
   * survey has sate named color, and question has property named color
   * Survey passes color state to question as property, this means that any chagnge to survey color will also be reflected in questions color
-  * This is powerful mean for parent to conrol childs functionalit7
+  * This is powerful mean for parent to conrol childs functionality
+* Question component also has state named **answer**, the value of anser is displayed as part of questions content. User can interact wtih state through HTML radio input elements. WHen one of inputs is chagned, the questions **onChange** function is called and answer state is updated to reflect users choice. Automaitically causes display of anser to be updated
+* Be carefiul about assumptions when state is updated, just cuz you called **updateState** doesn't mean you can access updated state on next line of code
+  * update hapens asynchronously, therefore can never really know when it is going to happen, you can only know it will eventually happen
+
+**CODE:**
+<!-- // The Survey component
+const Survey = () => {
+  const [color, updateColor] = React.useState('#737AB0');
+
+  // When the color changes update the state
+  const onChange = (e) => {
+    updateColor(e.target.value);
+  };
+  return (
+    <div>
+      <h1>Survey</h1>
+      {/* Pass the Survey color state as a property to the Question.
+          When the color changes the Question property will also be updated and rendered. */}
+      <Question color={color} />
+
+      <p>
+        <span>Pick a color: </span>
+        {/* Pass the Survey color state as a property to the input element.
+            When the color changes, the input property will also be updated and rendered. */}
+        <input type='color' onChange={(e) => onChange(e)} value={color} />
+      </p>
+    </div>
+  );
+};
+
+// The Question component
+const Question = ({ color }) => {
+  const [answer, updateAnswer] = React.useState('pending...');
+
+  function onChange({ target }) {
+    updateAnswer(target.value);
+  }
+
+  return (
+    <div>
+      <span>Do you like this</span>
+      {/* Color rerendered whenever the property changes */}
+      <span style={{ color: color }}> color</span>?
+      <label>
+        <input type='radio' name='answer' value='yes' onChange={(e) => onChange(e)} />
+        Yes
+      </label>
+      <label>
+        <input type='radio' name='answer' value='no' onChange={(e) => onChange(e)} />
+        No
+      </label>
+      {/* Answer rerendered whenever the state changes */}
+      <p>Your answer: {answer}</p>
+    </div>
+  );
+};
+
+ReactDOM.render(<Survey />, document.getElementById('root')); -->

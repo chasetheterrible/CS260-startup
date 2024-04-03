@@ -3391,3 +3391,69 @@ const Question = ({ color }) => {
 };
 
 ReactDOM.render(<Survey />, document.getElementById('root')); -->
+
+## React Hook
+* React hooks allow ract function style components to be able to do everythig that a class styel component can do an more, additionally as new features are added to react they are including them as hooks, this makes function style components preferred way of doing things in react
+
+function Clicker({initialCount}) {
+  const [count, updateCount] = React.useState(initialCount);
+  return <div onClick={() => updateCount(count + 1)}>Click count: {count}</div>;
+}
+
+ReactDOM.render(<Clicker initialCount={3} />, document.getElementById('root'));
+### useEffect hook
+* the useEffect hook allows you to represent lifecycle evnets, for example if you want to run function every time compoennt completes rendering could do the following
+
+function UseEffectHookDemo() {
+  React.useEffect(() => {
+    console.log('rendered');
+  });
+
+  return <div>useEffectExample</div>;
+}
+
+ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
+
+* Can also take action when component cleans up by returning cleanup from function registered with useEffect. In following example every time component is clicked, the state changes and so compoentn is rerendered, this causes both cleanup function to be called in addition to hook function
+* If function was not rendered then only cleanup function would be called
+
+function UseEffectHookDemo() {
+  const [count, updateCount] = React.useState(0);
+  React.useEffect(() => {
+    console.log('rendered');
+
+    return function cleanup() {
+      console.log('cleanup');
+    };
+  });
+
+  return <div onClick={() => updateCount(count + 1)}>useEffectExample {count}</div>;
+}
+
+ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
+* usefule when wnat to ceate side effects for things such as tracking when component is displayed, hidden, or creating and displaying of resources
+
+### Hook Dependencies
+* You can control what triggers a **useEffect** hook by specifying dependencies
+* In following ex, we have two state variables,, but we only want the useEffect hook to be called when component is initially called and wehn first variable is clicked
+* To accomplish you pass array of dependencies of second parameter to useEffect call
+
+function UseEffectHookDemo() {
+  const [count1, updateCount1] = React.useState(0);
+  const [count2, updateCount2] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log(`count1 effect triggered ${count1}`);
+  }, [count1]);
+
+  return (
+    <ol>
+      <li onClick={() => updateCount1(count1 + 1)}>Item 1 - {count1}</li>
+      <li onClick={() => updateCount2(count2 + 1)}>Item 2 - {count2}</li>
+    </ol>
+  );
+}
+
+ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
+
+* if you specify and empty array [] as hook dependency, then it is only called when compoennt is first rendered

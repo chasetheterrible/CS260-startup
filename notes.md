@@ -3457,3 +3457,108 @@ function UseEffectHookDemo() {
 ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
 
 * if you specify and empty array [] as hook dependency, then it is only called when compoennt is first rendered
+
+## Typescript
+* TypeScript adds static type checking in JS, providing type checking while you are writing code to prevent mistakes like using a string when number is expected
+* Consider followin simple code
+
+function increment(value) {
+  return value + 1;
+}
+
+let count = 'one';
+console.log(increment(count));
+
+* When code executes will log one1 because count variable was accidentlay intialized with string instead of number
+* With Typescript you explicituyly define types, and as the JS is transpiled an error will be generate long before code is seen by user
+* To provide type safety for increment function if would look like this
+
+function increment(value: number) {
+  return value + 1;
+}
+
+let count: number = 'one';
+console.log(increment(count));
+
+* VS code will analyze code and give error about valid type conversion, in addtion to defining types for function parameters
+* In addition to defining types for function parameters, can define types of object properties, for ex defining state for react clas style component, you can specify types of all state and property values
+
+export class About extends React.Component {
+  state: {
+    imageUrl: string;
+    quote: string;
+    price: number;
+  };
+
+  constructor(props: { price: number }) {
+    super(props);
+
+    this.state = {
+      imageUrl: '',
+      quote: 'loading...',
+      price: props.price,
+    };
+  }
+}
+* can likewise specify type of react function style components properties with an inline object definition
+
+function Clicker(props: { initialCount: number }) {
+  const [count, updateCount] = React.useState(props.initialCount);
+
+  return <div onClick={() => updateCount(1 + count)}>Click count: {count}</div>;
+}
+
+### Interface
+* Because is so common to define object property types, TypeScript introduced use of **interface** keyword to define collection of parameters and types that object must contain to satisfy interface types
+* Ex for a book interface:
+
+interface Book {
+  title: string;
+  id: number;
+}
+
+* can then create object and pass it to function that requires interface
+
+function catalog(book: Book) {
+  console.log(`Cataloging ${book.title} with ID ${book.id}`);
+}
+
+const myBook = { title: 'Essentials', id: 2938 };
+catalog(myBook);
+
+### Unions
+* typescript introduces ability to define possbile values for new type, this is useful for doing things like defining an enumerable
+* With plain JS can create enumerable class
+
+export class AuthState {
+  static Unknown = new AuthState('unknown');
+  static Authenticated = new AuthState('authenticated');
+  static Unauthenticated = new AuthState('unauthenticated');
+
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+* with typescrup can define this by decorating new type and defining what its possible values are
+
+type AuthState = 'unknown' | 'authenticated' | 'unauthenticated';
+
+let auth: AuthState = 'authenticated';
+
+* can also use unions to specify all possible types that variable can represent
+
+function square(n: number | string) {
+  if (typeof n === 'string') {
+    console.log(`{$n}^2`);
+  } else {
+    console.log(n * n);
+  }
+}
+
+### Using typescript
+* if you would like to use on web aoo do
+* npx create-react-app my-app --template typescript
+* npm install --save-dev typescript(for existing application)
+
+## Performance monitoring

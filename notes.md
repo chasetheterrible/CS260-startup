@@ -3024,3 +3024,541 @@ ws.on('pong', () => {
 * cateory of attack cuases app service to make unintended interal requests that utilized services elevated prviliges in order to expose internal data or services
 * If service exposed enpoint that let user retrieve an external profile image based upon supplied URl, attacker could change URL to point to location that is normally only availoable to service internallyy
 * Mitigation: sanitzing returned data, not returning data, whitelisting accessible domains, rejecting HTTP requests
+
+# Web Frameworks
+## Web frameworkds
+* seeks to make job writing web app easier by providing tools for completing common application tasks such as modularizing code, creating sinlge page apps, simplifying reactivity, and supporting diverse hardware devices
+* Each has advangages and disadvantages, some are very prescriptibe(opinionated) about how to do things, some have major institutional backing, and others have strong open source community
+### Hello world example
+* Vue
+  * Vue combines HTML, CSS and JS into single file. HTML is represented by template slement that can be aggregated inot others
+<script>
+  export default {
+    data() {
+      return {
+        name: 'world',
+      };
+    },
+  };
+</script>
+
+<style>
+  p {
+    color: green;
+  }
+</style>
+
+<template>
+  <p>Hello {{ name }}!</p>
+</template>
+
+### Svelte
+* also vombines into single file, however it requires transpiler to generate browswer-ready code, instead of runtime virtual DOM
+
+<script>
+  let name = 'world';
+</script>
+
+<style>
+  p {
+    color: green;
+  }
+</style>
+
+<p>Hello {name}!</p>
+
+### React
+* Combines JS and HTML into component format, CSS must be declared outside of JSX file
+* Component itself highly leverages functionality of JS and can be represented as function or class
+
+import 'hello.css';
+
+const Hello = () => {
+  let name = 'world';
+
+  return <p>Hello {name}</p>;
+};
+
+p {
+  color: green;
+}
+
+###  Angular component
+* defines what JS, HTML, and CSS are combined together. Keeps fairly strong separatioon of files that are usually grou0ped together in directory rathe rthan using single file representation
+
+@Component({
+  selector: 'app-hello-world',
+  templateUrl: './hello-world.component.html',
+  styleUrls: ['./hello-world.component.css'],
+})
+export class HelloWorldComponent {
+  name: string;
+  constructor() {
+    this.name = 'world';
+  }
+}
+
+<p>hello {{name}}</p>
+
+p {
+  color: green;
+}
+
+## **React**
+* react and associated projects provide powerful web programming framework
+* Name react comes from focus on making reactive web page components that automatically update based on user interactions or changes in underlying data
+* Created by Jordan Walk for use at facebook
+* Abstracts HTML into JS variatn called JSX, which is converted into valid HTML and JS using preprocessor called Babel
+* Note example that has both HTML and JSS:
+
+const i = 3;
+const list = (
+  <ol class='big'>
+    <li>Item {i}</li>
+    <li>Item {3 + i}</li>
+  </ol>
+);
+
+* Babel will converty into valid JS
+
+const i = 3;
+const list = React.createElement(
+  'ol',
+  { class: 'big' },
+  React.createElement('li', null, 'Item ', i),
+  React.createElement('li', null, 'Item ', 3 + i)
+);
+
+* **React.createElement** function will then genarate DOM element and monitor data they represent for changes, when change is discovered trigger dependent changes
+
+## Components
+* React components allow modularizing functionality of app, which allows underlying code to directlyt represent components that user interacts with
+* Also enables code refuse as common app compononets often sho up repeatedly
+### Render function
+* one of primary purposes of component is to generate user interface, which is done wtih components **render** function
+* Whatever is returned from render is inserted into components HTML elemnet
+* Simple example, JSX file contaning react component elemnet named **Demo** would cause react to load that component, call render function and insert result into place of Demo element
+
+<div>
+  Component: <Demo />
+</div>
+* NOTE: Demo is not valid HTML element, tranplier will repalce this tage with resulting rendered HTML
+
+function Demo() {
+  const who = 'world';
+  return <b>Hello {who}</b>;
+}
+
+* Resulting HTML
+<div>Component: <b>Hello world</b></div>
+
+### Properties
+* React components also allow you to pass info to them in form of element properties
+* Component receives properties in its constructor and then can display them when it renders
+* JSX
+<div>Component: <Demo who="Walke" /><div>
+* React component
+function Demo(props) {
+  return <b>Hello {props.who}</b>;
+}
+* Resulting HTML
+<div>Component: <b>Hello Walke</b></div>
+
+### State
+* in addition to properties, component can have internal state. Component state is created by calling React.useState hook function
+* useState function retunrs variable that contains current state and function to update the state
+* Following example creates state varibale called **clicked** and toggles the click state in the **updateClicked** function that gets called whent he paragraph text is clicked
+
+const Clicker = () => {
+  const [clicked, updateClicked] = React.useState(false);
+
+  const onClicked = (e) => {
+    updateClicked(!clicked);
+  };
+
+  return <p onClick={(e) => onClicked(e)}>clicked: {`${clicked}`}</p>;
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clicker />);
+
+* NOTE: you can use JSX even without function, a simple variable representing JSC will work anyolace you would otherwise put component
+
+const hello = <div>Hello</div>;
+
+ReactDOM.render(hello, document.getElementById('root'));
+### Class style components
+* In addition to preferred **function style** components demonstrated above, react also supports **class style** components
+* However, you should note react team is moving away from class style representation, so we whould probalby not use it
+* Should still be aware of syntax. Major difference is that properties are loaded on constructor and state is ste using **setState** funciton on component object
+
+class Clicker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicked: false,
+    };
+  }
+  onClicked() {
+    this.setState({
+      clicked: !this.state.clicked,
+    });
+  }
+  render() {
+    return <p onClick={(e) => this.onClicked(e)}>clicked: {`${this.state.clicked}`}</p>;
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clicker />);
+
+### Reactivity
+* Components properties and state are used by react framework to determine reactivity of interface
+* Reactivity conttols how component reacts to actions taken by user of events withing app
+* When components state or properties change, **render** function for component and all its dependent component **render** functions are caled
+
+## Tool Chains
+* As web programming becomes more and more complex, it became necessary to abstract away some of that complexity with series of tools
+  * Code repository: stores code in shared, versioned, location
+  * Linter: removes, or warns, of non-idiomatic code usage
+  * Prettier: formats code accoriding to shared standard
+  * transpilier: complies code into diff format; from JSX to JS, TypeScript to JS or SCSS to CSS
+  * Polyfill: generates backward compatible code for supporting old browser versions that do not support latest standards
+  * Bundler: packages code into bundles for delivery to browser, this enables compatibility(for ex Es6 module support) or performace(with lazy loading)
+  * Minifier: removes whitespace and reanmes variables in order to make code smaller and more efficient to deploy
+  * Testing: automated tests at multiple levels to ensure correctness
+  * Deployment: automated packaging and delivery of code from the development environment to production environment
+  * Tool chain we will use is Github as repository, Vite for JSX, TS, development and debugging support, ESBuild for converting Es6 and transpiling(with Babel), Rollup for bundling and tree shakking, PostCSS for CSS transpiling and finally simple bash script for deployment
+
+## Vite
+* Want to extend usage to include full web framework toolchain that allows to use JSX, minification, polyfills, and budling for simon and startup applications
+* Common way to confiure is to take advantage of CLI(command line interface) to initially set up web app
+  * saves trouble of congifuring toolchain parameters and gets us quickly started with default application
+* To create new react based web app using Viet open console and ruin following commands
+  1) npm create vite@latest demoVite -- --template react
+  2) cd demoVite
+  3) npm install
+  4) npm run dev
+* Will create new web app in demoVite direcotry, download required 3rd party packages, and start up application using local HTTP debugging server
+  * can tell Vite to open browser to URL that is hosting app by pression o, or press h to see all of Vite CLI options
+* Can terrturn to your console and stop vite from hosting application by pressing q
+### Generated project
+* / directory
+  * index.html: primary page for app, starting point to load of JSX begnning with main.jsx
+  * package.json: npm definition for package dependencies and script commands
+  * package-lock.json: version constratines for included packages(DO NOT EDIT)
+* /public
+  * vite.svg: vite logo for use as favicon and display in app
+* /src
+  * main.jsx: entry point for code execution, simply loads the app component found in *
+* app.jsx
+  * index.css: CSS for entire app
+  * app.jsx: jsx for top level app component, displays logs and implements click counter
+  * app.css: CSS for top level app component
+* /scr/assets
+  * react.svg: react logo for display in app
+ 
+* main files in app are index.html, main.jsx, and app.jsx
+* Browser loads index.html which provides HTML element(#root) that the react app will be injected into, it also includes script element to load main.jsx
+* Main.jsx creates react app by associating #root element with app component found in app.jsx
+* Causes all component redner functions to execute and the genrated HTML, CSS, JS to be executed in index.html
+
+### JSX vs JS
+* Vite CLU uses .jsx extention for JSX files intstead of .js extension
+* Babel transpiler will work with either one but some editor tools work differetly based on extension which is why its better to use .jsx for files that contain it
+### Building production release
+* when execute npm run dev you are bundling codee to temporary directory that vite debug HTTP server loads from
+* When want to bundle your app so you can deploy to production encironment ned to run **npm run build** which executres **build** script found in **package.json** and invokes vite CLI
+* **vite build** transpiles, minifies, injects proper JS and outputs everything to deployment-read version contained in distribution sub-directory named **dist**
+
+➜  npm run build
+
+> demovite@0.0.0 build
+> vite build
+
+vite v4.3.7 building for production...
+✓ 34 modules transformed.
+dist/index.html                   0.45 kB │ gzip:  0.30 kB
+dist/assets/react-35ef61ed.svg    4.13 kB │ gzip:  2.14 kB
+dist/assets/index-51439b3f.css    1.42 kB │ gzip:  0.74 kB
+dist/assets/index-58d24859.js   143.42 kB │ gzip: 46.13 kB
+✓ built in 382ms
+
+### Deploying production release
+* deployment script fo simon react(deployReact.sh) creates production distribution by callin npm run build and then copying resulting dist directory to your productoin server
+* Take time to build produiction rleasee by running npm run build then examine what vite actaully buidls by examining **dist** directory
+  * if lo0k at dist/assets will see bundled and minified JS and CSS file
+
+## Router
+* Web framework router provides essentiual functionality for single-page apps
+* With multi webpage apps the headers, footers, nave and common components must be duplicated in each HTML page, or injected before server sends page to browswer
+* With single page, browser only loads one HTML page then JS is used to manipulate DOM and give it appearance of multiple pages
+* Router defines routes a user can take through app
+* React does not have a standard router package, and there are many that you can choose from
+* We will use **react-router-dom** version 6
+* Simplified routing functionality of react-router-dom derives from project react-router for its core functionality
+* Do not confuse the two, or versions of react-router-dom before version 6, when rading tutorials and documentation
+* Basic implementation of router consits of **BrowserRouter** component that encapsulates entire app and controlls the routing action
+* The **Link** or **NavLink** component captures user navigation events and modifies what is rendered by **Routes** component by matching up **to** and **path** attributes
+
+// Inject the router into the application root DOM element
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  // BrowserRouter component that controls what is rendered
+  // NavLink component captures user navigation requests
+  // Routes component defines what component is routed to
+  <BrowserRouter>
+    <div className='app'>
+      <nav>
+        <NavLink to='/'>Home</Link>
+        <NavLink to='/about'>About</Link>
+        <NavLink to='/users'>Users</Link>
+      </nav>
+      main
+        <Routes>
+          <Route path='/' element={<Home />} exact />
+          <Route path='/about' element={<About />} />
+          <Route path='/users' element={<Users />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
+        </Routes>
+      </main>
+    /div
+  </BrowserRouter>
+);
+
+## Reactivity
+* making UI reacto to chnages in user input/data is one of architecutral foundations of react. React enables reactivity with 3 major pieces of react component: **props, state, and render**
+* When components JSX is rendered, react parses JSX and creates list of any references to components state or prop objects, react then monitors those objects and if it detencts they have changes, it will call components render function so impoac of change is visualized
+* Following ex contains two components: a parent <survey/> component and child <Quesition/>
+  * survey has sate named color, and question has property named color
+  * Survey passes color state to question as property, this means that any chagnge to survey color will also be reflected in questions color
+  * This is powerful mean for parent to conrol childs functionality
+* Question component also has state named **answer**, the value of anser is displayed as part of questions content. User can interact wtih state through HTML radio input elements. WHen one of inputs is chagned, the questions **onChange** function is called and answer state is updated to reflect users choice. Automaitically causes display of anser to be updated
+* Be carefiul about assumptions when state is updated, just cuz you called **updateState** doesn't mean you can access updated state on next line of code
+  * update hapens asynchronously, therefore can never really know when it is going to happen, you can only know it will eventually happen
+
+**CODE:**
+<!-- // The Survey component
+const Survey = () => {
+  const [color, updateColor] = React.useState('#737AB0');
+
+  // When the color changes update the state
+  const onChange = (e) => {
+    updateColor(e.target.value);
+  };
+  return (
+    <div>
+      <h1>Survey</h1>
+      {/* Pass the Survey color state as a property to the Question.
+          When the color changes the Question property will also be updated and rendered. */}
+      <Question color={color} />
+
+      <p>
+        <span>Pick a color: </span>
+        {/* Pass the Survey color state as a property to the input element.
+            When the color changes, the input property will also be updated and rendered. */}
+        <input type='color' onChange={(e) => onChange(e)} value={color} />
+      </p>
+    </div>
+  );
+};
+
+// The Question component
+const Question = ({ color }) => {
+  const [answer, updateAnswer] = React.useState('pending...');
+
+  function onChange({ target }) {
+    updateAnswer(target.value);
+  }
+
+  return (
+    <div>
+      <span>Do you like this</span>
+      {/* Color rerendered whenever the property changes */}
+      <span style={{ color: color }}> color</span>?
+      <label>
+        <input type='radio' name='answer' value='yes' onChange={(e) => onChange(e)} />
+        Yes
+      </label>
+      <label>
+        <input type='radio' name='answer' value='no' onChange={(e) => onChange(e)} />
+        No
+      </label>
+      {/* Answer rerendered whenever the state changes */}
+      <p>Your answer: {answer}</p>
+    </div>
+  );
+};
+
+ReactDOM.render(<Survey />, document.getElementById('root')); -->
+
+## React Hook
+* React hooks allow ract function style components to be able to do everythig that a class styel component can do an more, additionally as new features are added to react they are including them as hooks, this makes function style components preferred way of doing things in react
+
+function Clicker({initialCount}) {
+  const [count, updateCount] = React.useState(initialCount);
+  return <div onClick={() => updateCount(count + 1)}>Click count: {count}</div>;
+}
+
+ReactDOM.render(<Clicker initialCount={3} />, document.getElementById('root'));
+### useEffect hook
+* the useEffect hook allows you to represent lifecycle evnets, for example if you want to run function every time compoennt completes rendering could do the following
+
+function UseEffectHookDemo() {
+  React.useEffect(() => {
+    console.log('rendered');
+  });
+
+  return <div>useEffectExample</div>;
+}
+
+ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
+
+* Can also take action when component cleans up by returning cleanup from function registered with useEffect. In following example every time component is clicked, the state changes and so compoentn is rerendered, this causes both cleanup function to be called in addition to hook function
+* If function was not rendered then only cleanup function would be called
+
+function UseEffectHookDemo() {
+  const [count, updateCount] = React.useState(0);
+  React.useEffect(() => {
+    console.log('rendered');
+
+    return function cleanup() {
+      console.log('cleanup');
+    };
+  });
+
+  return <div onClick={() => updateCount(count + 1)}>useEffectExample {count}</div>;
+}
+
+ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
+* usefule when wnat to ceate side effects for things such as tracking when component is displayed, hidden, or creating and displaying of resources
+
+### Hook Dependencies
+* You can control what triggers a **useEffect** hook by specifying dependencies
+* In following ex, we have two state variables,, but we only want the useEffect hook to be called when component is initially called and wehn first variable is clicked
+* To accomplish you pass array of dependencies of second parameter to useEffect call
+
+function UseEffectHookDemo() {
+  const [count1, updateCount1] = React.useState(0);
+  const [count2, updateCount2] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log(`count1 effect triggered ${count1}`);
+  }, [count1]);
+
+  return (
+    <ol>
+      <li onClick={() => updateCount1(count1 + 1)}>Item 1 - {count1}</li>
+      <li onClick={() => updateCount2(count2 + 1)}>Item 2 - {count2}</li>
+    </ol>
+  );
+}
+
+ReactDOM.render(<UseEffectHookDemo />, document.getElementById('root'));
+
+* if you specify and empty array [] as hook dependency, then it is only called when compoennt is first rendered
+
+## Typescript
+* TypeScript adds static type checking in JS, providing type checking while you are writing code to prevent mistakes like using a string when number is expected
+* Consider followin simple code
+
+function increment(value) {
+  return value + 1;
+}
+
+let count = 'one';
+console.log(increment(count));
+
+* When code executes will log one1 because count variable was accidentlay intialized with string instead of number
+* With Typescript you explicituyly define types, and as the JS is transpiled an error will be generate long before code is seen by user
+* To provide type safety for increment function if would look like this
+
+function increment(value: number) {
+  return value + 1;
+}
+
+let count: number = 'one';
+console.log(increment(count));
+
+* VS code will analyze code and give error about valid type conversion, in addtion to defining types for function parameters
+* In addition to defining types for function parameters, can define types of object properties, for ex defining state for react clas style component, you can specify types of all state and property values
+
+export class About extends React.Component {
+  state: {
+    imageUrl: string;
+    quote: string;
+    price: number;
+  };
+
+  constructor(props: { price: number }) {
+    super(props);
+
+    this.state = {
+      imageUrl: '',
+      quote: 'loading...',
+      price: props.price,
+    };
+  }
+}
+* can likewise specify type of react function style components properties with an inline object definition
+
+function Clicker(props: { initialCount: number }) {
+  const [count, updateCount] = React.useState(props.initialCount);
+
+  return <div onClick={() => updateCount(1 + count)}>Click count: {count}</div>;
+}
+
+### Interface
+* Because is so common to define object property types, TypeScript introduced use of **interface** keyword to define collection of parameters and types that object must contain to satisfy interface types
+* Ex for a book interface:
+
+interface Book {
+  title: string;
+  id: number;
+}
+
+* can then create object and pass it to function that requires interface
+
+function catalog(book: Book) {
+  console.log(`Cataloging ${book.title} with ID ${book.id}`);
+}
+
+const myBook = { title: 'Essentials', id: 2938 };
+catalog(myBook);
+
+### Unions
+* typescript introduces ability to define possbile values for new type, this is useful for doing things like defining an enumerable
+* With plain JS can create enumerable class
+
+export class AuthState {
+  static Unknown = new AuthState('unknown');
+  static Authenticated = new AuthState('authenticated');
+  static Unauthenticated = new AuthState('unauthenticated');
+
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+* with typescrup can define this by decorating new type and defining what its possible values are
+
+type AuthState = 'unknown' | 'authenticated' | 'unauthenticated';
+
+let auth: AuthState = 'authenticated';
+
+* can also use unions to specify all possible types that variable can represent
+
+function square(n: number | string) {
+  if (typeof n === 'string') {
+    console.log(`{$n}^2`);
+  } else {
+    console.log(n * n);
+  }
+}
+
+### Using typescript
+* if you would like to use on web aoo do
+* npx create-react-app my-app --template typescript
+* npm install --save-dev typescript(for existing application)
+
+## Performance monitoring

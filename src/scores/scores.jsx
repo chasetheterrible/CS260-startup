@@ -54,5 +54,5 @@ export function Times() {
                 <tbody id="times">{timeRows}</tbody>
             </table>
         </main>
-        );
-    }
+    );
+}

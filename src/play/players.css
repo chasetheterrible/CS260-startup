@@ -1,0 +1,28 @@
+.players {
+    width: 100%;
+}
+
+.player-name {
+    Color: white;
+}
+
+#player-messages {
+    padding-top: 0.25 em;
+    opacity: 0.7;
+}
+
+.event {
+    color: white ;
+}
+
+.player-event {
+    color: skyblue;
+}
+
+.player-data {
+    color: white;
+}
+
+.system-event {
+    color: orange;
+}

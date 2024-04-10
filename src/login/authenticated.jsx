@@ -12,17 +12,17 @@ export function Authenitaced(props) {
         fetch(`/api/auth/logout`, {
             method: 'delete',
         })
-        .catch(() => {
-        })
+            .catch(() => {
+            })
 
-        .finally(() => {
-            localStorage.removeItem('userName');
-            props.onLogout();
+            .finally(() => {
+                localStorage.removeItem('userName');
+                props.onLogout();
             });
     }
     
     return (
-        <div>
+    <div>
       <div className='playerName'>{props.userName}</div>
       <Button variant='primary' onClick={() => navigate('/play')}>
         Play

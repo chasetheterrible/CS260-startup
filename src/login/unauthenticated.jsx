@@ -4,37 +4,37 @@ import Button from 'react-boostrap/Button';
 import { MessageDialog } from './messageDialog';
 
 export function Unauthenticated(props) {
-const [userName, setUserName] = React.useState(props.userName);
-const [password, setPassword] = React.useState('');
-const [displayError, setDisplayError] = React.useState(null);
+  const [userName, setUserName] = React.useState(props.userName);
+  const [password, setPassword] = React.useState('');
+  const [displayError, setDisplayError] = React.useState(null);
 
-async function loginUser() {
+  async function loginUser() {
     loginOrCreate(`/api/auth/login`);
-}
+  }
 
-async function createUser() {
-loginOrCreate(`/api/auth/create`);
-}
+  async function createUser() {
+    loginOrCreate(`/api/auth/create`);
+  }
 
-async function loginOrCreate(endpoint) {
+  async function loginOrCreate(endpoint) {
     const response = await fetch(endpoint, {
-        method: 'post',
-        body: JSON.stringify({email: userName, password: password}),
-        headers: {
-            'Content-type': 'applicaiton/json; charset=UTF-8',
-        },
+      method: 'post',
+      body: JSON.stringify({email: userName, password: password}),
+      headers: {
+        'Content-type': 'applicaiton/json; charset=UTF-8',
+      },
     });
 
     if (response?.status === 2000) {
-        localStorage.setItem('userName', userName);
-        props.onLogin(userName);
+      localStorage.setItem('userName', userName);
+      props.onLogin(userName);
     } else {
-        const body = await response.json();
-        setDisplayError(`⚠ Error: ${body.msg}`);
+      const body = await response.json();
+      setDisplayError(`⚠ Error: ${body.msg}`);
     }
-}
+  }
 
-return (
+  return (
     <>
       <div>
         <div className='input-group mb-3'>

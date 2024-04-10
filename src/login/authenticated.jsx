@@ -5,23 +5,22 @@ import Button from 'react-bootstrap/Button';
 
 import './authenticated.css';
 
-export function Authenitaced(props) {
-    const navigate = useNavigate();
+export function Authenticated(props) {
+  const navigate = useNavigate();
 
-    function logout() {
-        fetch(`/api/auth/logout`, {
-            method: 'delete',
-        })
-            .catch(() => {
-            })
+  function logout() {
+    fetch(`/api/auth/logout`, {
+      method: 'delete',
+    })
+      .catch(() => {
+      })
+      .finally(() => {
+        localStorage.removeItem('userName');
+        props.onLogout();
+      });
+  }
 
-            .finally(() => {
-                localStorage.removeItem('userName');
-                props.onLogout();
-            });
-    }
-    
-    return (
+  return (
     <div>
       <div className='playerName'>{props.userName}</div>
       <Button variant='primary' onClick={() => navigate('/play')}>
@@ -31,5 +30,5 @@ export function Authenitaced(props) {
         Logout
       </Button>
     </div>
-    );
+  );
 }

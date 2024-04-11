@@ -1,22 +1,20 @@
 {
-  "name": "cs260-startup",
-  "version": "1.0.0",
-  "description": "Have you ever wanted to work on speed and memorization at the same time, or even have quick friendly competition? This matching game makes it so you as an individual can test your skills of speed and memorization against yourself or others by turning over two two at a time and comparing them. The user is timed and the goal is for the tiles to have the same number. If the numbers match it is a pair and the tiles are taken off the board, if not the user must flip two new cards over until the whole board is clear. Once the board is clear the game is over. The layout of the cards will be different each time. ## App Design ![first screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%209.59.49%20PM.png) ![signup screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%209.59.58%20PM.png) ![login screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.12%20PM.png) ![instruction screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.24%20PM.png) ![Game screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.32%20PM.png) ![End screen](https://github.com/chasetheterrible/CS260-startup/blob/main/Screen%20Shot%202024-01-15%20at%2010.00.48%20PM.png)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.3",
-    "mongodb": "^4.17.2",
-    "ws": "^8.16.0"
-  },
-  "devDependencies": {
-    "vite": "^5.2.8"
+    "name": "CS260-startup",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview"
+    },
+    "devDependencies": {
+      "vite": "^4.3.2"
+    },
+    "dependencies": {
+      "bootstrap": "^5.2.3",
+      "react": "^18.2.0",
+      "react-bootstrap": "^2.7.0",
+      "react-dom": "^18.2.0",
+      "react-router-dom": "^6.4.3"
+    }
   }
-}

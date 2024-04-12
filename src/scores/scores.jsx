@@ -2,7 +2,7 @@ import React from 'react';
 
 import './scores.css';
 
-export function Times() {
+export function Scores() {
     const [times, setTimes] = React.useState([]);
 
     React.useEffect(() => {

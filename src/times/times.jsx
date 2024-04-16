@@ -26,9 +26,9 @@ export function Times() {
       timeRows.push(
         <tr key={i}>
           <td>{i}</td>
-          <td>{score.name.split("@")[0]}</td>
-          <td>{score.score}</td>
-          <td>{score.date}</td>
+          <td>{time.name.split("@")[0]}</td>
+          <td>{time.time}</td>
+          <td>{time.date}</td>
         </tr>
       );
     }

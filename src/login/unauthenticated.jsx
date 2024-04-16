@@ -19,13 +19,13 @@ export function Unauthenticated(props) {
   async function loginOrCreate(endpoint) {
     const response = await fetch(endpoint, {
       method: "post",
-      body: JSON.stringify({ email: userName, password: password }),
+      body: JSON.stringify({ username: userName, password: password }),
       headers: {
         "Content-type": "applicaiton/json; charset=UTF-8",
       },
     });
 
-    if (response?.status === 2000) {
+    if (response?.status === 200) {
       localStorage.setItem("userName", userName);
       props.onLogin(userName);
     } else {
@@ -59,7 +59,7 @@ export function Unauthenticated(props) {
         <Button variant="primary" onClick={() => loginUser()}>
           Login
         </Button>
-        <Button variant="secondary" onClick={() => createUser()}>
+        <Button variant="primary" onClick={() => createUser()}>
           Create
         </Button>
       </div>

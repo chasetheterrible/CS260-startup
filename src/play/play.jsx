@@ -6,7 +6,7 @@ import { PairedUpGame } from "./pairedupGame";
 export function Play(props) {
   return (
     <main className="bg-secondary">
-      {/* <Players userName={props.userName} /> */}
+      <Players userName={props.userName} />
       <PairedUpGame userName={props.userName} />
     </main>
   );

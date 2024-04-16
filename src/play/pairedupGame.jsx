@@ -3,6 +3,7 @@ import "./pairedupGame.css";
 
 export function PairedUpGame(props) {
   // State variables
+  const userName = props.userName;
   const [cardValues, setCardValues] = useState(shuffleArray());
   const [elapsedTime, setElapsedTime] = useState(0);
   const [timerInterval, setTimerInterval] = useState(null);
@@ -59,7 +60,7 @@ export function PairedUpGame(props) {
         if (allButtonsMatched()) {
           clearInterval(timerInterval);
           alert("Congratulations! You matched all the numbers");
-          // saveTime(elapsedTime);
+          saveTime(elapsedTime);
         }
       } else {
         setTimeout(() => {
@@ -75,7 +76,6 @@ export function PairedUpGame(props) {
     }
   }
 
-  // Function to check if all buttons are matched
   function allButtonsMatched() {
     const buttons = document.querySelectorAll("#button-container button");
     for (const button of buttons) {
@@ -86,16 +86,14 @@ export function PairedUpGame(props) {
     return true;
   }
 
-  // Function to start the timer
   function startTimer() {
-    setTimerInterval(
-      setInterval(() => {
-        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
-      }, 1000)
-    );
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      elapsedTime++;
+      countInput.value = formatTime(elapsedTime);
+    }, 1000);
   }
 
-  // Function to reset the timer
   function resetTimer() {
     clearInterval(timerInterval);
     setElapsedTime(0);
@@ -103,12 +101,55 @@ export function PairedUpGame(props) {
     setCardValues(newCardValues);
     createButtons();
     startTimer();
+    GameNotifier.broadcastEvent(userName, GameEvent.Start, {});
   }
 
   // Function to format time
   function formatTime(seconds) {
     const remainingSeconds = seconds % 60;
     return `${remainingSeconds}`;
+  }
+
+  async function saveTime(time) {
+    const date = new Date().toLocaleDateString();
+    const newTime = { name: userName, time: time, date: date };
+
+    try {
+      const response = await fetch("/api/time", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(newTime),
+      });
+
+      GameNotifier.broadcastEvent(userName, GameEvent.End, newTime);
+      const times = await response.json();
+      localStorage.setItem("times", JSON.stringify(times));
+    } catch {
+      updateTimesLocal(newTime);
+    }
+  }
+
+  function updateTimesLocal(newTime) {
+    let times = [];
+    const timesText = localStorage.getItem("times");
+    if (timesText) {
+      times = JSON.parse(timesText);
+    }
+    times.forEach((entry, index) => {
+      times[index] = {
+        name: entry.name,
+        times: entry.time,
+        date: entry.date,
+      };
+    });
+
+    times.push(newTime);
+    times.sort((a, b) => Number(a.time) - Number(b.time));
+    if (times.length > 10) {
+      times = times.slice(0, 10);
+    }
+
+    localStorage.setItem("times", JSON.stringify(times));
   }
 
   return (

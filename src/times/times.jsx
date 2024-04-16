@@ -45,6 +45,7 @@ export function Times() {
       <table className="table table-striped table">
         <thead className="table table-secondary">
           <tr>
+            <th>#</th>
             <th>Name</th>
             <th>Time(sec)</th>
             <th>Date</th>

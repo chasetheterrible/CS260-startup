@@ -1,31 +1,30 @@
 .picture-box {
-    height: calc(300px + 1em);
-    margin-bottom: 1em;
-    padding: 1em;
-    background: gray;
-    display: inline-block;
+  height: calc(300px + 1em);
+  margin-bottom: 1em;
+  padding: 1em;
+  background: gray;
+  display: inline-block;
 }
 
 .quote-box {
-    margin-top: 1em;
-    padding: 0.5em;
-    border-radius: 5px;
+  margin-top: 1em;
+  padding: 0.5em;
+  border-radius: 5px;
 }
 
 .joke {
-    font-style: italic;
+  font-style: italic;
 }
 
 .author {
-    text-align: right;
+  text-align: right;
 }
 
- .author::before {
-    content: " - " 
+.author::before {
+  content: " - ";
 }
-
 
 #picture img {
-    width: 400 px;
-    height: 100%;
+  width: 400 px;
+  height: 100%;
 }

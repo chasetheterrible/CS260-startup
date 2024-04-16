@@ -22,7 +22,7 @@ export function About(props) {
   return (
     <main className="container-fluid bg-secondary text-center">
       <div>
-        <div id="picture" class="picture-box">
+        <div id="picture" className="picture-box">
           <img
             src="https://media.istockphoto.com/id/952655342/photo/padre-bay-rock-in-lake-powell.jpg?s=612x612&w=0&k=20&c=G0TiUNmV28ObzmK7foI3AjDz0Vnv2DDIGY3J-PmYEBw="
             alt="random"

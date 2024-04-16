@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 import "./pairedupGame.css";
 
 export function PairedUpGame(props) {
-  const userName = props.userName;
-  const button = new Map();
+  // State variables
+  const [cardValues, setCardValues] = useState(shuffleArray());
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [timerInterval, setTimerInterval] = useState(null);
+  const [clickedButton, setClickedButton] = useState(null);
 
-  const [cardValues, setCardValues] = React.useState(shuffleArray());
+  // useEffect to create buttons and start timer when component mounts
   useEffect(() => {
     createButtons();
+    startTimer();
   }, []);
 
+  // Function to shuffle the card values
   function shuffleArray() {
     const array = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
     for (let i = array.length - 1; i > 0; i--) {
@@ -19,6 +23,8 @@ export function PairedUpGame(props) {
     }
     return array;
   }
+
+  // Function to create buttons
   function createButtons() {
     const buttonContainer = document.getElementById("button-container");
     buttonContainer.innerHTML = "";
@@ -31,13 +37,13 @@ export function PairedUpGame(props) {
       button.addEventListener("click", handleButtonClick);
     }
   }
-  let clickedButton = null;
-  let timerInterval;
-  let elapsedTime = 0;
+
+  // Function to handle button click
   function handleButtonClick(event) {
     const button = event.target;
     button.style.backgroundColor = "aquamarine";
     button.style.color = "coral";
+
     if (clickedButton) {
       if (
         clickedButton !== button &&
@@ -48,12 +54,12 @@ export function PairedUpGame(props) {
         button.dataset.matched = "true";
         button.dataset.matched = "true";
         clickedButton.dataset.matched = "true";
-        clickedButton = null;
+        setClickedButton(null);
 
         if (allButtonsMatched()) {
           clearInterval(timerInterval);
           alert("Congratulations! You matched all the numbers");
-          //   saveTime(elapsedTime);
+          // saveTime(elapsedTime);
         }
       } else {
         setTimeout(() => {
@@ -61,14 +67,15 @@ export function PairedUpGame(props) {
           clickedButton.style.color = "black";
           button.style.backgroundColor = "black";
           button.style.color = "black";
-          clickedButton = null;
+          setClickedButton(null);
         }, 1000);
       }
     } else {
-      clickedButton = button;
+      setClickedButton(button);
     }
   }
 
+  // Function to check if all buttons are matched
   function allButtonsMatched() {
     const buttons = document.querySelectorAll("#button-container button");
     for (const button of buttons) {
@@ -79,51 +86,50 @@ export function PairedUpGame(props) {
     return true;
   }
 
+  // Function to start the timer
   function startTimer() {
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-      elapsedTime++;
-      countInput.value = formatTime(elapsedTime);
-    }, 1000);
+    setTimerInterval(
+      setInterval(() => {
+        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+      }, 1000)
+    );
   }
 
+  // Function to reset the timer
   function resetTimer() {
     clearInterval(timerInterval);
-    elapsedTime = 0;
-    countInput.value = "";
-
-    shuffleArray(cardValues);
-    for (const buttonContainer of buttonContainers) {
-      createButtons(buttonContainer);
-    }
-    clearInterval(timerInterval);
+    setElapsedTime(0);
+    const newCardValues = shuffleArray();
+    setCardValues(newCardValues);
+    createButtons();
     startTimer();
+  }
+
+  // Function to format time
+  function formatTime(seconds) {
+    const remainingSeconds = seconds % 60;
+    return `${remainingSeconds}`;
   }
 
   return (
     <main className="bg-secondary">
       <div className="players">
         Player:
-        <span className="player-name"></span>
-        <div id="player-messages">
-          <div className="event">
-            <span className="player-event">Alex</span>
-            <span className="player-data"> started a new game</span>
-          </div>
-          <div className="event">
-            <span className="player-event">John</span>
-            <span className="player-data">
-              {" "}
-              got all the pairs in 38 seconds
-            </span>
-          </div>
-        </div>
+        <span className="player-name">{props.userName}</span>
+        <div id="player-messages">{/* Render player messages */}</div>
       </div>
 
       <div className="game-timer">
-        <label for="count">Time</label>
-        <input type="text" id="count" readOnly />
-        <button className="reset-time">Reset</button>
+        <label htmlFor="count">Time</label>
+        <input
+          type="text"
+          id="count"
+          value={formatTime(elapsedTime)}
+          readOnly
+        />
+        <button className="reset-time" onClick={resetTimer}>
+          Reset
+        </button>
       </div>
 
       <div className="game">

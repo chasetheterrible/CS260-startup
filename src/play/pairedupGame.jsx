@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./pairedupGame.css";
+
+let timerInterval;
 
 export function PairedUpGame(props) {
   // State variables
   const userName = props.userName;
   const [cardValues, setCardValues] = useState(shuffleArray());
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [timerInterval, setTimerInterval] = useState(null);
+  const [countValue, setCountValue] = useState(0);
+  const elapsedTimeRef = useRef(0); // useRef for accessing latest value of elapsedTime
   const [clickedButton, setClickedButton] = useState(null);
 
   // useEffect to create buttons and start timer when component mounts
   useEffect(() => {
     createButtons();
     startTimer();
+    return () => clearInterval(timerInterval);
   }, []);
+
+  useEffect(() => {
+    setCountValue(formatTime(elapsedTime));
+  }, [elapsedTime]);
 
   // Function to shuffle the card values
   function shuffleArray() {
@@ -37,6 +45,11 @@ export function PairedUpGame(props) {
       buttonContainer.appendChild(button);
       button.addEventListener("click", handleButtonClick);
     }
+    return cardValues.map((value, index) => (
+      <button ke={index} onClick={() => handleButtonClick(value)}>
+        {value}
+      </button>
+    ));
   }
 
   // Function to handle button click
@@ -89,8 +102,9 @@ export function PairedUpGame(props) {
   function startTimer() {
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-      elapsedTime++;
-      countInput.value = formatTime(elapsedTime);
+      elapsedTimeRef.current = elapsedTimeRef.current + 1;
+      setElapsedTime((prevElapsedTime) => prevElapsedTime + 1); // Update state
+      setCountValue(formatTime(elapsedTimeRef.current));
     }, 1000);
   }
 
@@ -101,7 +115,7 @@ export function PairedUpGame(props) {
     setCardValues(newCardValues);
     createButtons();
     startTimer();
-    GameNotifier.broadcastEvent(userName, GameEvent.Start, {});
+    // GameNotifier.broadcastEvent(userName, GameEvent.Start, {});
   }
 
   // Function to format time
@@ -162,12 +176,7 @@ export function PairedUpGame(props) {
 
       <div className="game-timer">
         <label htmlFor="count">Time</label>
-        <input
-          type="text"
-          id="count"
-          value={formatTime(elapsedTime)}
-          readOnly
-        />
+        <input type="text" id="count" value={countValue} readOnly />
         <button className="reset-time" onClick={resetTimer}>
           Reset
         </button>

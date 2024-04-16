@@ -23,7 +23,7 @@ function App() {
         <header className="container-fluid">
           <nav className="navbar fixed-top navbar-dark">
             <div className="navbar-brand">
-              Simon<sup>&reg;</sup>
+              PairedUp<sup>&reg;</sup>
             </div>
             <menu className="navbar-nav">
               <li className="nav-item">
@@ -38,8 +38,8 @@ function App() {
               </li>
 
               <li className="nav-item">
-                <NavLink className="nav-link" to="scores">
-                  Scores
+                <NavLink className="nav-link" to="times">
+                  Times
                 </NavLink>
               </li>
 
@@ -68,7 +68,7 @@ function App() {
             exact
           />
           <Route path="/play" element={<Play userName={userName} />} />
-          <Route path="/scores" element={<Times />} />
+          <Route path="/times" element={<Times />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -79,9 +79,7 @@ function App() {
             <a
               className="text-reset"
               href="https://github.com/chasetheterrible/CS260-startup/tree/main"
-            >
-              Source
-            </a>
+            ></a>
           </div>
         </footer>
       </div>

@@ -68,7 +68,7 @@ function App() {
             exact
           />
           <Route path="/play" element={<Play userName={userName} />} />
-          <Route path="/scores" element={<Scores />} />
+          <Route path="/scores" element={<Times />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

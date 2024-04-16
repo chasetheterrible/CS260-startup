@@ -37,13 +37,12 @@ function App() {
                 </NavLink>
               </li>
 
-              {authState === AuthState.Authenticated && (
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="scores">
-                    Scores
-                  </NavLink>
-                </li>
-              )}
+              <li className="nav-item">
+                <NavLink className="nav-link" to="scores">
+                  Scores
+                </NavLink>
+              </li>
+
               <li className="nav-item">
                 <NavLink className="nav-link" to="about">
                   About

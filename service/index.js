@@ -33,6 +33,7 @@ apiRouter.post("/auth/create", async (req, res) => {
 });
 
 apiRouter.post("/auth/login", async (req, res) => {
+  let body = req.body;
   const user = await DB.getUser(req.body.name);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {

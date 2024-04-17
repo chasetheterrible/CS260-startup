@@ -168,12 +168,6 @@ export function PairedUpGame(props) {
 
   return (
     <main className="bg-secondary">
-      <div className="players">
-        Player:
-        <span className="player-name">{props.userName}</span>
-        <div id="player-messages">{/* Render player messages */}</div>
-      </div>
-
       <div className="game-timer">
         <label htmlFor="count">Time</label>
         <input type="text" id="count" value={countValue} readOnly />

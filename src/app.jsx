@@ -31,17 +31,21 @@ function App() {
                   Login
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="play">
-                  Play
-                </NavLink>
-              </li>
+              {authState === AuthState.Authenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="play">
+                    Play
+                  </NavLink>
+                </li>
+              )}
 
-              <li className="nav-item">
-                <NavLink className="nav-link" to="times">
-                  Times
-                </NavLink>
-              </li>
+              {authState === AuthState.Authenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="times">
+                    Times
+                  </NavLink>
+                </li>
+              )}
 
               <li className="nav-item">
                 <NavLink className="nav-link" to="about">

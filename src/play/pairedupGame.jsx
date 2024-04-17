@@ -120,8 +120,9 @@ export function PairedUpGame(props) {
 
   // Function to format time
   function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${remainingSeconds}`;
+    return `${minutes}:${remainingSeconds}`;
   }
 
   async function saveTime(time) {

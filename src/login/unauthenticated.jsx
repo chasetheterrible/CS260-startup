@@ -19,7 +19,7 @@ export function Unauthenticated(props) {
   async function loginOrCreate(endpoint) {
     const response = await fetch(endpoint, {
       method: "post",
-      body: JSON.stringify({ username: userName, password: password }),
+      body: JSON.stringify({ name: userName, password: password }),
       headers: {
         "Content-type": "applicaiton/json; charset=UTF-8",
       },

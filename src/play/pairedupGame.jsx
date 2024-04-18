@@ -46,7 +46,7 @@ export function PairedUpGame(props) {
       button.addEventListener("click", handleButtonClick);
     }
     return cardValues.map((value, index) => (
-      <button ke={index} onClick={() => handleButtonClick(value)}>
+      <button key={index} onClick={() => handleButtonClick(value)}>
         {value}
       </button>
     ));

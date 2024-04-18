@@ -68,3 +68,9 @@ This is a sequence diagram that shows how to people would interact with the back
 * Frontend makes WS connection
 * Data sent over WS connection
 * WS data displayed: all user times display in real time
+
+# React deliverable
+* Bundled and transpiled
+* Components - Login, game, and scoring are all components(unable to complete)
+* Router - Routing between login and scoring components(unable to complete)
+* Added hooks
